@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.21.0
+- Nuovo *Stile → Icona → Icona e testo*: *Insieme* (come prima) oppure *Ai due capi della card*, che porta l'icona in cima e il testo in fondo (o il contrario con l'icona sotto), con tutte le icone alla stessa altezza. Impostabile per dispositivo.
+- *Distanza dal testo* arriva fino a 200px.
+
 ## 1.20.0
 - *Righe visibili* accetta 0: il testo scelto in *Cosa troncare* resta nascosto del tutto e al suo posto c'è solo il pulsante per aprirlo, sempre visibile. Per esempio il secondo blocco di testo nascosto dietro "Scopri di più". Il valore si imposta per dispositivo.
 
