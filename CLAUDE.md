@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.22.0**.
+- Versione attuale: **1.22.1**.
 
 ## File
 
@@ -43,6 +43,8 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 
 ## Bug già risolti (non reintrodurli)
 
+- **Variabili del template in `render()`**: il markup è un unico grande metodo; un `foreach` con un nome già usato (es. `$position`, che è la posizione delle frecce) lo sovrascrive per tutto il resto del render. Nella 1.19.0 `foreach ( $text_blocks as $position => … )` ha fatto sparire le frecce dopo lo stage (fix 1.22.1, ora `$block_index`). Prima di aggiungere variabili nel template, cerca il nome in tutto `render()`.
+
 - Animazione d'ingresso con `fill-mode: both` bloccava il transform dell'hover → `backwards`.
 - Bordo/ombra tagliati dall'overflow del viewport → `padding-block`/`margin-block` con `--lu3g-bleed` (56px in modalità centrata).
 - Frecce "sotto" facevano collassare il carosello a altezza 0 → stage/viewport `flex: 0 0 auto` in colonna.
@@ -71,7 +73,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 
 ## Come si testa
 
-Nel container PHP si installa con `apt-get install php-cli`: usare `php -l` e script con stub di Elementor per provare i metodi privati via Reflection. Metodo usato finora:
+Nel container PHP si installa con `apt-get install php-cli`: usare `php -l` e script con stub di Elementor per provare i metodi privati via Reflection. Per i bug di markup conviene eseguire il vero `render()` con uno stub di `Widget_Base` (get_settings_for_display, add_render_attribute, get_render_attribute_string, get_id), di `Icons_Manager::render_icon` e delle funzioni WP di escaping, passando le impostazioni come JSON, e aprire l'HTML risultante in Playwright con CSS e JS veri. Metodo usato finora:
 - `node --check assets/carousel.js`
 - controllo parentesi del PHP con uno script Python
 - pagina HTML statica che replica il markup del widget + Playwright/Chromium (preinstallato, `executablePath: '/opt/pw-browsers/chromium'` se serve) per misurare posizioni, centratura, loop, clic sulle frecce, swipe con emulazione iPhone.

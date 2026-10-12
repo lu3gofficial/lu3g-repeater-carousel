@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.22.0
+Documentazione del plugin — versione 1.22.1
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -553,6 +553,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.22.1**
+- Corrette le frecce sotto, a destra e ai due lati, che non comparivano.
 
 **1.22.0**
 - Distanza icona-testo anche negativa.

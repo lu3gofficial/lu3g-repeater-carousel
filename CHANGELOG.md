@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.22.1
+- Corretto: dalla 1.19.0 le frecce nelle posizioni *Sotto il carosello*, *A destra del carosello* e la freccia destra di *Ai due lati* non venivano stampate. Una variabile del ciclo dei blocchi di testo sovrascriveva la posizione delle frecce.
+
 ## 1.22.0
 - *Stile → Icona → Distanza dal testo* accetta valori negativi (fino a -100px), per avvicinare l'icona al testo oltre lo spazio vuoto del disegno. Funziona con l'icona in tutte le posizioni.
 
