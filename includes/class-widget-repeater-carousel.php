@@ -5524,8 +5524,12 @@ class Repeater_Carousel extends Widget_Base {
 									}
 									?>
 
-									<?php foreach ( $text_blocks as $position => $block ) : ?>
-										<?php $clamp_this = in_array( $position, $clamp_blocks, true ); ?>
+									<?php
+									// $block_index, non $position: $position è la posizione
+									// delle frecce e serve ancora dopo il ciclo delle card.
+									foreach ( $text_blocks as $block_index => $block ) :
+										?>
+										<?php $clamp_this = in_array( $block_index, $clamp_blocks, true ); ?>
 										<div class="<?php echo esc_attr( $block['class'] . ( $clamp_this ? ' lu3g-carousel__clamp' : '' ) ); ?>"><?php echo $block['html']; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 										<?php
 										if ( $clamp_this ) {
