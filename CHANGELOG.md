@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.22.0
+- *Stile → Icona → Distanza dal testo* accetta valori negativi (fino a -100px), per avvicinare l'icona al testo oltre lo spazio vuoto del disegno. Funziona con l'icona in tutte le posizioni.
+
 ## 1.21.0
 - Nuovo *Stile → Icona → Icona e testo*: *Insieme* (come prima) oppure *Ai due capi della card*, che porta l'icona in cima e il testo in fondo (o il contrario con l'icona sotto), con tutte le icone alla stessa altezza. Impostabile per dispositivo.
 - *Distanza dal testo* arriva fino a 200px.

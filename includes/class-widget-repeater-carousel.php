@@ -2639,6 +2639,15 @@ class Repeater_Carousel extends Widget_Base {
 					'row'            => __( 'A sinistra', 'lu3g-carousel' ),
 					'row-reverse'    => __( 'A destra', 'lu3g-carousel' ),
 				),
+				// Oltre alla direzione dice su quale lato dell'icona va il
+				// margine negativo quando la Distanza dal testo è sotto zero:
+				// sempre quello rivolto verso il testo.
+				'selectors_dictionary' => array(
+					'column'         => 'column; --lu3g-icon-pull: 0 0 var(--lu3g-icon-neg) 0',
+					'column-reverse' => 'column-reverse; --lu3g-icon-pull: var(--lu3g-icon-neg) 0 0 0',
+					'row'            => 'row; --lu3g-icon-pull: 0 var(--lu3g-icon-neg) 0 0',
+					'row-reverse'    => 'row-reverse; --lu3g-icon-pull: 0 0 0 var(--lu3g-icon-neg)',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .lu3g-carousel__body' => 'flex-direction: {{VALUE}};',
 				),
@@ -2732,9 +2741,10 @@ class Repeater_Carousel extends Widget_Base {
 				'label'      => __( 'Distanza dal testo', 'lu3g-carousel' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
+				'description' => __( 'Anche negativa, per avvicinare l\'icona al testo oltre lo spazio vuoto del disegno.', 'lu3g-carousel' ),
 				'range'      => array(
 					'px' => array(
-						'min' => 0,
+						'min' => -100,
 						'max' => 200,
 					),
 				),

@@ -245,7 +245,11 @@
 .lu3g-carousel__body {
 	display: flex;
 	flex-direction: column;
-	gap: var(--lu3g-icon-gap);
+	/* gap non accetta valori negativi: sotto zero lo spazio va a 0 e la
+	   parte negativa diventa un margine dell'icona sul lato del testo,
+	   scelto dal controllo Posizione (--lu3g-icon-pull). */
+	--lu3g-icon-neg: min(0px, var(--lu3g-icon-gap));
+	gap: max(0px, var(--lu3g-icon-gap));
 	width: 100%;
 	min-width: 0;
 	/* "Icona e testo" nel pannello: con "Icona in alto, testo in basso" il
@@ -264,6 +268,8 @@
    sballerebbe l'allineamento su card con testi di lunghezza diversa. */
 .lu3g-carousel__icon {
 	flex: 0 0 auto;
+	/* Il ripiego è la posizione predefinita, icona sopra il testo. */
+	margin: var(--lu3g-icon-pull, 0 0 var(--lu3g-icon-neg) 0);
 	display: inline-flex;
 	align-items: center;
 	justify-content: flex-start;
