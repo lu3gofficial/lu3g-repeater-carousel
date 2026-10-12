@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.23.0
+- Card statiche: *Aggiungi un altro pulsante*, fino a tre pulsanti per card, ognuno con testo, link e aspetto (*Come il primo* o *Secondario*).
+- *Stile → Pulsante → Più pulsanti*: distanza tra i pulsanti, pulsanti uno sotto l'altro, colori del pulsante secondario (normale e hover). Su card strette i pulsanti vanno a capo da soli.
+- Con più pulsanti la card non è cliccabile per intero; se il primo ha il link ma non il testo, diventa un pulsante "Scopri di più".
+
 ## 1.22.2
 - Corretto: sotto i puntini del testo troncato spuntava la parte alta della riga successiva, che sembrava tagliata di netto. Le cause erano due: il margine dei paragrafi dentro il testo, ora tolto finché il testo è chiuso, e, con *Allineato riga per riga*, l'altezza data al riquadro troncato per allinearlo alle altre card, ora aggiunta sotto il riquadro.
 

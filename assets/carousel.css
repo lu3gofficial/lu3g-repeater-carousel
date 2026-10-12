@@ -1004,7 +1004,10 @@ a.lu3g-carousel__card--image[data-elementor-open-lightbox="no"] {
 
 .lu3g-carousel__actions {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	justify-content: flex-start;
+	gap: var(--lu3g-buttons-gap, 16px);
 	margin-top: var(--lu3g-button-gap);
 }
 
