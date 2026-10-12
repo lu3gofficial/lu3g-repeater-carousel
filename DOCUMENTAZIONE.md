@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.23.0
+Documentazione del plugin — versione 1.24.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -176,7 +176,7 @@ I controlli contrassegnati con **R** sono responsive: possono avere valori diver
 | Dimensione dell'immagine | *(immagini)* Versione della foto da caricare. |
 | Al click | *(immagini)* Nessuna azione, lightbox, apertura del file. |
 
-**Dentro ogni card statica — tab Contenuto:** Etichetta, Titolo, Testo con il suo stile, blocchi aggiuntivi, Icona, Testo del pulsante, Link, e con *Aggiungi un altro pulsante* fino a due pulsanti in più (testo, link, aspetto *Come il primo* o *Secondario*).
+**Dentro ogni card statica — tab Contenuto:** Etichetta, Titolo, Testo con il suo stile, blocchi aggiuntivi, Icona, Testo del pulsante, Link, e con *Aggiungi un altro pulsante* fino a due pulsanti in più, ognuno con testo e link. Il loro stile si imposta in *Stile → Pulsante 2* e *Pulsante 3*.
 
 **Dentro ogni card statica — tab Stile:**
 - interruttore *Colori propri*; se attivo: Sfondo, Sfondo in hover, Bordo, Testi e icona, Testo del pulsante, Sfondo del pulsante. I campi lasciati vuoti restano quelli generali;
@@ -269,7 +269,8 @@ Le sezioni seguono l'ordine degli elementi nella card. Dove c'è un effetto hove
 | Titolo | Tipografia, allineamento, righe riservate, colore (normale / hover). |
 | Stile testo 1, 2, 3 | Tipografia, distanza dal blocco sopra, colore (normale / hover). |
 | Mostra di più | Tipografia, distanza, sottolineatura, colore e sfondo (normale / hover), bordo, raggio, padding. |
-| Pulsante | Allineamento, distanza dal testo, tipografia, colore e sfondo (normale / hover), bordo, raggio, padding, icona e spostamento della freccia in hover. *Più pulsanti*: distanza tra i pulsanti, uno sotto l'altro, colori del pulsante secondario (normale / hover); tipografia, padding e raggio sono quelli del pulsante principale. |
+| Pulsante | Allineamento, distanza dal testo, tipografia, colore e sfondo (normale / hover), bordo, raggio, padding, icona e spostamento della freccia in hover. *Più pulsanti*: distanza tra i pulsanti, uno sotto l'altro. |
+| Pulsante 2, Pulsante 3 | *(statico)* Stile proprio del secondo e del terzo pulsante di ogni card: tipografia, testo e sfondo (normale / hover), bordo, raggio, padding. Vuoto = come la sezione Pulsante. L'hover è quello del pulsante stesso. |
 | Frecce | Dimensione, colore e sfondo (normale / hover), bordo, raggio, padding, distanza dal carosello, opacità quando inattive. |
 | Indicatori di posizione | Puntini: dimensione, larghezza dell'attivo, distanza, colori. Barra: larghezza, spessore, colori. Numeri: tipografia e colore. |
 | Animazioni | Ingresso e hover: vedi sotto. |
@@ -553,6 +554,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.24.0**
+- Stile proprio per il pulsante 2 e il pulsante 3.
 
 **1.23.0**
 - Fino a tre pulsanti per card statica.

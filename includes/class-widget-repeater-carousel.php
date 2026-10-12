@@ -229,6 +229,10 @@ class Repeater_Carousel extends Widget_Base {
 
 		$this->register_toggle_style_controls();
 		$this->register_button_style_controls();
+
+		for ( $n = 2; $n <= self::LU3G_MAX_BUTTONS; $n++ ) {
+			$this->register_button_n_style_controls( $n );
+		}
 		$this->register_nav_style_controls();
 		$this->register_indicator_style_controls();
 		$this->register_animation_controls();
@@ -461,21 +465,6 @@ class Repeater_Carousel extends Widget_Base {
 					'placeholder' => 'https://',
 					'dynamic'     => array( 'active' => true ),
 					'condition'   => $button_chain,
-				)
-			);
-
-			$manual->add_control(
-				'card_button_' . $n . '_look',
-				array(
-					'label'     => __( 'Aspetto', 'lu3g-carousel' ),
-					'type'      => Controls_Manager::SELECT,
-					'default'   => 'secondary',
-					'options'   => array(
-						'primary'   => __( 'Come il primo pulsante', 'lu3g-carousel' ),
-						'secondary' => __( 'Secondario', 'lu3g-carousel' ),
-					),
-					'description' => __( 'I colori del pulsante secondario si impostano in Stile → Pulsante.', 'lu3g-carousel' ),
-					'condition' => $button_chain,
 				)
 			);
 		}
@@ -3263,6 +3252,161 @@ class Repeater_Carousel extends Widget_Base {
 	}
 
 	/**
+	 * Tab Stile — Pulsante 2, Pulsante 3: stile proprio di un pulsante.
+	 *
+	 * Le card statiche hanno fino a tre pulsanti. Ognuno, dal secondo, può
+	 * avere un aspetto proprio; i campi lasciati vuoti restano quelli della
+	 * sezione Pulsante, quindi senza impostazioni i pulsanti sono uguali.
+	 * L'hover è quello del pulsante stesso, non della card: con più pulsanti
+	 * affiancati cambiano uno alla volta.
+	 *
+	 * @param int $n Numero del pulsante.
+	 * @return void
+	 */
+	private function register_button_n_style_controls( $n ) {
+		// Senza punto iniziale: viene sempre preceduto da " ." qui sotto.
+		$base = 'lu3g-carousel__button.lu3g-carousel__button--n' . $n;
+		$sel  = '{{WRAPPER}} .lu3g-carousel .' . $base;
+
+		// I colori valgono anche con il mouse sulla card: senza la seconda
+		// variante vincerebbe l'hover della sezione Pulsante, che agisce su
+		// tutti i pulsanti quando si passa sulla card ed è più specifico.
+		$colors = $sel . ', {{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .' . $base;
+
+		// L'hover del pulsante ha la stessa specificità della variante sopra
+		// e viene dopo nel CSS, quindi prevale.
+		$hover_base = '{{WRAPPER}} .lu3g-carousel .lu3g-carousel__card .' . $base;
+		$hover      = $hover_base . ':hover, ' . $hover_base . ':focus-visible';
+		$key        = 'button_' . $n . '_';
+
+		$this->start_controls_section(
+			'section_button_' . $n . '_style',
+			array(
+				/* translators: %d: numero del pulsante */
+				'label'     => sprintf( __( 'Pulsante %d', 'lu3g-carousel' ), $n ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array( 'source_type' => 'manual' ),
+			)
+		);
+
+		$this->add_control(
+			$key . 'note',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				/* translators: %d: numero del pulsante */
+				'raw'             => sprintf( __( 'Vale per il pulsante %d di ogni card. Ciò che lasci vuoto resta come nella sezione Pulsante.', 'lu3g-carousel' ), $n ),
+				'content_classes' => 'elementor-descriptor',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => $key . 'typography',
+				'selector' => $sel,
+			)
+		);
+
+		$this->start_controls_tabs( $key . 'state_tabs' );
+
+		$this->start_controls_tab( $key . 'tab_normal', array( 'label' => __( 'Normale', 'lu3g-carousel' ) ) );
+
+		$this->add_control(
+			$key . 'color',
+			array(
+				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$colors => 'color: {{VALUE}};',
+					$sel . ' svg, {{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .' . $base . ' svg' => 'fill: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			$key . 'bg',
+			array(
+				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $colors => 'background-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( $key . 'tab_hover', array( 'label' => __( 'Hover', 'lu3g-carousel' ) ) );
+
+		$this->add_control(
+			$key . 'color_hover',
+			array(
+				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$hover => 'color: {{VALUE}};',
+					$hover_base . ':hover svg' => 'fill: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			$key . 'bg_hover',
+			array(
+				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $hover => 'background-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->add_control(
+			$key . 'border_hover',
+			array(
+				'label'     => __( 'Colore del bordo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $hover => 'border-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'      => $key . 'border',
+				'selector'  => $sel,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_responsive_control(
+			$key . 'radius',
+			array(
+				'label'      => __( 'Raggio dei bordi', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					$sel => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			$key . 'padding',
+			array(
+				'label'      => __( 'Padding', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em' ),
+				'selectors'  => array(
+					$sel => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
 	 * Tab Stile — Pulsante della card.
 	 *
 	 * @return void
@@ -3564,79 +3708,6 @@ class Repeater_Carousel extends Widget_Base {
 			)
 		);
 
-		$secondary = '{{WRAPPER}} .lu3g-carousel .lu3g-carousel__button.lu3g-carousel__button--secondary';
-
-		$this->start_controls_tabs( 'button_secondary_tabs' );
-
-		$this->start_controls_tab(
-			'button_secondary_normal',
-			array( 'label' => __( 'Secondario', 'lu3g-carousel' ) )
-		);
-
-		$this->add_control(
-			'button_secondary_color',
-			array(
-				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary => 'color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_control(
-			'button_secondary_bg',
-			array(
-				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary => 'background-color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_control(
-			'button_secondary_border',
-			array(
-				'label'     => __( 'Colore del bordo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary => 'border-color: {{VALUE}};' ),
-			)
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'button_secondary_hover',
-			array( 'label' => __( 'Secondario hover', 'lu3g-carousel' ) )
-		);
-
-		$this->add_control(
-			'button_secondary_color_hover',
-			array(
-				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary . ':hover' => 'color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_control(
-			'button_secondary_bg_hover',
-			array(
-				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary . ':hover' => 'background-color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_control(
-			'button_secondary_border_hover',
-			array(
-				'label'     => __( 'Colore del bordo', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array( $secondary . ':hover' => 'border-color: {{VALUE}};' ),
-			)
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 		$this->end_controls_section();
 	}
 
@@ -4197,7 +4268,7 @@ class Repeater_Carousel extends Widget_Base {
 	 * di testo. Un pulsante senza testo non viene stampato.
 	 *
 	 * @param array $row Riga del repeater di Elementor.
-	 * @return array Elenco di array text, url, new_tab, rel, look.
+	 * @return array Elenco di array text, url, new_tab, rel.
 	 */
 	private function lu3g_manual_extra_buttons( $row ) {
 		$buttons = array();
@@ -4219,16 +4290,11 @@ class Repeater_Carousel extends Widget_Base {
 				? $row[ 'card_button_' . $n . '_link' ]
 				: array();
 
-			$look = isset( $row[ 'card_button_' . $n . '_look' ] ) && 'primary' === $row[ 'card_button_' . $n . '_look' ]
-				? 'primary'
-				: 'secondary';
-
 			$buttons[] = array(
 				'text'    => $text,
 				'url'     => ! empty( $link['url'] ) ? esc_url( $link['url'] ) : '',
 				'new_tab' => ! empty( $link['is_external'] ),
 				'rel'     => ! empty( $link['nofollow'] ) ? 'nofollow' : '',
-				'look'    => $look,
 			);
 		}
 
@@ -5788,7 +5854,6 @@ class Repeater_Carousel extends Widget_Base {
 											'url'     => $item['button_url'],
 											'new_tab' => $item['button_new_tab'],
 											'rel'     => $item['button_rel'],
-											'look'    => 'primary',
 										);
 									}
 
@@ -5798,11 +5863,12 @@ class Repeater_Carousel extends Widget_Base {
 									?>
 									<?php if ( $card_buttons ) : ?>
 										<div class="lu3g-carousel__actions">
-											<?php foreach ( $card_buttons as $card_button ) : ?>
+											<?php foreach ( $card_buttons as $button_index => $card_button ) : ?>
 												<?php
+												// --nN dice la posizione nella card: lo usano le sezioni
+												// di stile "Pulsante 2" e "Pulsante 3".
 												$button_tag   = $card_button['url'] ? 'a' : 'span';
-												$button_class = 'lu3g-carousel__button'
-													. ( 'secondary' === $card_button['look'] ? ' lu3g-carousel__button--secondary' : '' )
+												$button_class = 'lu3g-carousel__button lu3g-carousel__button--n' . ( $button_index + 1 )
 													. ( $icon_only ? ' lu3g-carousel__button--icon-only' : '' );
 												$button_attrs = 'class="' . esc_attr( $button_class ) . '"';
 
