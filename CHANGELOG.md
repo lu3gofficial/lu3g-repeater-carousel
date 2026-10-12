@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.26.0
+- *Card → tab Stile → Colori propri*: i colori dei pulsanti ora si impostano per ogni pulsante (*Pulsante 1*, *2*, *3*: testo, sfondo, testo in hover, sfondo in hover). I campi del pulsante 2 e 3 compaiono solo se la card ha quel pulsante. Le card già impostate mantengono i colori sul pulsante 1.
+- Corretto: dalla 1.25.0 l'hover generale del pulsante poteva sovrascrivere i colori propri della card.
+
+## 1.25.0
+- Nuovo *Stile → Pulsante → Hover → Hover del pulsante*: *Passando sulla card* (come prima) oppure *Solo sul pulsante*, per cui colori e spostamento della freccia cambiano solo sul pulsante sotto il mouse. Utile con più pulsanti nella stessa card.
+
 ## 1.24.0
 - Nuove sezioni *Stile → Pulsante 2* e *Pulsante 3* (sorgente statica): tipografia, colori di testo e sfondo, hover, bordo, raggio e padding per il secondo e il terzo pulsante di ogni card. Ciò che resta vuoto è come nella sezione *Pulsante*. L'hover di questi pulsanti è quello del pulsante stesso, e i loro colori restano anche passando sulla card.
 - Sostituisce *Aspetto* e i colori del *pulsante secondario* della 1.23.0.
