@@ -3516,6 +3516,20 @@ class Repeater_Carousel extends Widget_Base {
 			array( 'label' => __( 'Hover', 'lu3g-carousel' ) )
 		);
 
+		$this->add_control(
+			'button_hover_target',
+			array(
+				'label'       => __( 'Hover del pulsante', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'card',
+				'options'     => array(
+					'card' => __( 'Passando sulla card', 'lu3g-carousel' ),
+					'self' => __( 'Solo sul pulsante', 'lu3g-carousel' ),
+				),
+				'description' => __( 'Quando si attivano i colori qui sotto e lo spostamento della freccia. "Solo sul pulsante" è il più chiaro con più pulsanti nella stessa card.', 'lu3g-carousel' ),
+			)
+		);
+
 		// L'hover scatta passando sulla card, non solo sul pulsante: tutta
 		// la card è la zona d'interesse, e il pulsante ne segnala l'azione.
 		$this->add_control(
@@ -3524,8 +3538,8 @@ class Repeater_Carousel extends Widget_Base {
 				'label'     => __( 'Colore', 'lu3g-carousel' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__button' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__button svg' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .lu3g-carousel:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:hover, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:focus-visible' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .lu3g-carousel:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button svg, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:hover svg' => 'fill: {{VALUE}};',
 				),
 			)
 		);
@@ -3536,7 +3550,7 @@ class Repeater_Carousel extends Widget_Base {
 				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__button' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .lu3g-carousel:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:hover, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:focus-visible' => 'background-color: {{VALUE}};',
 				),
 			)
 		);
@@ -3547,7 +3561,7 @@ class Repeater_Carousel extends Widget_Base {
 				'label'     => __( 'Bordo', 'lu3g-carousel' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__button' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .lu3g-carousel:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:hover, {{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self .lu3g-carousel__card .lu3g-carousel__button:focus-visible' => 'border-color: {{VALUE}};',
 				),
 			)
 		);
@@ -5472,6 +5486,7 @@ class Repeater_Carousel extends Widget_Base {
 				'truncate_target'    => 'title',
 				'button_icon'        => array(),
 				'button_display'     => 'text_icon',
+				'button_hover_target' => 'card',
 				'lock_scroll'        => '',
 				'lock_max_cards'     => 3,
 				'lock_align'         => 'fill',
@@ -5665,6 +5680,10 @@ class Repeater_Carousel extends Widget_Base {
 
 		if ( 'yes' === $settings['hide_idle_arrows'] ) {
 			$classes[] = 'lu3g-carousel--hide-idle-arrows';
+		}
+
+		if ( 'self' === $settings['button_hover_target'] ) {
+			$classes[] = 'lu3g-carousel--button-hover-self';
 		}
 
 		if ( 'yes' === $settings['hide_arrows_mobile'] ) {

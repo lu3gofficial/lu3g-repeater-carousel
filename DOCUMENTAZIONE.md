@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.24.0
+Documentazione del plugin — versione 1.25.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -269,7 +269,7 @@ Le sezioni seguono l'ordine degli elementi nella card. Dove c'è un effetto hove
 | Titolo | Tipografia, allineamento, righe riservate, colore (normale / hover). |
 | Stile testo 1, 2, 3 | Tipografia, distanza dal blocco sopra, colore (normale / hover). |
 | Mostra di più | Tipografia, distanza, sottolineatura, colore e sfondo (normale / hover), bordo, raggio, padding. |
-| Pulsante | Allineamento, distanza dal testo, tipografia, colore e sfondo (normale / hover), bordo, raggio, padding, icona e spostamento della freccia in hover. *Più pulsanti*: distanza tra i pulsanti, uno sotto l'altro. |
+| Pulsante | Allineamento, distanza dal testo, tipografia, colore e sfondo (normale / hover), *Hover del pulsante* (passando sulla card o solo sul pulsante), bordo, raggio, padding, icona e spostamento della freccia in hover. *Più pulsanti*: distanza tra i pulsanti, uno sotto l'altro. |
 | Pulsante 2, Pulsante 3 | *(statico)* Stile proprio del secondo e del terzo pulsante di ogni card: tipografia, testo e sfondo (normale / hover), bordo, raggio, padding. Vuoto = come la sezione Pulsante. L'hover è quello del pulsante stesso. |
 | Frecce | Dimensione, colore e sfondo (normale / hover), bordo, raggio, padding, distanza dal carosello, opacità quando inattive. |
 | Indicatori di posizione | Puntini: dimensione, larghezza dell'attivo, distanza, colori. Barra: larghezza, spessore, colori. Numeri: tipografia e colore. |
@@ -554,6 +554,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.25.0**
+- Hover del pulsante solo sul pulsante.
 
 **1.24.0**
 - Stile proprio per il pulsante 2 e il pulsante 3.

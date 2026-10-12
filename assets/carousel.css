@@ -1063,8 +1063,11 @@ span.lu3g-carousel__button {
 	justify-content: center;
 }
 
-/* La freccia avanza in hover sulla card intera, non solo sul pulsante. */
-.lu3g-carousel__card:hover .lu3g-carousel__button-icon {
+/* La freccia avanza in hover sulla card intera, oppure solo sul pulsante
+   se nel pannello è scelto "Hover del pulsante: Solo sul pulsante". */
+.lu3g-carousel:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button-icon,
+.lu3g-carousel--button-hover-self .lu3g-carousel__button:hover .lu3g-carousel__button-icon,
+.lu3g-carousel--button-hover-self .lu3g-carousel__button:focus-visible .lu3g-carousel__button-icon {
 	transform: translateX(var(--lu3g-button-icon-shift));
 }
 
@@ -1344,6 +1347,11 @@ span.lu3g-carousel__button {
 	.lu3g-carousel__card:hover .lu3g-carousel__button-icon,
 	.lu3g-carousel__card--image:hover .lu3g-carousel__image {
 		transform: none;
+	}
+
+	/* Le regole della freccia sono più specifiche di quelle sopra. */
+	.lu3g-carousel .lu3g-carousel__button-icon {
+		transform: none !important;
 	}
 
 	.lu3g-carousel--text-line .lu3g-carousel__text::after {
