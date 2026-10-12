@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.27.0
+- *Card → Stile → Colori propri*: per ogni pulsante anche *Bordo* e *Bordo in hover*. Senza un bordo impostato, il bordo resta del colore dello *Sfondo*, come prima. *Sfondo in hover* non cambia più il colore del bordo.
+
 ## 1.26.0
 - *Card → tab Stile → Colori propri*: i colori dei pulsanti ora si impostano per ogni pulsante (*Pulsante 1*, *2*, *3*: testo, sfondo, testo in hover, sfondo in hover). I campi del pulsante 2 e 3 compaiono solo se la card ha quel pulsante. Le card già impostate mantengono i colori sul pulsante 1.
 - Corretto: dalla 1.25.0 l'hover generale del pulsante poteva sovrascrivere i colori propri della card.
