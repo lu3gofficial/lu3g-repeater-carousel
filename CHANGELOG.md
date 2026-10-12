@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.24.0
+- Nuove sezioni *Stile → Pulsante 2* e *Pulsante 3* (sorgente statica): tipografia, colori di testo e sfondo, hover, bordo, raggio e padding per il secondo e il terzo pulsante di ogni card. Ciò che resta vuoto è come nella sezione *Pulsante*. L'hover di questi pulsanti è quello del pulsante stesso, e i loro colori restano anche passando sulla card.
+- Sostituisce *Aspetto* e i colori del *pulsante secondario* della 1.23.0.
+
 ## 1.23.0
 - Card statiche: *Aggiungi un altro pulsante*, fino a tre pulsanti per card, ognuno con testo, link e aspetto (*Come il primo* o *Secondario*).
 - *Stile → Pulsante → Più pulsanti*: distanza tra i pulsanti, pulsanti uno sotto l'altro, colori del pulsante secondario (normale e hover). Su card strette i pulsanti vanno a capo da soli.
