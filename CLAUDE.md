@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.22.1**.
+- Versione attuale: **1.22.2**.
 
 ## File
 
@@ -42,6 +42,8 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 6. Il token GitHub non va mai nel codice: solo `define( 'LU3G_GITHUB_TOKEN', ... )` in `wp-config.php` (il repo ora è pubblico, non serve).
 
 ## Bug già risolti (non reintrodurli)
+
+- **Testo troncato più alto delle sue righe = mezza riga visibile sotto i puntini.** Un clamp `-webkit-box` non deve mai avere altezza extra: niente `min-height` (setupRows ora gli aggiunge `margin-bottom` fuori dal riquadro) e niente margini dei `<p>` interni da chiuso (`.lu3g-carousel__clamp:not(.is-open) > * { margin-block: 0 }`, valido anche durante `is-measuring`). L'apertura/chiusura emette `lu3g:layout` sul root per ricalcolare setupRows (fix 1.22.2).
 
 - **Variabili del template in `render()`**: il markup è un unico grande metodo; un `foreach` con un nome già usato (es. `$position`, che è la posizione delle frecce) lo sovrascrive per tutto il resto del render. Nella 1.19.0 `foreach ( $text_blocks as $position => … )` ha fatto sparire le frecce dopo lo stage (fix 1.22.1, ora `$block_index`). Prima di aggiungere variabili nel template, cerca il nome in tutto `render()`.
 

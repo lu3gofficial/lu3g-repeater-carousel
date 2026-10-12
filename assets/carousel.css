@@ -344,6 +344,17 @@
 	overflow: visible;
 }
 
+/* Da chiuso, i paragrafi dentro il testo troncato perdono i margini: il
+   margine sotto un <p> allungherebbe il riquadro oltre le righe indicate,
+   e sotto i puntini spunterebbe la parte alta della riga successiva. Vale
+   anche durante la misura (is-measuring), così il confronto tra testo
+   chiuso e testo intero non scambia i margini per righe nascoste. Da
+   aperto i margini tornano. */
+.lu3g-carousel--clamp .lu3g-carousel__clamp:not(.is-open) > * {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 /* Righe visibili a 0: il testo resta nascosto finché non lo si apre. */
 .lu3g-carousel--clamp .lu3g-carousel__clamp.is-hidden-text:not(.is-open) {
 	display: none;
