@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.20.0
+Documentazione del plugin — versione 1.21.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -264,7 +264,7 @@ Le sezioni seguono l'ordine degli elementi nella card. Dove c'è un effetto hove
 |---|---|
 | Card | Sfondo e bordo (normale / hover), raggio dei bordi, padding, effetto vetro (sfocatura **R**, saturazione, sfocatura in hover). Con le immagini il padding non crea cornici: la foto copre l'intera card. |
 | Immagini | *(immagini)* Adattamento (riempi ritagliando, o intera), punto di ritaglio **R**, zoom in hover, velatura in hover. |
-| Icona | Posizione rispetto al testo (sopra, sotto, sinistra, destra) **R**, allineamento a sinistra, al centro o a destra (con l'icona sopra o sotto) **R**, dimensione, distanza dal testo, colore (normale / hover). |
+| Icona | Posizione rispetto al testo (sopra, sotto, sinistra, destra) **R**, allineamento a sinistra, al centro o a destra (con l'icona sopra o sotto) **R**, *Icona e testo*: insieme oppure ai due capi della card **R**, dimensione, distanza dal testo (fino a 200px), colore (normale / hover). |
 | Etichetta | Tipografia, distanza dal titolo, colore (normale / hover). |
 | Titolo | Tipografia, allineamento, righe riservate, colore (normale / hover). |
 | Stile testo 1, 2, 3 | Tipografia, distanza dal blocco sopra, colore (normale / hover). |
@@ -553,6 +553,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.21.0**
+- Icona e testo ai due capi della card.
 
 **1.20.0**
 - Righe visibili a 0: testo nascosto dietro il pulsante.

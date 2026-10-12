@@ -248,10 +248,15 @@
 	gap: var(--lu3g-icon-gap);
 	width: 100%;
 	min-width: 0;
+	/* "Icona e testo" nel pannello: con "Icona in alto, testo in basso" il
+	   body occupa tutta l'altezza della card e i due gruppi vanno ai capi
+	   opposti. I valori di ripiego sono il comportamento di sempre. */
+	align-self: var(--lu3g-body-self, auto);
+	justify-content: var(--lu3g-body-justify, flex-start);
 }
 
 .lu3g-carousel__content {
-	flex: 1 1 auto;
+	flex: var(--lu3g-content-grow, 1) 1 auto;
 	min-width: 0;
 }
 
@@ -1069,7 +1074,7 @@ span.lu3g-carousel__button {
 .lu3g-carousel--spread .lu3g-carousel__content {
 	display: flex;
 	flex-direction: column;
-	flex: 1 1 auto;
+	flex: var(--lu3g-content-grow, 1) 1 auto;
 }
 
 /* margin-top auto assorbe tutto lo spazio libero; il padding garantisce la

@@ -2703,6 +2703,30 @@ class Repeater_Carousel extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'icon_layout',
+			array(
+				'label'                => __( 'Icona e testo', 'lu3g-carousel' ),
+				'type'                 => Controls_Manager::SELECT,
+				'default'              => 'together',
+				'options'              => array(
+					'together' => __( 'Insieme', 'lu3g-carousel' ),
+					'split'    => __( 'Ai due capi della card', 'lu3g-carousel' ),
+				),
+				// Variabili e non proprietà dirette: il valore "Insieme" su un
+				// breakpoint deve annullare "Ai due capi" di quello più grande
+				// senza toccare le regole della distribuzione "Distribuito".
+				'selectors_dictionary' => array(
+					'together' => '--lu3g-body-self: auto; --lu3g-body-justify: flex-start; --lu3g-content-grow: 1;',
+					'split'    => '--lu3g-body-self: stretch; --lu3g-body-justify: space-between; --lu3g-content-grow: 0;',
+				),
+				'selectors'            => array(
+					'{{WRAPPER}} .lu3g-carousel' => '{{VALUE}}',
+				),
+				'description'          => __( '"Ai due capi": con l\'icona sopra il testo, l\'icona va in cima alla card e il testo in fondo; con l\'icona sotto, il contrario. Lo spazio libero resta in mezzo; la Distanza dal testo fa da minimo.', 'lu3g-carousel' ),
+			)
+		);
+
+		$this->add_responsive_control(
 			'icon_gap',
 			array(
 				'label'      => __( 'Distanza dal testo', 'lu3g-carousel' ),
@@ -2711,7 +2735,7 @@ class Repeater_Carousel extends Widget_Base {
 				'range'      => array(
 					'px' => array(
 						'min' => 0,
-						'max' => 60,
+						'max' => 200,
 					),
 				),
 				'default'    => array(
