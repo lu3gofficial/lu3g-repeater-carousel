@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.21.0**.
+- Versione attuale: **1.22.0**.
 
 ## File
 
@@ -66,6 +66,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - 1.19.0: `truncate_target` anche `block_2`..`block_5` e `all_blocks` (helper `lu3g_clamp_positions`); il render costruisce `$text_blocks` (descrizione + blocchi) e mette un toggle dopo ogni blocco troncato. JS: stato aperto sul testo (`.lu3g-carousel__clamp.is-open`), la card ha `is-expanded` se almeno un testo è aperto; `clampOf(toggle)` = elemento prima del toggle-wrap; nel loop si apre il toggle nella stessa posizione delle copie.
 - 1.20.0: `truncate_lines` min 0. JS `hiddenMode()` legge `--lu3g-lines` calcolata su root: se < 1 i clamp ricevono `is-hidden-text` (display none finché non `is-open`) e il pulsante è sempre visibile; applicato anche in modo sincrono all'init, prima di `setupRows`. Senza questo, 0 rendeva `-webkit-line-clamp` invalido e il pulsante non compariva.
 - 1.21.0: `icon_layout` (responsive, together/split) via selectors_dictionary che imposta `--lu3g-body-self`, `--lu3g-body-justify`, `--lu3g-content-grow` su `.lu3g-carousel` (usate da `.lu3g-carousel__body` e `__content`); `icon_gap` max 200.
+- 1.22.0: `icon_gap` min -100. CSS: `gap: max(0px, var(--lu3g-icon-gap))`, `--lu3g-icon-neg: min(0px, …)` sul body; l'icona ha `margin: var(--lu3g-icon-pull, …)`. `icon_position` ha un selectors_dictionary che, oltre a flex-direction, imposta `--lu3g-icon-pull` col margine negativo sul lato rivolto al testo.
 - 1.12.0/1.12.1: modalità centrata (`center_mode`, `center_side_scale`, `center_side_opacity`, `center_main_scale` default 1.04, `center_shadow`); con 3 card visibili la seconda è subito al centro senza scorrere. JS: `updateCenter`/`scheduleCenter` assegnano `.is-center`.
 
 ## Come si testa
