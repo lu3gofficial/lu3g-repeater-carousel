@@ -40,6 +40,11 @@ class Repeater_Carousel extends Widget_Base {
 	const LU3G_MAX_EXTRA_BLOCKS = 4;
 
 	/**
+	 * Pulsanti per card statica, compreso il primo.
+	 */
+	const LU3G_MAX_BUTTONS = 3;
+
+	/**
 	 * Nome interno del widget.
 	 *
 	 * @return string
@@ -413,6 +418,67 @@ class Repeater_Carousel extends Widget_Base {
 				'dynamic'     => array( 'active' => true ),
 			)
 		);
+
+		// Pulsanti aggiuntivi, a catena come i blocchi di testo: ognuno
+		// compare solo se è attivo l'interruttore del precedente.
+		$button_chain = array();
+
+		for ( $n = 2; $n <= self::LU3G_MAX_BUTTONS; $n++ ) {
+			$add_args = array(
+				'label'        => __( 'Aggiungi un altro pulsante', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => '',
+				'return_value' => 'yes',
+				'separator'    => 'before',
+			);
+
+			if ( $button_chain ) {
+				$add_args['condition'] = $button_chain;
+			}
+
+			$manual->add_control( 'card_add_button_' . $n, $add_args );
+
+			$button_chain[ 'card_add_button_' . $n ] = 'yes';
+
+			$manual->add_control(
+				'card_button_' . $n . '_text',
+				array(
+					/* translators: %d: numero del pulsante */
+					'label'       => sprintf( __( 'Testo del pulsante %d', 'lu3g-carousel' ), $n ),
+					'type'        => Controls_Manager::TEXT,
+					'label_block' => true,
+					'dynamic'     => array( 'active' => true ),
+					'condition'   => $button_chain,
+				)
+			);
+
+			$manual->add_control(
+				'card_button_' . $n . '_link',
+				array(
+					/* translators: %d: numero del pulsante */
+					'label'       => sprintf( __( 'Link del pulsante %d', 'lu3g-carousel' ), $n ),
+					'type'        => Controls_Manager::URL,
+					'placeholder' => 'https://',
+					'dynamic'     => array( 'active' => true ),
+					'condition'   => $button_chain,
+				)
+			);
+
+			$manual->add_control(
+				'card_button_' . $n . '_look',
+				array(
+					'label'     => __( 'Aspetto', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::SELECT,
+					'default'   => 'secondary',
+					'options'   => array(
+						'primary'   => __( 'Come il primo pulsante', 'lu3g-carousel' ),
+						'secondary' => __( 'Secondario', 'lu3g-carousel' ),
+					),
+					'description' => __( 'I colori del pulsante secondario si impostano in Stile → Pulsante.', 'lu3g-carousel' ),
+					'condition' => $button_chain,
+				)
+			);
+		}
 
 		$manual->end_controls_tab();
 
@@ -3234,7 +3300,7 @@ class Repeater_Carousel extends Widget_Base {
 				),
 				'default'   => 'flex-start',
 				'selectors' => array(
-					'{{WRAPPER}} .lu3g-carousel__actions' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .lu3g-carousel__actions' => 'justify-content: {{VALUE}}; --lu3g-actions-align: {{VALUE}};',
 				),
 			)
 		);
@@ -3453,6 +3519,124 @@ class Repeater_Carousel extends Widget_Base {
 				),
 			)
 		);
+
+		$this->add_control(
+			'buttons_heading',
+			array(
+				'label'     => __( 'Più pulsanti', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_responsive_control(
+			'buttons_gap',
+			array(
+				'label'      => __( 'Distanza tra i pulsanti', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 60,
+					),
+				),
+				'default'    => array(
+					'unit' => 'px',
+					'size' => 16,
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-buttons-gap: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'buttons_stack',
+			array(
+				'label'        => __( 'Uno sotto l\'altro', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => '',
+				'return_value' => 'yes',
+				'selectors'    => array(
+					'{{WRAPPER}} .lu3g-carousel__actions' => 'flex-direction: column; align-items: var(--lu3g-actions-align, flex-start);',
+				),
+			)
+		);
+
+		$secondary = '{{WRAPPER}} .lu3g-carousel .lu3g-carousel__button.lu3g-carousel__button--secondary';
+
+		$this->start_controls_tabs( 'button_secondary_tabs' );
+
+		$this->start_controls_tab(
+			'button_secondary_normal',
+			array( 'label' => __( 'Secondario', 'lu3g-carousel' ) )
+		);
+
+		$this->add_control(
+			'button_secondary_color',
+			array(
+				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary => 'color: {{VALUE}};' ),
+			)
+		);
+
+		$this->add_control(
+			'button_secondary_bg',
+			array(
+				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary => 'background-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->add_control(
+			'button_secondary_border',
+			array(
+				'label'     => __( 'Colore del bordo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary => 'border-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'button_secondary_hover',
+			array( 'label' => __( 'Secondario hover', 'lu3g-carousel' ) )
+		);
+
+		$this->add_control(
+			'button_secondary_color_hover',
+			array(
+				'label'     => __( 'Colore del testo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary . ':hover' => 'color: {{VALUE}};' ),
+			)
+		);
+
+		$this->add_control(
+			'button_secondary_bg_hover',
+			array(
+				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary . ':hover' => 'background-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->add_control(
+			'button_secondary_border_hover',
+			array(
+				'label'     => __( 'Colore del bordo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array( $secondary . ':hover' => 'border-color: {{VALUE}};' ),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 		$this->end_controls_section();
 	}
 
@@ -4007,6 +4191,51 @@ class Repeater_Carousel extends Widget_Base {
 	}
 
 	/**
+	 * Pulsanti dal secondo in poi di una card statica.
+	 *
+	 * La catena si ferma al primo interruttore spento, come per i blocchi
+	 * di testo. Un pulsante senza testo non viene stampato.
+	 *
+	 * @param array $row Riga del repeater di Elementor.
+	 * @return array Elenco di array text, url, new_tab, rel, look.
+	 */
+	private function lu3g_manual_extra_buttons( $row ) {
+		$buttons = array();
+
+		for ( $n = 2; $n <= self::LU3G_MAX_BUTTONS; $n++ ) {
+			if ( empty( $row[ 'card_add_button_' . $n ] ) || 'yes' !== $row[ 'card_add_button_' . $n ] ) {
+				break;
+			}
+
+			$text = isset( $row[ 'card_button_' . $n . '_text' ] )
+				? trim( wp_strip_all_tags( (string) $row[ 'card_button_' . $n . '_text' ] ) )
+				: '';
+
+			if ( '' === $text ) {
+				continue;
+			}
+
+			$link = isset( $row[ 'card_button_' . $n . '_link' ] ) && is_array( $row[ 'card_button_' . $n . '_link' ] )
+				? $row[ 'card_button_' . $n . '_link' ]
+				: array();
+
+			$look = isset( $row[ 'card_button_' . $n . '_look' ] ) && 'primary' === $row[ 'card_button_' . $n . '_look' ]
+				? 'primary'
+				: 'secondary';
+
+			$buttons[] = array(
+				'text'    => $text,
+				'url'     => ! empty( $link['url'] ) ? esc_url( $link['url'] ) : '',
+				'new_tab' => ! empty( $link['is_external'] ),
+				'rel'     => ! empty( $link['nofollow'] ) ? 'nofollow' : '',
+				'look'    => $look,
+			);
+		}
+
+		return $buttons;
+	}
+
+	/**
 	 * Quali testi di una card troncare.
 	 *
 	 * @param string $target Valore di "Cosa troncare".
@@ -4446,11 +4675,21 @@ class Repeater_Carousel extends Widget_Base {
 			$new_tab = ! empty( $link['is_external'] );
 			$rel     = ! empty( $link['nofollow'] ) ? 'nofollow' : '';
 
+			$extra_buttons = $this->lu3g_manual_extra_buttons( $row );
+
+			// Con altri pulsanti la card non può essere cliccabile (link
+			// dentro un link): se il primo ha il link ma non il testo,
+			// diventa anch'esso un pulsante.
+			if ( $extra_buttons && '' === $button_text && '' !== $url ) {
+				$button_text = __( 'Scopri di più', 'lu3g-carousel' );
+			}
+
 			// Con un pulsante il link va lì e la card resta un div: un link
 			// dentro un altro link non è markup valido.
-			$has_button = ( '' !== $button_text );
+			$has_button = ( '' !== $button_text ) || ! empty( $extra_buttons );
 
 			$items[] = array(
+				'extra_buttons'  => $extra_buttons,
 				'class'          => $item_class,
 				'kicker'         => $kicker,
 				'content'        => $content,
@@ -5538,32 +5777,58 @@ class Repeater_Carousel extends Widget_Base {
 										?>
 									<?php endforeach; ?>
 
-									<?php if ( '' !== $item['button_text'] ) : ?>
+									<?php
+									// Il primo pulsante più gli eventuali altri delle card
+									// statiche, tutti con la stessa struttura.
+									$card_buttons = array();
+
+									if ( '' !== $item['button_text'] ) {
+										$card_buttons[] = array(
+											'text'    => $item['button_text'],
+											'url'     => $item['button_url'],
+											'new_tab' => $item['button_new_tab'],
+											'rel'     => $item['button_rel'],
+											'look'    => 'primary',
+										);
+									}
+
+									if ( ! empty( $item['extra_buttons'] ) ) {
+										$card_buttons = array_merge( $card_buttons, $item['extra_buttons'] );
+									}
+									?>
+									<?php if ( $card_buttons ) : ?>
 										<div class="lu3g-carousel__actions">
-											<?php
-											$button_tag   = $item['button_url'] ? 'a' : 'span';
-											$button_attrs = $icon_only
-												? 'class="lu3g-carousel__button lu3g-carousel__button--icon-only" aria-label="' . esc_attr( $item['button_text'] ) . '"'
-												: 'class="lu3g-carousel__button"';
+											<?php foreach ( $card_buttons as $card_button ) : ?>
+												<?php
+												$button_tag   = $card_button['url'] ? 'a' : 'span';
+												$button_class = 'lu3g-carousel__button'
+													. ( 'secondary' === $card_button['look'] ? ' lu3g-carousel__button--secondary' : '' )
+													. ( $icon_only ? ' lu3g-carousel__button--icon-only' : '' );
+												$button_attrs = 'class="' . esc_attr( $button_class ) . '"';
 
-											if ( $item['button_url'] ) {
-												$button_attrs .= ' href="' . esc_url( $item['button_url'] ) . '"';
-
-												if ( $item['button_new_tab'] ) {
-													$button_attrs .= ' target="_blank" rel="' . esc_attr( trim( 'noopener noreferrer ' . $item['button_rel'] ) ) . '"';
-												} elseif ( $item['button_rel'] ) {
-													$button_attrs .= ' rel="' . esc_attr( $item['button_rel'] ) . '"';
+												if ( $icon_only ) {
+													$button_attrs .= ' aria-label="' . esc_attr( $card_button['text'] ) . '"';
 												}
-											}
-											?>
-											<<?php echo esc_html( $button_tag ) . ' ' . $button_attrs; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
-												<?php if ( ! $icon_only ) : ?>
-													<span class="lu3g-carousel__button-text"><?php echo esc_html( $item['button_text'] ); ?></span>
-												<?php endif; ?>
-												<?php if ( '' !== $button_icon ) : ?>
-													<span class="lu3g-carousel__button-icon" aria-hidden="true"><?php echo $button_icon; // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-												<?php endif; ?>
-											</<?php echo esc_html( $button_tag ); ?>>
+
+												if ( $card_button['url'] ) {
+													$button_attrs .= ' href="' . esc_url( $card_button['url'] ) . '"';
+
+													if ( $card_button['new_tab'] ) {
+														$button_attrs .= ' target="_blank" rel="' . esc_attr( trim( 'noopener noreferrer ' . $card_button['rel'] ) ) . '"';
+													} elseif ( $card_button['rel'] ) {
+														$button_attrs .= ' rel="' . esc_attr( $card_button['rel'] ) . '"';
+													}
+												}
+												?>
+												<<?php echo esc_html( $button_tag ) . ' ' . $button_attrs; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+													<?php if ( ! $icon_only ) : ?>
+														<span class="lu3g-carousel__button-text"><?php echo esc_html( $card_button['text'] ); ?></span>
+													<?php endif; ?>
+													<?php if ( '' !== $button_icon ) : ?>
+														<span class="lu3g-carousel__button-icon" aria-hidden="true"><?php echo $button_icon; // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+													<?php endif; ?>
+												</<?php echo esc_html( $button_tag ); ?>>
+											<?php endforeach; ?>
 										</div>
 									<?php endif; ?>
 								</div>
