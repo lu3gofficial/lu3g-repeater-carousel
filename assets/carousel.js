@@ -999,6 +999,7 @@
 					var el = pair[ 1 ];
 
 					el.style.minHeight = '';
+					el.style.marginBottom = '';
 
 					// Un testo aperto con "Mostra di più" non deve allargare
 					// la riga delle altre card: si misura solo da chiuso.
@@ -1022,7 +1023,24 @@
 
 				if ( max > 0 ) {
 					groups[ key ].forEach( function ( item ) {
-						item.el.style.minHeight = max + 'px';
+						var el = item.el;
+
+						// Un testo troncato non può diventare più alto: il
+						// riquadro mostrerebbe l'inizio della riga che il taglio
+						// deve nascondere, sotto i puntini. Lo spazio che manca
+						// va sotto, come margine, fuori dal riquadro.
+						if ( el.classList.contains( 'lu3g-carousel__clamp' ) && ! el.classList.contains( 'is-open' ) ) {
+							var missing = max - el.offsetHeight;
+
+							if ( missing > 0 ) {
+								var base = parseFloat( window.getComputedStyle( el ).marginBottom ) || 0;
+								el.style.marginBottom = ( base + missing ) + 'px';
+							}
+
+							return;
+						}
+
+						el.style.minHeight = max + 'px';
 					} );
 				}
 			} );
@@ -1045,6 +1063,7 @@
 
 		window.addEventListener( 'resize', schedule );
 		window.addEventListener( 'load', schedule );
+		root.addEventListener( 'lu3g:layout', schedule );
 
 		// I font web cambiano la larghezza delle parole, quindi gli a capo.
 		if ( document.fonts && document.fonts.ready ) {
@@ -1183,6 +1202,9 @@
 			toggle.textContent = expanded
 				? toggle.getAttribute( 'data-label-collapse' )
 				: toggle.getAttribute( 'data-label-expand' );
+
+			// L'allineamento riga per riga, se attivo, si ricalcola.
+			root.dispatchEvent( new CustomEvent( 'lu3g:layout' ) );
 		}
 
 		toggles.forEach( function ( toggle ) {

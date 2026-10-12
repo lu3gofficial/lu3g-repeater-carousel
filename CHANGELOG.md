@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.22.2
+- Corretto: sotto i puntini del testo troncato spuntava la parte alta della riga successiva, che sembrava tagliata di netto. Le cause erano due: il margine dei paragrafi dentro il testo, ora tolto finché il testo è chiuso, e, con *Allineato riga per riga*, l'altezza data al riquadro troncato per allinearlo alle altre card, ora aggiunta sotto il riquadro.
+
 ## 1.22.1
 - Corretto: dalla 1.19.0 le frecce nelle posizioni *Sotto il carosello*, *A destra del carosello* e la freccia destra di *Ai due lati* non venivano stampate. Una variabile del ciclo dei blocchi di testo sovrascriveva la posizione delle frecce.
 
