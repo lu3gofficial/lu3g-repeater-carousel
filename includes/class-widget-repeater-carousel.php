@@ -638,7 +638,34 @@ class Repeater_Carousel extends Widget_Base {
 					'type'      => Controls_Manager::COLOR,
 					'condition' => $cond,
 					'selectors' => array(
-						$hover => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
+						$hover => 'background-color: {{VALUE}};',
+					),
+				)
+			);
+
+			// Dopo lo sfondo: lo Sfondo colora anche il bordo (comportamento
+			// di prima), e un Bordo impostato qui, venendo dopo, prevale. Lo
+			// spessore del bordo è quello della sezione di stile del pulsante.
+			$manual->add_control(
+				$id . 'border',
+				array(
+					'label'     => __( 'Bordo', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$sel => 'border-color: {{VALUE}};',
+					),
+				)
+			);
+
+			$manual->add_control(
+				$id . 'border_hover',
+				array(
+					'label'     => __( 'Bordo in hover', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$hover => 'border-color: {{VALUE}};',
 					),
 				)
 			);
