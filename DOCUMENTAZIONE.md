@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.25.0
+Documentazione del plugin — versione 1.26.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -179,7 +179,7 @@ I controlli contrassegnati con **R** sono responsive: possono avere valori diver
 **Dentro ogni card statica — tab Contenuto:** Etichetta, Titolo, Testo con il suo stile, blocchi aggiuntivi, Icona, Testo del pulsante, Link, e con *Aggiungi un altro pulsante* fino a due pulsanti in più, ognuno con testo e link. Il loro stile si imposta in *Stile → Pulsante 2* e *Pulsante 3*.
 
 **Dentro ogni card statica — tab Stile:**
-- interruttore *Colori propri*; se attivo: Sfondo, Sfondo in hover, Bordo, Testi e icona, Testo del pulsante, Sfondo del pulsante. I campi lasciati vuoti restano quelli generali;
+- interruttore *Colori propri*; se attivo: Sfondo, Sfondo in hover, Bordo, Testi e icona, e per ogni pulsante (Pulsante 1, 2, 3, i campi del 2 e del 3 compaiono solo se la card li ha) Testo, Sfondo, Testo in hover, Sfondo in hover. I campi lasciati vuoti restano quelli generali; con un colore proprio del pulsante, l'hover di quel pulsante si imposta qui;
 - interruttore *Immagine di sfondo*; se attivo: Immagine (anche da tag dinamico), Dimensioni (Cover, Contenitore, Automatica, Personalizzato con larghezza) **R**, Posizione (nove posizioni o Personalizzato con X e Y) **R**, Ripetizione, e la velatura: Colore, Intensità, Intensità in hover.
 
 #### Opzioni del contenuto
@@ -554,6 +554,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.26.0**
+- Colori propri della card per ogni pulsante.
 
 **1.25.0**
 - Hover del pulsante solo sul pulsante.

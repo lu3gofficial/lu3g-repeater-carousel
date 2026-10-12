@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.25.0**.
+- Versione attuale: **1.26.0**.
 
 ## File
 
@@ -74,6 +74,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - 1.23.0: card statiche con più pulsanti: `LU3G_MAX_BUTTONS = 3`, catena `card_add_button_N` / `card_button_N_text` / `_link` per N=2..3; `lu3g_manual_extra_buttons` → item `extra_buttons`; il render unisce primo + extra in `$card_buttons`. Stile: `buttons_gap` (`--lu3g-buttons-gap`), `buttons_stack`. Solo sorgente manuale.
 - 1.24.0: ogni pulsante ha la classe `lu3g-carousel__button--nN` (posizione nella card); sezioni `section_button_N_style` (N=2..3, metodo `register_button_n_style_controls`) con chiavi `button_N_*`. I colori normali usano anche la variante `.card:hover .button--nN`, altrimenti l'hover-card della sezione Pulsante (più specifico) li sovrascrive; l'hover proprio è `.card .button--nN:hover`. Rimossi `_look` e i colori `--secondary` della 1.23.0.
 - 1.25.0: `button_hover_target` (card/self) → classe root `lu3g-carousel--button-hover-self`. I selettori hover della sezione Pulsante contengono entrambe le varianti nella stessa chiave (`:not(--button-hover-self) .card:hover .button` e `--button-hover-self .card .button:hover`), così i widget esistenti restano invariati. Freccia: stesso schema nel CSS; in reduced-motion `transform: none !important` sull'icona.
+- 1.26.0: colori per card per ogni pulsante nel repeater manuale: pulsante 1 mantiene le chiavi `item_button_color` / `item_button_bg` (+ `_color_hover`, `_bg_hover`), poi `item_button_N_*`; condizione sulla catena `card_add_button_N`. Selettori `$card .lu3g-carousel__actions .button.--nN` (8 classi, battono tutti i generali, hover compresi). Hover del pulsante 1 segue `button_hover_target`, 2 e 3 sempre sul pulsante.
 - 1.12.0/1.12.1: modalità centrata (`center_mode`, `center_side_scale`, `center_side_opacity`, `center_main_scale` default 1.04, `center_shadow`); con 3 card visibili la seconda è subito al centro senza scorrere. JS: `updateCenter`/`scheduleCenter` assegnano `.is-center`.
 
 ## Come si testa

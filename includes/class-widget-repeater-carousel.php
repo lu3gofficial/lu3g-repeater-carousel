@@ -551,30 +551,98 @@ class Repeater_Carousel extends Widget_Base {
 			)
 		);
 
-		$manual->add_control(
-			'item_button_color',
-			array(
-				'label'     => __( 'Testo del pulsante', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'condition' => array( 'item_custom_colors' => 'yes' ),
-				'selectors' => array(
-					$card . ' .lu3g-carousel__button' => 'color: {{VALUE}};',
-					$card . ' .lu3g-carousel__button svg' => 'fill: {{VALUE}};',
-				),
-			)
-		);
+		/*
+		 * Colori dei pulsanti di questa card, uno per pulsante. Le chiavi del
+		 * pulsante 1 restano quelle di prima (item_button_color/_bg), così le
+		 * card già impostate non perdono il colore. I selettori passano da
+		 * .lu3g-carousel__actions e dalla classe --nN: due livelli in più dei
+		 * selettori generali, hover compresi, perché la card vinca sempre.
+		 * L'hover del pulsante 1 segue "Hover del pulsante" (card o pulsante);
+		 * quello dei pulsanti 2 e 3 è sempre sul pulsante, come nelle sezioni
+		 * di stile generali.
+		 */
+		$item_in    = ' .lu3g-carousel__track .lu3g-carousel__card{{CURRENT_ITEM}}';
+		$item_card  = '{{WRAPPER}} .lu3g-carousel:not(.lu3g-carousel--button-hover-self)' . $item_in . ':hover .lu3g-carousel__actions ';
+		$item_self  = '{{WRAPPER}} .lu3g-carousel.lu3g-carousel--button-hover-self' . $item_in . ' .lu3g-carousel__actions ';
+		$item_own   = '{{WRAPPER}} .lu3g-carousel' . $item_in . ' .lu3g-carousel__actions ';
 
-		$manual->add_control(
-			'item_button_bg',
-			array(
-				'label'     => __( 'Sfondo del pulsante', 'lu3g-carousel' ),
-				'type'      => Controls_Manager::COLOR,
-				'condition' => array( 'item_custom_colors' => 'yes' ),
-				'selectors' => array(
-					$card . ' .lu3g-carousel__button' => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
-				),
-			)
-		);
+		for ( $n = 1; $n <= self::LU3G_MAX_BUTTONS; $n++ ) {
+			$btn  = '.lu3g-carousel__button.lu3g-carousel__button--n' . $n;
+			$sel  = $card . ' .lu3g-carousel__actions ' . $btn;
+			$id   = ( 1 === $n ) ? 'item_button_' : 'item_button_' . $n . '_';
+			$cond = array( 'item_custom_colors' => 'yes' );
+
+			// Il pulsante 2 compare solo se la card ce l'ha, il 3 lo stesso.
+			for ( $k = 2; $k <= $n; $k++ ) {
+				$cond[ 'card_add_button_' . $k ] = 'yes';
+			}
+
+			if ( 1 === $n ) {
+				$hover = $item_card . $btn . ', ' . $item_self . $btn . ':hover, ' . $item_self . $btn . ':focus-visible';
+			} else {
+				$hover = $item_own . $btn . ':hover, ' . $item_own . $btn . ':focus-visible';
+			}
+
+			$manual->add_control(
+				$id . 'heading',
+				array(
+					/* translators: %d: numero del pulsante */
+					'label'     => sprintf( __( 'Pulsante %d', 'lu3g-carousel' ), $n ),
+					'type'      => Controls_Manager::HEADING,
+					'separator' => 'before',
+					'condition' => $cond,
+				)
+			);
+
+			$manual->add_control(
+				$id . 'color',
+				array(
+					'label'     => __( 'Testo', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$sel          => 'color: {{VALUE}};',
+						$sel . ' svg' => 'fill: {{VALUE}};',
+					),
+				)
+			);
+
+			$manual->add_control(
+				$id . 'bg',
+				array(
+					'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$sel => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
+					),
+				)
+			);
+
+			$manual->add_control(
+				$id . 'color_hover',
+				array(
+					'label'     => __( 'Testo in hover', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$hover => 'color: {{VALUE}};',
+					),
+				)
+			);
+
+			$manual->add_control(
+				$id . 'bg_hover',
+				array(
+					'label'     => __( 'Sfondo in hover', 'lu3g-carousel' ),
+					'type'      => Controls_Manager::COLOR,
+					'condition' => $cond,
+					'selectors' => array(
+						$hover => 'background-color: {{VALUE}}; border-color: {{VALUE}};',
+					),
+				)
+			);
+		}
 
 		$manual->add_control(
 			'item_bg_enable',
