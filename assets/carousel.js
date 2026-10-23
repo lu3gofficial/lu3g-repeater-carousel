@@ -39,6 +39,8 @@
 			return;
 		}
 
+		wrapTitles( root );
+
 		// Blocco con poche card. La copia va presa prima di qualsiasi
 		// modifica: se cambiando dispositivo lo stato si inverte, il
 		// carosello viene ricostruito da qui, con loop e modalità centrata
@@ -1343,6 +1345,33 @@
 		}, { threshold: 0.25 } );
 
 		observer.observe( root );
+	}
+
+	/**
+	 * Garantisce lo span interno ai titoli.
+	 *
+	 * Sottolineatura ed evidenziatore sono lo sfondo di
+	 * .lu3g-carousel__text-inner, che il PHP stampa dalla 1.28. Una pagina
+	 * servita da una cache con l'HTML di prima non l'ha: qui lo si aggiunge,
+	 * così l'effetto funziona anche prima che la cache venga svuotata.
+	 *
+	 * @param {HTMLElement} root Elemento del carosello.
+	 */
+	function wrapTitles( root ) {
+		Array.prototype.forEach.call( root.querySelectorAll( '.lu3g-carousel__text' ), function ( title ) {
+			if ( title.querySelector( '.lu3g-carousel__text-inner' ) ) {
+				return;
+			}
+
+			var inner = document.createElement( 'span' );
+			inner.className = 'lu3g-carousel__text-inner';
+
+			while ( title.firstChild ) {
+				inner.appendChild( title.firstChild );
+			}
+
+			title.appendChild( inner );
+		} );
 	}
 
 	/**

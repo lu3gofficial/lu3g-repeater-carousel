@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.28.2
+- Corretto: la sottolineatura non si vedeva sulle card con il solo titolo e il troncamento attivo (che in quel caso tronca il titolo). Il titolo troncato taglia ciò che esce dalle sue righe, e la linea, sul bordo inferiore della scritta, veniva tagliata. Ora sta leggermente più in alto, dentro la riga.
+- Le pagine servite da una cache con l'HTML di prima della 1.28 ricevono lo span del titolo dal JS, così la sottolineatura funziona anche prima di svuotare la cache.
+
 ## 1.28.1
 - Corretto: la sottolineatura e l'evidenziatore non si vedevano sui titoli racchiusi in un paragrafo (`<p>`), come quelli che arrivano da un campo WYSIWYG o da un tag dinamico. I paragrafi attorno al titolo ora vengono tolti, e più paragrafi diventano righe separate.
 
