@@ -1160,6 +1160,14 @@ span.lu3g-carousel__button {
 	background-position: 50% 100%;
 }
 
+/* Ripiego per i blocchi rimasti nel titolo (il PHP toglie già i <p>):
+   dentro uno span inline un blocco lo spezza, e la linea non si vedrebbe. */
+.lu3g-carousel__text-inner :is(p, div, h1, h2, h3, h4, h5, h6) {
+	display: inline;
+	margin: 0;
+	font: inherit;
+}
+
 /* L'evidenziatore è una fascia dietro la parte bassa del testo. Il colore
    di ripiego è quello del testo, attenuato. */
 .lu3g-carousel--text-highlight .lu3g-carousel__text-inner {
