@@ -4181,6 +4181,7 @@ class Repeater_Carousel extends Widget_Base {
 					'shrink' => __( 'Rimpicciolimento', 'lu3g-carousel' ),
 					'tilt'   => __( 'Inclinazione', 'lu3g-carousel' ),
 					'glow'   => __( 'Ombra', 'lu3g-carousel' ),
+					'lift-glow' => __( 'Sollevamento con ombra', 'lu3g-carousel' ),
 				),
 			)
 		);
@@ -4201,7 +4202,7 @@ class Repeater_Carousel extends Widget_Base {
 					'unit' => 'px',
 					'size' => 6,
 				),
-				'condition'  => array( 'hover_effect' => array( 'lift', 'sink' ) ),
+				'condition'  => array( 'hover_effect' => array( 'lift', 'sink', 'lift-glow' ) ),
 				'selectors'  => array(
 					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-hover-distance: {{SIZE}}{{UNIT}};',
 				),
@@ -4236,11 +4237,83 @@ class Repeater_Carousel extends Widget_Base {
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => array(
-					'none'  => __( 'Nessuno', 'lu3g-carousel' ),
-					'shift' => __( 'Scorrimento laterale', 'lu3g-carousel' ),
-					'rise'  => __( 'Sollevamento', 'lu3g-carousel' ),
-					'line'  => __( 'Sottolineatura', 'lu3g-carousel' ),
+					'none'        => __( 'Nessuno', 'lu3g-carousel' ),
+					'shift'       => __( 'Scorrimento laterale', 'lu3g-carousel' ),
+					'rise'        => __( 'Sollevamento', 'lu3g-carousel' ),
+					'line'        => __( 'Sottolineatura', 'lu3g-carousel' ),
+					'line-center' => __( 'Sottolineatura dal centro', 'lu3g-carousel' ),
+					'highlight'   => __( 'Evidenziatore', 'lu3g-carousel' ),
+					'spacing'     => __( 'Spaziatura delle lettere', 'lu3g-carousel' ),
 				),
+				'description' => __( 'Vale per il titolo. Sottolineatura ed evidenziatore seguono le parole, anche su più righe.', 'lu3g-carousel' ),
+			)
+		);
+
+		$this->add_control(
+			'hover_line_color',
+			array(
+				'label'       => __( 'Colore della linea', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::COLOR,
+				'description' => __( 'Vuoto: il colore del titolo (per l\'evidenziatore, un grigio trasparente).', 'lu3g-carousel' ),
+				'condition'   => array( 'hover_text_effect' => array( 'line', 'line-center', 'highlight' ) ),
+				'selectors'   => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-line-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'hover_line_size',
+			array(
+				'label'      => __( 'Spessore della linea', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 1,
+						'max' => 8,
+					),
+				),
+				'default'    => array(
+					'unit' => 'px',
+					'size' => 1,
+				),
+				'condition'  => array( 'hover_text_effect' => array( 'line', 'line-center' ) ),
+				'selectors'  => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-line-size: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'hover_icon_effect',
+			array(
+				'label'   => __( 'Effetto sull\'icona', 'lu3g-carousel' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'none',
+				'options' => array(
+					'none'   => __( 'Nessuno', 'lu3g-carousel' ),
+					'scale'  => __( 'Ingrandimento', 'lu3g-carousel' ),
+					'rotate' => __( 'Rotazione', 'lu3g-carousel' ),
+					'bounce' => __( 'Salto', 'lu3g-carousel' ),
+					'wiggle' => __( 'Oscillazione', 'lu3g-carousel' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'hover_button_effect',
+			array(
+				'label'       => __( 'Effetto sul pulsante', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'none',
+				'options'     => array(
+					'none'  => __( 'Nessuno', 'lu3g-carousel' ),
+					'lift'  => __( 'Sollevamento', 'lu3g-carousel' ),
+					'scale' => __( 'Ingrandimento', 'lu3g-carousel' ),
+					'push'  => __( 'Spinta in avanti', 'lu3g-carousel' ),
+				),
+				'description' => __( 'Si attiva come i colori in hover del pulsante: sulla card o solo sul pulsante (Stile → Pulsante → Hover del pulsante).', 'lu3g-carousel' ),
 			)
 		);
 
@@ -5561,6 +5634,8 @@ class Repeater_Carousel extends Widget_Base {
 				'animation_type'     => 'slide-up',
 				'hover_effect'       => 'lift',
 				'hover_text_effect'  => 'none',
+				'hover_icon_effect'  => 'none',
+				'hover_button_effect' => 'none',
 				'card_width_mode'    => 'auto',
 				'content_layout'     => 'grouped',
 				'center_mode'        => '',
@@ -5698,6 +5773,14 @@ class Repeater_Carousel extends Widget_Base {
 
 		if ( 'none' !== $settings['hover_effect'] ) {
 			$classes[] = 'lu3g-carousel--hover-' . sanitize_html_class( $settings['hover_effect'] );
+		}
+
+		if ( in_array( $settings['hover_icon_effect'], array( 'scale', 'rotate', 'bounce', 'wiggle' ), true ) ) {
+			$classes[] = 'lu3g-carousel--icon-' . $settings['hover_icon_effect'];
+		}
+
+		if ( in_array( $settings['hover_button_effect'], array( 'lift', 'scale', 'push' ), true ) ) {
+			$classes[] = 'lu3g-carousel--button-' . $settings['hover_button_effect'];
 		}
 
 		if ( 'none' !== $settings['hover_text_effect'] ) {
@@ -5936,7 +6019,7 @@ class Repeater_Carousel extends Widget_Base {
 									<?php if ( '' !== $item['kicker'] ) : ?>
 										<span class="lu3g-carousel__kicker"><?php echo esc_html( $item['kicker'] ); ?></span>
 									<?php endif; ?>
-									<<?php echo esc_html( $title_tag ); ?> class="<?php echo esc_attr( $title_class ); ?>"><?php echo $item['content']; // phpcs:ignore WordPress.Security.EscapeOutput ?></<?php echo esc_html( $title_tag ); ?>>
+									<<?php echo esc_html( $title_tag ); ?> class="<?php echo esc_attr( $title_class ); ?>"><span class="lu3g-carousel__text-inner"><?php echo $item['content']; // phpcs:ignore WordPress.Security.EscapeOutput ?></span></<?php echo esc_html( $title_tag ); ?>>
 									<?php
 									if ( $clamp_title ) {
 										echo $toggle_markup; // phpcs:ignore WordPress.Security.EscapeOutput

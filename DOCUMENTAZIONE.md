@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.27.0
+Documentazione del plugin — versione 1.28.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -279,7 +279,7 @@ Le sezioni seguono l'ordine degli elementi nella card. Dove c'è un effetto hove
 
 **Animazioni d'ingresso.** Dieci tipi: dissolvenza, dal basso, dall'alto, da sinistra, da destra, ingrandimento, rimpicciolimento, sfocatura, ribaltamento, scoprimento dal basso. Si regolano durata, andamento, distanza di partenza e ritardo tra una card e l'altra. L'animazione parte quando il carosello entra nello schermo, non al caricamento della pagina.
 
-**Effetti hover.** Sulla card: sollevamento, abbassamento, ingrandimento, rimpicciolimento, inclinazione, ombra. Sul titolo: scorrimento laterale, sollevamento, sottolineatura animata.
+**Effetti hover.** Sulla card: sollevamento, abbassamento, ingrandimento, rimpicciolimento, inclinazione, ombra, sollevamento con ombra. Sul titolo: scorrimento laterale, sollevamento, sottolineatura, sottolineatura dal centro, evidenziatore (con colore e spessore della linea), spaziatura delle lettere; sottolineatura ed evidenziatore stanno sotto le parole, anche su più righe. Sull'icona: ingrandimento, rotazione, salto, oscillazione. Sul pulsante: sollevamento, ingrandimento, spinta in avanti, attivati come i colori in hover del pulsante (sulla card o solo sul pulsante). Chi ha attivato *riduci movimento* nel sistema non vede gli effetti di movimento.
 
 ---
 
@@ -554,6 +554,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.28.0**
+- Nuove animazioni in hover per card, titolo, icona e pulsante; sottolineatura corretta.
 
 **1.27.0**
 - Bordo dei pulsanti nei colori propri della card.

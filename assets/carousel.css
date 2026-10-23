@@ -547,6 +547,10 @@ a.lu3g-carousel__card:focus-visible {
 	--lu3g-bleed: 48px;
 }
 
+.lu3g-carousel--hover-lift-glow {
+	--lu3g-bleed: calc(var(--lu3g-hover-distance) + 56px);
+}
+
 /* ---------------------------------------------------------------------------
  * Effetti hover
  * ------------------------------------------------------------------------ */
@@ -570,6 +574,11 @@ a.lu3g-carousel__card:focus-visible {
 
 .lu3g-carousel--hover-glow .lu3g-carousel__card:hover {
 	box-shadow: 0 12px 32px rgba(0, 0, 0, .12);
+}
+
+.lu3g-carousel--hover-lift-glow .lu3g-carousel__card:hover {
+	transform: translateY(calc(var(--lu3g-hover-distance) * -1));
+	box-shadow: 0 16px 36px rgba(0, 0, 0, .16);
 }
 
 /* Effetti sul testo. Il contenitore serve alla sottolineatura, che si
@@ -1130,35 +1139,123 @@ span.lu3g-carousel__button {
 	transform: translateY(-6px);
 }
 
-/* Il :not esclude il caso col troncamento attivo: display inline-block
-   disattiverebbe il -webkit-box del clamp, che ha la stessa specificità ma
-   viene prima nel foglio. Col clamp la sottolineatura copre l'intera
-   larghezza invece del solo testo, ed è un compromesso accettabile. */
-.lu3g-carousel--text-line .lu3g-carousel__text:not(.lu3g-carousel__clamp) {
-	position: relative;
-	display: inline-block;
-	width: auto;
+/* Sottolineatura, sottolineatura dal centro ed evidenziatore.
+   Si disegnano come sfondo dello span interno al titolo, non con uno
+   pseudo-elemento sotto il riquadro: così stanno sotto le parole, anche
+   su più righe, seguono l'allineamento del testo, e non vengono tagliate
+   dal troncamento o allargate a tutta la card da Distribuito e Riga per
+   riga, dove il titolo è un blocco largo quanto la card. */
+.lu3g-carousel--text-line .lu3g-carousel__text-inner,
+.lu3g-carousel--text-line-center .lu3g-carousel__text-inner,
+.lu3g-carousel--text-highlight .lu3g-carousel__text-inner {
+	background-image: linear-gradient(var(--lu3g-line-color, currentColor), var(--lu3g-line-color, currentColor));
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 0 var(--lu3g-line-size, 1px);
+	padding-bottom: .08em;
+	transition: background-size var(--lu3g-hover-duration) ease;
 }
 
-.lu3g-carousel--text-line .lu3g-carousel__text.lu3g-carousel__clamp {
-	position: relative;
+.lu3g-carousel--text-line-center .lu3g-carousel__text-inner {
+	background-position: 50% 100%;
 }
 
-.lu3g-carousel--text-line .lu3g-carousel__text::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	bottom: -4px;
-	width: 100%;
-	height: 1px;
-	background: currentColor;
-	transform: scaleX(0);
-	transform-origin: left center;
-	transition: transform var(--lu3g-hover-duration) ease;
+/* L'evidenziatore è una fascia dietro la parte bassa del testo. Il colore
+   di ripiego è quello del testo, attenuato. */
+.lu3g-carousel--text-highlight .lu3g-carousel__text-inner {
+	background-image: linear-gradient(var(--lu3g-line-color, rgba(127, 127, 127, .25)), var(--lu3g-line-color, rgba(127, 127, 127, .25)));
+	background-size: 0 .45em;
+	background-position: 0 88%;
+	padding-bottom: 0;
 }
 
-.lu3g-carousel--text-line .lu3g-carousel__card:hover .lu3g-carousel__text::after {
-	transform: scaleX(1);
+.lu3g-carousel--text-line .lu3g-carousel__card:hover .lu3g-carousel__text-inner,
+.lu3g-carousel--text-line-center .lu3g-carousel__card:hover .lu3g-carousel__text-inner {
+	background-size: 100% var(--lu3g-line-size, 1px);
+}
+
+.lu3g-carousel--text-highlight .lu3g-carousel__card:hover .lu3g-carousel__text-inner {
+	background-size: 100% .45em;
+}
+
+.lu3g-carousel--text-spacing .lu3g-carousel__text {
+	transition: letter-spacing var(--lu3g-hover-duration) ease;
+}
+
+.lu3g-carousel--text-spacing .lu3g-carousel__card:hover .lu3g-carousel__text {
+	letter-spacing: .04em;
+}
+
+/* ---------------------------------------------------------------------------
+ * Effetti hover sull'icona
+ * ------------------------------------------------------------------------ */
+
+.lu3g-carousel__icon svg,
+.lu3g-carousel__icon img,
+.lu3g-carousel__icon i {
+	transition: transform var(--lu3g-hover-duration) ease, fill var(--lu3g-hover-duration) ease;
+}
+
+.lu3g-carousel--icon-scale .lu3g-carousel__card:hover .lu3g-carousel__icon > * {
+	transform: scale(1.15);
+}
+
+.lu3g-carousel--icon-rotate .lu3g-carousel__card:hover .lu3g-carousel__icon > * {
+	transform: rotate(-12deg);
+}
+
+.lu3g-carousel--icon-bounce .lu3g-carousel__card:hover .lu3g-carousel__icon > * {
+	animation: lu3g-icon-bounce .6s ease;
+}
+
+.lu3g-carousel--icon-wiggle .lu3g-carousel__card:hover .lu3g-carousel__icon > * {
+	animation: lu3g-icon-wiggle .6s ease;
+}
+
+@keyframes lu3g-icon-bounce {
+	0%, 100% { transform: translateY(0); }
+	35% { transform: translateY(-10px); }
+	65% { transform: translateY(-3px); }
+}
+
+@keyframes lu3g-icon-wiggle {
+	0%, 100% { transform: rotate(0); }
+	20% { transform: rotate(-10deg); }
+	40% { transform: rotate(8deg); }
+	60% { transform: rotate(-5deg); }
+	80% { transform: rotate(3deg); }
+}
+
+/* ---------------------------------------------------------------------------
+ * Effetti hover sul pulsante
+ *
+ * Si attivano come i colori: passando sulla card, oppure solo sul pulsante
+ * con "Hover del pulsante: Solo sul pulsante".
+ * ------------------------------------------------------------------------ */
+
+.lu3g-carousel .lu3g-carousel__button {
+	transition:
+		color var(--lu3g-hover-duration) ease,
+		background-color var(--lu3g-hover-duration) ease,
+		border-color var(--lu3g-hover-duration) ease,
+		transform var(--lu3g-hover-duration) ease,
+		box-shadow var(--lu3g-hover-duration) ease;
+}
+
+.lu3g-carousel--button-lift:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button,
+.lu3g-carousel--button-lift.lu3g-carousel--button-hover-self .lu3g-carousel__button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+}
+
+.lu3g-carousel--button-scale:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button,
+.lu3g-carousel--button-scale.lu3g-carousel--button-hover-self .lu3g-carousel__button:hover {
+	transform: scale(1.06);
+}
+
+.lu3g-carousel--button-push:not(.lu3g-carousel--button-hover-self) .lu3g-carousel__card:hover .lu3g-carousel__button,
+.lu3g-carousel--button-push.lu3g-carousel--button-hover-self .lu3g-carousel__button:hover {
+	transform: translateX(4px);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1354,7 +1451,15 @@ span.lu3g-carousel__button {
 		transform: none !important;
 	}
 
-	.lu3g-carousel--text-line .lu3g-carousel__text::after {
+	.lu3g-carousel__text-inner {
 		transition: none;
+	}
+
+	/* Icone e pulsanti restano fermi. */
+	.lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__icon > *,
+	.lu3g-carousel .lu3g-carousel__button:hover,
+	.lu3g-carousel .lu3g-carousel__card:hover .lu3g-carousel__button {
+		transform: none !important;
+		animation: none !important;
 	}
 }
