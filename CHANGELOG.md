@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.28.0
+- Nuove animazioni in *Stile → Animazioni*:
+  - card: *Sollevamento con ombra*;
+  - titolo: *Sottolineatura dal centro*, *Evidenziatore*, *Spaziatura delle lettere*, con *Colore* e *Spessore della linea*;
+  - nuovo *Effetto sull'icona*: ingrandimento, rotazione, salto, oscillazione;
+  - nuovo *Effetto sul pulsante*: sollevamento, ingrandimento, spinta in avanti; segue *Hover del pulsante* (sulla card o solo sul pulsante).
+- Corretto: la sottolineatura del titolo non si vedeva con il titolo troncato, e con *Distribuito* e *Allineato riga per riga* attraversava tutta la card o finiva lontano dal testo. Ora è disegnata sotto le parole, riga per riga, e segue l'allineamento del testo.
+- Il titolo ha uno span interno `.lu3g-carousel__text-inner`.
+
 ## 1.27.0
 - *Card → Stile → Colori propri*: per ogni pulsante anche *Bordo* e *Bordo in hover*. Senza un bordo impostato, il bordo resta del colore dello *Sfondo*, come prima. *Sfondo in hover* non cambia più il colore del bordo.
 
