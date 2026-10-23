@@ -1150,14 +1150,17 @@ span.lu3g-carousel__button {
 .lu3g-carousel--text-highlight .lu3g-carousel__text-inner {
 	background-image: linear-gradient(var(--lu3g-line-color, currentColor), var(--lu3g-line-color, currentColor));
 	background-repeat: no-repeat;
-	background-position: 0 100%;
+	/* La linea sta leggermente sopra il fondo della scritta, dentro la
+	   riga: un titolo troncato taglia ciò che esce dalle sue righe, e con
+	   caratteri grandi o interlinea stretta il fondo della scritta ne esce
+	   (fix 1.28.2). */
+	background-position: 0 calc(100% - .1em);
 	background-size: 0 var(--lu3g-line-size, 1px);
-	padding-bottom: .08em;
 	transition: background-size var(--lu3g-hover-duration) ease;
 }
 
 .lu3g-carousel--text-line-center .lu3g-carousel__text-inner {
-	background-position: 50% 100%;
+	background-position: 50% calc(100% - .1em);
 }
 
 /* Ripiego per i blocchi rimasti nel titolo (il PHP toglie già i <p>):
@@ -1174,7 +1177,6 @@ span.lu3g-carousel__button {
 	background-image: linear-gradient(var(--lu3g-line-color, rgba(127, 127, 127, .25)), var(--lu3g-line-color, rgba(127, 127, 127, .25)));
 	background-size: 0 .45em;
 	background-position: 0 88%;
-	padding-bottom: 0;
 }
 
 .lu3g-carousel--text-line .lu3g-carousel__card:hover .lu3g-carousel__text-inner,
