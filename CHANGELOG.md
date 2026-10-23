@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.28.1
+- Corretto: la sottolineatura e l'evidenziatore non si vedevano sui titoli racchiusi in un paragrafo (`<p>`), come quelli che arrivano da un campo WYSIWYG o da un tag dinamico. I paragrafi attorno al titolo ora vengono tolti, e più paragrafi diventano righe separate.
+
 ## 1.28.0
 - Nuove animazioni in *Stile → Animazioni*:
   - card: *Sollevamento con ombra*;

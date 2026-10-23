@@ -4484,6 +4484,31 @@ class Repeater_Carousel extends Widget_Base {
 	}
 
 	/**
+	 * Titolo senza paragrafi attorno.
+	 *
+	 * Un campo WYSIWYG o un tag dinamico può restituire il titolo dentro
+	 * <p>. Nel titolo, che è già un'intestazione, il paragrafo è di troppo
+	 * e rompe la sottolineatura: lo span che la disegna resterebbe vuoto
+	 * attorno al blocco. I paragrafi vengono tolti e, se sono più d'uno,
+	 * separati da un a capo. Il contenuto è già stato filtrato.
+	 *
+	 * @param string $html Titolo già pulito.
+	 * @return string
+	 */
+	private function lu3g_inline_title( $html ) {
+		$html = trim( (string) $html );
+
+		if ( false === stripos( $html, '<p' ) ) {
+			return $html;
+		}
+
+		$html = preg_replace( '#</p>\s*<p\b[^>]*>#i', '<br>', $html );
+		$html = preg_replace( '#</?p\b[^>]*>#i', '', $html );
+
+		return trim( $html );
+	}
+
+	/**
 	 * Quali testi di una card troncare.
 	 *
 	 * @param string $target Valore di "Cosa troncare".
@@ -6019,7 +6044,7 @@ class Repeater_Carousel extends Widget_Base {
 									<?php if ( '' !== $item['kicker'] ) : ?>
 										<span class="lu3g-carousel__kicker"><?php echo esc_html( $item['kicker'] ); ?></span>
 									<?php endif; ?>
-									<<?php echo esc_html( $title_tag ); ?> class="<?php echo esc_attr( $title_class ); ?>"><span class="lu3g-carousel__text-inner"><?php echo $item['content']; // phpcs:ignore WordPress.Security.EscapeOutput ?></span></<?php echo esc_html( $title_tag ); ?>>
+									<<?php echo esc_html( $title_tag ); ?> class="<?php echo esc_attr( $title_class ); ?>"><span class="lu3g-carousel__text-inner"><?php echo $this->lu3g_inline_title( $item['content'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></<?php echo esc_html( $title_tag ); ?>>
 									<?php
 									if ( $clamp_title ) {
 										echo $toggle_markup; // phpcs:ignore WordPress.Security.EscapeOutput

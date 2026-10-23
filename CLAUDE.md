@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.28.0**.
+- Versione attuale: **1.28.1**.
 
 ## File
 
@@ -42,6 +42,8 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 6. Il token GitHub non va mai nel codice: solo `define( 'LU3G_GITHUB_TOKEN', ... )` in `wp-config.php` (il repo ora è pubblico, non serve).
 
 ## Bug già risolti (non reintrodurli)
+
+- **Blocchi dentro lo span del titolo.** La sottolineatura è un background dello span inline `.lu3g-carousel__text-inner`: un `<p>` dentro lo spezza e la linea sparisce (frammenti larghi 0). `lu3g_inline_title()` toglie i `<p>` (più paragrafi → `<br>`); il CSS rende inline eventuali p/div/h* rimasti (fix 1.28.1). Testare sempre i titoli anche con `<p>` attorno, non solo testo semplice.
 
 - **Testo troncato più alto delle sue righe = mezza riga visibile sotto i puntini.** Un clamp `-webkit-box` non deve mai avere altezza extra: niente `min-height` (setupRows ora gli aggiunge `margin-bottom` fuori dal riquadro) e niente margini dei `<p>` interni da chiuso (`.lu3g-carousel__clamp:not(.is-open) > * { margin-block: 0 }`, valido anche durante `is-measuring`). L'apertura/chiusura emette `lu3g:layout` sul root per ricalcolare setupRows (fix 1.22.2).
 
