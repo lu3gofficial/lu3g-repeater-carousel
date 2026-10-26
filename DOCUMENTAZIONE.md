@@ -1,6 +1,6 @@
 # LU3G Repeater Carousel
 
-Documentazione del plugin — versione 1.28.2
+Documentazione del plugin — versione 1.29.0
 
 Widget per Elementor che crea caroselli a scorrimento orizzontale: di card con testi, scritte direttamente in Elementor o lette da un campo repeater di JetEngine, oppure di sole immagini. Lo stesso widget funziona sia in una pagina qualsiasi sia in un template di CPT dove ogni post ha i suoi contenuti.
 
@@ -255,6 +255,18 @@ I controlli contrassegnati con **R** sono responsive: possono avere valori diver
 | Nascondi su mobile | Nasconde gli indicatori sotto i 767px. |
 
 *Tra le due frecce* richiede due frecce a sinistra, a destra, sopra o sotto. Negli altri casi gli indicatori vanno automaticamente sotto il carosello.
+
+#### Invito a scorrere (mobile)
+
+| Controllo | Cosa fa |
+|---|---|
+| Mostra l'invito a scorrere | Su mobile, se nessuna freccia è visibile (frecce spente o *Nascondi su mobile*), un'animazione sopra le card invita a scorrere. |
+| Animazione | *Mano che scorre*, *Frecce lampeggianti*, *Etichetta "Scorri"*, *Tocco con scia*, *Spinta delle card* (le card si spostano di lato e tornano, senza nulla sopra). |
+| Testo | *(Etichetta)* Il testo della pillola, di default *Scorri*. |
+| Posizione | Al centro, sul bordo destro, in basso. |
+| Durata | Dopo quanti secondi sparisce se nessuno tocca il carosello. |
+
+Compare una sola volta per caricamento di pagina, quando almeno metà del carosello è nello schermo, e solo se c'è qualcosa da scorrere e lo scorrimento non è bloccato. Sparisce al primo tocco, scorrimento o rotella. Il limite di "mobile" è il breakpoint mobile di Elementor. Colore, sfondo e dimensione: *Stile → Invito a scorrere*.
 
 ### Tab Stile
 
@@ -554,6 +566,9 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 ---
 
 ## Cronologia delle versioni
+
+**1.29.0**
+- Invito a scorrere su mobile, cinque animazioni.
 
 **1.28.2**
 - Sottolineatura corretta sui titoli troncati e sulle pagine in cache.

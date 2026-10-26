@@ -1369,6 +1369,172 @@ span.lu3g-carousel__button {
 }
 
 /* ---------------------------------------------------------------------------
+ * Invito a scorrere (mobile)
+ *
+ * Lo crea il JS dentro lo stage, sopra le card, solo quando serve. Non
+ * riceve i click: il tocco arriva alle card e fa sparire l'invito.
+ * ------------------------------------------------------------------------ */
+
+.lu3g-carousel__hint {
+	position: absolute;
+	inset: 0;
+	z-index: 4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.lu3g-carousel__hint.is-visible {
+	opacity: 1;
+}
+
+.lu3g-carousel__hint--at-end {
+	justify-content: flex-end;
+}
+
+.lu3g-carousel__hint--at-bottom {
+	align-items: flex-end;
+}
+
+.lu3g-carousel__hint-inner {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-width: var(--lu3g-hint-size, 44px);
+	height: var(--lu3g-hint-size, 44px);
+	padding: 0 calc(var(--lu3g-hint-size, 44px) * .25);
+	border-radius: 999px;
+	background: var(--lu3g-hint-bg, rgba(0, 0, 0, .55));
+	color: var(--lu3g-hint-color, #fff);
+	font-size: calc(var(--lu3g-hint-size, 44px) * .36);
+	line-height: 1;
+	box-sizing: border-box;
+	justify-content: center;
+}
+
+.lu3g-carousel__hint-inner svg {
+	width: calc(var(--lu3g-hint-size, 44px) * .6);
+	height: calc(var(--lu3g-hint-size, 44px) * .6);
+	flex: 0 0 auto;
+}
+
+/* 1. Mano che scorre da destra a sinistra. */
+.lu3g-carousel__hint--hand .lu3g-carousel__hint-inner {
+	width: calc(var(--lu3g-hint-size, 44px) * 2.2);
+}
+
+.lu3g-carousel__hint--hand svg {
+	animation: lu3g-hint-hand 1.6s ease-in-out infinite;
+}
+
+@keyframes lu3g-hint-hand {
+	0% { transform: translateX(40%) rotate(8deg); opacity: 0; }
+	15% { opacity: 1; }
+	70% { transform: translateX(-40%) rotate(-6deg); opacity: 1; }
+	100% { transform: translateX(-40%) rotate(-6deg); opacity: 0; }
+}
+
+/* 2. Tre frecce che si accendono in sequenza, verso sinistra. */
+.lu3g-carousel__hint-chevrons {
+	display: inline-flex;
+}
+
+.lu3g-carousel__hint-chevrons svg {
+	margin: 0 calc(var(--lu3g-hint-size, 44px) * -.14);
+	opacity: .25;
+	animation: lu3g-hint-chevron 1.2s ease-in-out infinite;
+}
+
+.lu3g-carousel__hint-chevrons svg:nth-child(3) { animation-delay: 0s; }
+.lu3g-carousel__hint-chevrons svg:nth-child(2) { animation-delay: .2s; }
+.lu3g-carousel__hint-chevrons svg:nth-child(1) { animation-delay: .4s; }
+
+@keyframes lu3g-hint-chevron {
+	0%, 100% { opacity: .25; }
+	40% { opacity: 1; }
+}
+
+/* 3. Etichetta con freccia che spinge. */
+.lu3g-carousel__hint--label .lu3g-carousel__hint-inner {
+	padding: 0 calc(var(--lu3g-hint-size, 44px) * .45);
+}
+
+.lu3g-carousel__hint-arrow {
+	animation: lu3g-hint-push 1.2s ease-in-out infinite;
+}
+
+@keyframes lu3g-hint-push {
+	0%, 100% { transform: translateX(0); }
+	50% { transform: translateX(5px); }
+}
+
+/* 4. Un "dito" che scorre verso sinistra lasciando una scia. */
+.lu3g-carousel__hint--swipe .lu3g-carousel__hint-inner {
+	position: relative;
+	width: calc(var(--lu3g-hint-size, 44px) * 2.6);
+	background: none;
+}
+
+.lu3g-carousel__hint-dot {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	width: calc(var(--lu3g-hint-size, 44px) * .55);
+	height: calc(var(--lu3g-hint-size, 44px) * .55);
+	margin-top: calc(var(--lu3g-hint-size, 44px) * -.275);
+	border-radius: 50%;
+	background: var(--lu3g-hint-color, #fff);
+	box-shadow: 0 0 0 6px var(--lu3g-hint-bg, rgba(0, 0, 0, .25));
+	animation: lu3g-hint-dot 1.6s ease-in-out infinite;
+}
+
+.lu3g-carousel__hint-trail {
+	position: absolute;
+	top: 50%;
+	right: calc(var(--lu3g-hint-size, 44px) * .275);
+	height: 4px;
+	margin-top: -2px;
+	border-radius: 2px;
+	background: linear-gradient(to left, var(--lu3g-hint-color, #fff), transparent);
+	animation: lu3g-hint-trail 1.6s ease-in-out infinite;
+}
+
+@keyframes lu3g-hint-dot {
+	0% { transform: translateX(0) scale(.6); opacity: 0; }
+	15% { transform: translateX(0) scale(1); opacity: 1; }
+	70% { transform: translateX(calc(var(--lu3g-hint-size, 44px) * -2)); opacity: 1; }
+	100% { transform: translateX(calc(var(--lu3g-hint-size, 44px) * -2)); opacity: 0; }
+}
+
+@keyframes lu3g-hint-trail {
+	0%, 15% { width: 0; opacity: .8; }
+	70% { width: calc(var(--lu3g-hint-size, 44px) * 2); opacity: .8; }
+	100% { width: calc(var(--lu3g-hint-size, 44px) * 2); opacity: 0; }
+}
+
+/* 5. Le card si spostano di lato e tornano, due volte. */
+.lu3g-carousel.is-hint-nudge .lu3g-carousel__track {
+	animation: lu3g-hint-nudge 1.4s ease-in-out 2;
+}
+
+@keyframes lu3g-hint-nudge {
+	0%, 100% { transform: translateX(0); }
+	35% { transform: translateX(-36px); }
+	55% { transform: translateX(-36px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lu3g-carousel__hint *,
+	.lu3g-carousel.is-hint-nudge .lu3g-carousel__track {
+		animation: none !important;
+	}
+}
+
+/* ---------------------------------------------------------------------------
  * Scorrimento bloccato con poche card
  *
  * is-locked la mette il JS quando, al dispositivo attuale, il numero di card
