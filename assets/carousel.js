@@ -921,6 +921,149 @@
 		setupTruncation( root );
 		setupAnimation( root, reduced );
 		setupRows( root, track );
+		setupHint( root, viewport, track, arrows, locked, reduced );
+	}
+
+	/**
+	 * Invito a scorrere su mobile.
+	 *
+	 * Compare una volta, quando il carosello entra nello schermo, solo se:
+	 * lo schermo è entro il breakpoint mobile, nessuna freccia è visibile,
+	 * lo scorrimento non è bloccato e c'è davvero qualcosa da scorrere.
+	 * Sparisce al primo tocco, rotella o scorrimento, oppure dopo la durata
+	 * impostata. "nudge" non aggiunge niente sopra le card: sposta il track
+	 * per un attimo con una trasformazione, senza toccare lo scroll.
+	 *
+	 * @param {HTMLElement}   root     Elemento del carosello.
+	 * @param {HTMLElement}   viewport Elemento che scorre.
+	 * @param {HTMLElement}   track    Contenitore delle card.
+	 * @param {HTMLElement[]} arrows   Frecce.
+	 * @param {boolean}       locked   Scorrimento bloccato.
+	 * @param {boolean}       reduced  Movimento ridotto richiesto.
+	 */
+	function setupHint( root, viewport, track, arrows, locked, reduced ) {
+		var type = root.getAttribute( 'data-lu3g-hint' );
+
+		if ( ! type || locked || ! ( 'IntersectionObserver' in window ) ) {
+			return;
+		}
+
+		var bp = parseInt( root.getAttribute( 'data-lu3g-hint-bp' ), 10 ) || 767;
+		var duration = parseInt( root.getAttribute( 'data-lu3g-hint-ms' ), 10 ) || 4000;
+		var done = false;
+		var hint = null;
+		var timer = null;
+
+		function arrowsVisible() {
+			return arrows.some( function ( arrow ) {
+				return null !== arrow.offsetParent;
+			} );
+		}
+
+		function canShow() {
+			return window.matchMedia( '(max-width: ' + bp + 'px)' ).matches
+				&& ! arrowsVisible()
+				&& track.scrollWidth - viewport.clientWidth > 2;
+		}
+
+		function hide() {
+			if ( done ) {
+				return;
+			}
+
+			done = true;
+			window.clearTimeout( timer );
+			root.classList.remove( 'is-hint-nudge' );
+
+			if ( hint ) {
+				hint.classList.remove( 'is-visible' );
+				window.setTimeout( function () {
+					if ( hint && hint.parentNode ) {
+						hint.parentNode.removeChild( hint );
+					}
+				}, 400 );
+			}
+
+			[ 'pointerdown', 'touchstart', 'wheel', 'scroll' ].forEach( function ( name ) {
+				viewport.removeEventListener( name, hide );
+			} );
+		}
+
+		function build() {
+			var el = document.createElement( 'div' );
+			var pos = root.getAttribute( 'data-lu3g-hint-pos' ) || 'center';
+			var inner = '';
+
+			el.className = 'lu3g-carousel__hint lu3g-carousel__hint--' + type + ' lu3g-carousel__hint--at-' + pos;
+			el.setAttribute( 'aria-hidden', 'true' );
+
+			if ( 'hand' === type ) {
+				inner = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V5a1.5 1.5 0 0 1 3 0v5.5"/><path d="M12 9.5a1.5 1.5 0 0 1 3 0v1.5"/><path d="M15 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.6a6 6 0 0 1-4.7-2.3L4.6 16a1.6 1.6 0 0 1 2.5-2l1.9 2"/></svg>';
+			} else if ( 'arrows' === type ) {
+				inner = '<span class="lu3g-carousel__hint-chevrons">'
+					+ [ 0, 1, 2 ].map( function () {
+						return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+					} ).join( '' )
+					+ '</span>';
+			} else if ( 'label' === type ) {
+				var label = document.createElement( 'span' );
+				label.className = 'lu3g-carousel__hint-text';
+				label.textContent = root.getAttribute( 'data-lu3g-hint-text' ) || '';
+				inner = label.outerHTML
+					+ '<svg class="lu3g-carousel__hint-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+			} else if ( 'swipe' === type ) {
+				inner = '<span class="lu3g-carousel__hint-trail"></span><span class="lu3g-carousel__hint-dot"></span>';
+			}
+
+			el.innerHTML = '<span class="lu3g-carousel__hint-inner">' + inner + '</span>';
+
+			var stage = root.querySelector( '.lu3g-carousel__stage' ) || viewport.parentNode;
+			stage.appendChild( el );
+
+			return el;
+		}
+
+		function show() {
+			if ( done || ! canShow() ) {
+				return;
+			}
+
+			if ( 'nudge' === type ) {
+				if ( reduced ) {
+					done = true;
+					return;
+				}
+
+				root.classList.add( 'is-hint-nudge' );
+			} else {
+				hint = build();
+
+				// Il frame dopo, così la transizione dell'opacità parte.
+				window.requestAnimationFrame( function () {
+					if ( hint ) {
+						hint.classList.add( 'is-visible' );
+					}
+				} );
+			}
+
+			[ 'pointerdown', 'touchstart', 'wheel', 'scroll' ].forEach( function ( name ) {
+				viewport.addEventListener( name, hide, { passive: true } );
+			} );
+
+			timer = window.setTimeout( hide, duration );
+		}
+
+		var observer = new IntersectionObserver( function ( entries ) {
+			entries.forEach( function ( entry ) {
+				if ( entry.isIntersecting ) {
+					observer.disconnect();
+					// Un attimo di respiro dopo l'ingresso e le animazioni.
+					window.setTimeout( show, 600 );
+				}
+			} );
+		}, { threshold: 0.5 } );
+
+		observer.observe( root );
 	}
 
 	/**

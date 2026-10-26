@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.28.2**.
+- Versione attuale: **1.29.0**.
 
 ## File
 
@@ -79,6 +79,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - 1.25.0: `button_hover_target` (card/self) → classe root `lu3g-carousel--button-hover-self`. I selettori hover della sezione Pulsante contengono entrambe le varianti nella stessa chiave (`:not(--button-hover-self) .card:hover .button` e `--button-hover-self .card .button:hover`), così i widget esistenti restano invariati. Freccia: stesso schema nel CSS; in reduced-motion `transform: none !important` sull'icona.
 - 1.26.0: colori per card per ogni pulsante nel repeater manuale: pulsante 1 mantiene le chiavi `item_button_color` / `item_button_bg` (+ `_color_hover`, `_bg_hover`), poi `item_button_N_*`; condizione sulla catena `card_add_button_N`. Selettori `$card .lu3g-carousel__actions .button.--nN` (8 classi, battono tutti i generali, hover compresi). Hover del pulsante 1 segue `button_hover_target`, 2 e 3 sempre sul pulsante. 1.27.0: anche `…border` e `…border_hover`, registrati dopo lo sfondo (che per compatibilità colora anche il bordo); `bg_hover` non tocca il bordo.
 - 1.28.0: titolo con `<span class="lu3g-carousel__text-inner">`; sottolineatura/dal centro/evidenziatore come `background-image` sullo span (non più `::after` sul titolo, che il clamp tagliava e che in spread/rows era largo quanto la card). Nuovi `hover_effect` `lift-glow`, `hover_text_effect` `line-center`/`highlight`/`spacing`, `hover_line_color`/`hover_line_size` (`--lu3g-line-color`/`--lu3g-line-size`), `hover_icon_effect` (classi `--icon-*`, keyframes `lu3g-icon-bounce`/`-wiggle`), `hover_button_effect` (classi `--button-lift/scale/push`, stesso schema card/self di `button_hover_target`).
+- 1.29.0: invito a scorrere su mobile: `swipe_hint`, `swipe_hint_type` (hand/arrows/label/swipe/nudge), `swipe_hint_text`, `swipe_hint_position`, `swipe_hint_duration`; stile `swipe_hint_color/_bg/_size` (`--lu3g-hint-*`). Attributi `data-lu3g-hint*` (bp dal breakpoint mobile di Elementor, `lu3g_mobile_breakpoint()`). JS `setupHint()`: IntersectionObserver 50%, mostra se mobile + nessuna freccia con `offsetParent` + c'è da scorrere + non bloccato; crea `.lu3g-carousel__hint` nello stage; `nudge` = classe `is-hint-nudge` che anima il track con transform; sparisce a pointerdown/touchstart/wheel/scroll o dopo la durata.
 - 1.12.0/1.12.1: modalità centrata (`center_mode`, `center_side_scale`, `center_side_opacity`, `center_main_scale` default 1.04, `center_shadow`); con 3 card visibili la seconda è subito al centro senza scorrere. JS: `updateCenter`/`scheduleCenter` assegnano `.is-center`.
 
 ## Come si testa

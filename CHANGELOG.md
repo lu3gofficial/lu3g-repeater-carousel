@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.29.0
+- Nuova sezione *Contenuto → Invito a scorrere (mobile)*: quando su mobile le frecce non si vedono, un'animazione sopra le card invita a scorrere. Cinque animazioni: *Mano che scorre*, *Frecce lampeggianti*, *Etichetta "Scorri"* (testo modificabile), *Tocco con scia*, *Spinta delle card* (senza sovrimpressione). Posizione (centro, bordo destro, in basso) e durata regolabili; colore, sfondo e dimensione in *Stile → Invito a scorrere*.
+- Compare una volta, quando il carosello entra nello schermo, solo se c'è qualcosa da scorrere; sparisce al primo tocco o dopo la durata. Con *riduci movimento* attivo nel sistema resta fermo, e la *Spinta delle card* non parte.
+
 ## 1.28.2
 - Corretto: la sottolineatura non si vedeva sulle card con il solo titolo e il troncamento attivo (che in quel caso tronca il titolo). Il titolo troncato taglia ciò che esce dalle sue righe, e la linea, sul bordo inferiore della scritta, veniva tagliata. Ora sta leggermente più in alto, dentro la riga.
 - Le pagine servite da una cache con l'HTML di prima della 1.28 ricevono lo span del titolo dal JS, così la sottolineatura funziona anche prima di svuotare la cache.

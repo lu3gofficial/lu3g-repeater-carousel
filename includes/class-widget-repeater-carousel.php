@@ -191,6 +191,7 @@ class Repeater_Carousel extends Widget_Base {
 		$this->register_scroll_controls();
 		$this->register_nav_controls();
 		$this->register_indicator_controls();
+		$this->register_hint_controls();
 
 		// Tab Stile.
 		$this->register_card_style_controls();
@@ -235,6 +236,7 @@ class Repeater_Carousel extends Widget_Base {
 		}
 		$this->register_nav_style_controls();
 		$this->register_indicator_style_controls();
+		$this->register_hint_style_controls();
 		$this->register_animation_controls();
 	}
 
@@ -1691,6 +1693,170 @@ class Repeater_Carousel extends Widget_Base {
 				),
 			)
 		);
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Tab Contenuto — Invito a scorrere su mobile.
+	 *
+	 * @return void
+	 */
+	private function register_hint_controls() {
+
+		$this->start_controls_section(
+			'section_hint',
+			array(
+				'label' => __( 'Invito a scorrere (mobile)', 'lu3g-carousel' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint',
+			array(
+				'label'        => __( 'Mostra l\'invito a scorrere', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => '',
+				'return_value' => 'yes',
+				'description'  => __( 'Solo su mobile e solo quando le frecce non si vedono: un\'animazione sopra le card suggerisce di scorrere. Compare quando il carosello entra nello schermo, se c\'è qualcosa da scorrere, e sparisce al primo tocco o dopo la durata indicata.', 'lu3g-carousel' ),
+			)
+		);
+
+		$hint_on = array( 'swipe_hint' => 'yes' );
+
+		$this->add_control(
+			'swipe_hint_type',
+			array(
+				'label'     => __( 'Animazione', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'hand',
+				'options'   => array(
+					'hand'   => __( 'Mano che scorre', 'lu3g-carousel' ),
+					'arrows' => __( 'Frecce lampeggianti', 'lu3g-carousel' ),
+					'label'  => __( 'Etichetta "Scorri"', 'lu3g-carousel' ),
+					'swipe'  => __( 'Tocco con scia', 'lu3g-carousel' ),
+					'nudge'  => __( 'Spinta delle card (senza sovrimpressione)', 'lu3g-carousel' ),
+				),
+				'condition' => $hint_on,
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_text',
+			array(
+				'label'       => __( 'Testo', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => __( 'Scorri', 'lu3g-carousel' ),
+				'condition'   => array(
+					'swipe_hint'      => 'yes',
+					'swipe_hint_type' => 'label',
+				),
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_position',
+			array(
+				'label'     => __( 'Posizione', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'center',
+				'options'   => array(
+					'center' => __( 'Al centro', 'lu3g-carousel' ),
+					'end'    => __( 'Sul bordo destro', 'lu3g-carousel' ),
+					'bottom' => __( 'In basso', 'lu3g-carousel' ),
+				),
+				'condition' => array(
+					'swipe_hint'       => 'yes',
+					'swipe_hint_type!' => 'nudge',
+				),
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_duration',
+			array(
+				'label'      => __( 'Durata (secondi)', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( '' ),
+				'range'      => array(
+					'' => array(
+						'min'  => 1,
+						'max'  => 15,
+						'step' => 0.5,
+					),
+				),
+				'default'    => array( 'size' => 4 ),
+				'description' => __( 'Dopo quanto sparisce se nessuno tocca il carosello.', 'lu3g-carousel' ),
+				'condition'  => $hint_on,
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Tab Stile — Invito a scorrere.
+	 *
+	 * @return void
+	 */
+	private function register_hint_style_controls() {
+
+		$this->start_controls_section(
+			'section_hint_style',
+			array(
+				'label'     => __( 'Invito a scorrere', 'lu3g-carousel' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'swipe_hint'       => 'yes',
+					'swipe_hint_type!' => 'nudge',
+				),
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_color',
+			array(
+				'label'     => __( 'Colore', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-hint-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_bg',
+			array(
+				'label'     => __( 'Sfondo', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-hint-bg: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'swipe_hint_size',
+			array(
+				'label'      => __( 'Dimensione', 'lu3g-carousel' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 24,
+						'max' => 96,
+					),
+				),
+				'default'    => array(
+					'unit' => 'px',
+					'size' => 44,
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .lu3g-carousel' => '--lu3g-hint-size: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -4509,6 +4675,24 @@ class Repeater_Carousel extends Widget_Base {
 	}
 
 	/**
+	 * Larghezza massima del breakpoint mobile di Elementor.
+	 *
+	 * @return int
+	 */
+	private function lu3g_mobile_breakpoint() {
+		if ( class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->breakpoints )
+			&& method_exists( \Elementor\Plugin::$instance->breakpoints, 'get_active_breakpoints' ) ) {
+			$active = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
+
+			if ( isset( $active['mobile'] ) ) {
+				return (int) $active['mobile']->get_value();
+			}
+		}
+
+		return 767;
+	}
+
+	/**
 	 * Quali testi di una card troncare.
 	 *
 	 * @param string $target Valore di "Cosa troncare".
@@ -5682,6 +5866,10 @@ class Repeater_Carousel extends Widget_Base {
 				'button_icon'        => array(),
 				'button_display'     => 'text_icon',
 				'button_hover_target' => 'card',
+				'swipe_hint'         => '',
+				'swipe_hint_type'    => 'hand',
+				'swipe_hint_text'    => __( 'Scorri', 'lu3g-carousel' ),
+				'swipe_hint_position' => 'center',
 				'lock_scroll'        => '',
 				'lock_max_cards'     => 3,
 				'lock_align'         => 'fill',
@@ -5893,6 +6081,15 @@ class Repeater_Carousel extends Widget_Base {
 			$classes[] = 'lu3g-carousel--hide-arrows-mobile';
 		}
 
+		// Invito a scorrere: tutto il comportamento lo decide il JS, che sa
+		// se lo schermo è mobile e se le frecce si vedono.
+		$hint_type = ( 'yes' === $settings['swipe_hint'] && in_array( $settings['swipe_hint_type'], array( 'hand', 'arrows', 'label', 'swipe', 'nudge' ), true ) )
+			? $settings['swipe_hint_type']
+			: '';
+		$hint_ms   = isset( $settings['swipe_hint_duration']['size'] ) ? (int) round( (float) $settings['swipe_hint_duration']['size'] * 1000 ) : 4000;
+		$hint_text = isset( $settings['swipe_hint_text'] ) ? wp_strip_all_tags( (string) $settings['swipe_hint_text'] ) : '';
+		$hint_pos  = in_array( $settings['swipe_hint_position'], array( 'center', 'end', 'bottom' ), true ) ? $settings['swipe_hint_position'] : 'center';
+
 		// Blocco con poche card: le regole per dispositivo le valuta il JS,
 		// perché il dispositivo si conosce solo nel browser.
 		$lock_rules = $this->lu3g_lock_rules( $settings, count( $items ) );
@@ -5921,6 +6118,11 @@ class Repeater_Carousel extends Widget_Base {
 				'data-lu3g-delay'     => (string) $delay,
 				'data-lu3g-speed'     => (string) $speed,
 				'data-lu3g-pause'     => ( 'yes' === $settings['pause_on_hover'] ) ? '1' : '0',
+				'data-lu3g-hint'      => $hint_type,
+				'data-lu3g-hint-bp'   => (string) $this->lu3g_mobile_breakpoint(),
+				'data-lu3g-hint-ms'   => (string) $hint_ms,
+				'data-lu3g-hint-text' => $hint_text,
+				'data-lu3g-hint-pos'  => $hint_pos,
 			)
 		);
 
