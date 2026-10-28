@@ -6,8 +6,8 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
-- Repository: `violix96/lu3g-repeater-carousel` (pubblico, branch `main`). È la fonte di verità.
-- Versione attuale: **1.29.0**.
+- Repository: `lu3gofficial/lu3g-repeater-carousel` (pubblico, branch `main`; fino alla 1.29.0 era `violix96/lu3g-repeater-carousel`, che ora rimanda qui). È la fonte di verità.
+- Versione attuale: **1.29.1**.
 
 ## File
 

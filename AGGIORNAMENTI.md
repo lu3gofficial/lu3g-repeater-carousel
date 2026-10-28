@@ -35,7 +35,7 @@ if ( file_exists( __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker
 	require_once __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
 
 	$nome_plugin_updater = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
-		'https://github.com/violix96/NOME-PLUGIN/',   // ← repository
+		'https://github.com/lu3gofficial/NOME-PLUGIN/',   // ← repository
 		__FILE__,
 		'NOME-PLUGIN'                                 // ← slug, uguale alla cartella
 	);

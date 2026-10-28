@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.29.1
+- Il repository è passato all'organizzazione GitHub `lu3gofficial`: gli aggiornamenti arrivano da https://github.com/lu3gofficial/lu3g-repeater-carousel. I siti con versioni precedenti si aggiornano comunque, perché GitHub reindirizza il vecchio indirizzo.
+
 ## 1.29.0
 - Nuova sezione *Contenuto → Invito a scorrere (mobile)*: quando su mobile le frecce non si vedono, un'animazione sopra le card invita a scorrere. Cinque animazioni: *Mano che scorre*, *Frecce lampeggianti*, *Etichetta "Scorri"* (testo modificabile), *Tocco con scia*, *Spinta delle card* (senza sovrimpressione). Posizione (centro, bordo destro, in basso) e durata regolabili; colore, sfondo e dimensione in *Stile → Invito a scorrere*.
 - Compare una volta, quando il carosello entra nello schermo, solo se c'è qualcosa da scorrere; sparisce al primo tocco o dopo la durata. Con *riduci movimento* attivo nel sistema resta fermo, e la *Spinta delle card* non parte.
