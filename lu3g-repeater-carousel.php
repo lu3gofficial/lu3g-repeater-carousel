@@ -3,7 +3,8 @@
  * Plugin Name:       LU3G Repeater Carousel
  * Plugin URI:        https://lu3g.it
  * Description:       Widget Elementor che trasforma un repeater JetEngine in un carosello a scroll orizzontale con snap, freccia di navigazione e animazione d'ingresso.
- * Version:           1.29.1
+ * Version:           1.29.2
+ * Update URI:        https://github.com/lu3gofficial/lu3g-repeater-carousel
  * Author:            LU3G Agenzia Web
  * Author URI:        https://lu3g.it
  * Text Domain:       lu3g-carousel
@@ -18,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LU3G_CAROUSEL_VERSION', '1.29.1' );
+define( 'LU3G_CAROUSEL_VERSION', '1.29.2' );
 define( 'LU3G_CAROUSEL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LU3G_CAROUSEL_URL', plugin_dir_url( __FILE__ ) );
 

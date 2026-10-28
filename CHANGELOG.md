@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.29.2
+- Intestazione `Update URI: https://github.com/lu3gofficial/lu3g-repeater-carousel`: WordPress non chiede più questo plugin a wordpress.org, così non può mai proporre al suo posto un plugin di wordpress.org con lo stesso nome di cartella. Gli aggiornamenti continuano ad arrivare da GitHub tramite Plugin Update Checker.
+
 ## 1.29.1
 - Il repository è passato all'organizzazione GitHub `lu3gofficial`: gli aggiornamenti arrivano da https://github.com/lu3gofficial/lu3g-repeater-carousel. I siti con versioni precedenti si aggiornano comunque, perché GitHub reindirizza il vecchio indirizzo.
 

@@ -28,6 +28,9 @@ Copia la cartella `vendor/plugin-update-checker` da LU3G Repeater Carousel dentr
 
 ### 3. Aggiungi il codice
 
+Nell'intestazione del plugin, sotto `Version:`, aggiungi `Update URI: https://github.com/lu3gofficial/NOME-PLUGIN`: WordPress non cercherà più il plugin su wordpress.org.
+
+
 Nel file principale del plugin, dopo il controllo `ABSPATH` e **prima** di qualsiasi controllo su Elementor o altre dipendenze: il plugin deve potersi aggiornare anche se una dipendenza è disattivata. Sostituisci i tre valori segnati.
 
 ```php
