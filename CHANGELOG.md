@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.31.0
+- *Opzioni del contenuto → Icona automatica dal testo* (spenta di serie): il widget legge titolo e testo della card e sceglie un'icona da un elenco di parole italiane ("spedizioni" → furgone), per le card scritte a mano e per quelle da repeater. Niente servizi esterni né costi. Un'icona impostata a mano ha sempre la precedenza; le card senza parole riconosciute restano senza icona.
+- *Parole aggiuntive*: righe "parole = nome-icona" per adattare l'elenco al settore del sito. Icone Lucide (licenza ISC).
+
 ## 1.30.0
 - Modalità *Immagini*: nuova voce *Al click → Link della singola immagine*, con *Apri in una nuova scheda*. Il link si scrive sulla foto, nel campo *Link nel carosello* dei dettagli dell'immagine (dalla galleria in Elementor o da *Media*): resta legato alla foto anche riordinando la galleria e vale anche per le gallerie dinamiche. Le foto senza link non sono cliccabili. I widget esistenti non cambiano.
 

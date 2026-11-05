@@ -701,3 +701,11 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 **1.0.x**
 - Carosello da repeater JetEngine e da contenuto statico; icone SVG; card visibili e anteprima; larghezza fissa; troncamento; scorrimento infinito; autoplay; animazioni d'ingresso e hover.
 - 1.0.1: corretto l'errore fatale dovuto a un metodo in conflitto con Elementor.
+
+## Icona automatica dal testo
+
+In *Opzioni del contenuto* attiva **Icona automatica dal testo**: il widget legge titolo, etichetta e testi della card (in quest'ordine) e sceglie un'icona da un elenco di parole italiane. Tutto avviene sul sito, senza servizi esterni. Un'icona impostata a mano ha la precedenza; se nessuna parola corrisponde, la card resta senza icona.
+
+**Parole aggiuntive**: una riga per gruppo, `parole separate da virgola = nome-icona`, per esempio `sartoria, cucito = scissors`. Vincono sull'elenco di serie. Una parola vale anche come inizio di parola; con `!` in fondo solo la parola esatta (`auto!` non trova "automatico").
+
+Nomi delle icone: `truck`, `utensils`, `phone`, `mail`, `map-pin`, `clock`, `calendar`, `users`, `user`, `shield-check`, `circle-check`, `star`, `heart`, `leaf`, `wrench`, `settings`, `trending-up`, `euro`, `credit-card`, `shopping-cart`, `gift`, `house`, `building-2`, `car`, `plane`, `graduation-cap`, `book-open`, `laptop`, `smartphone`, `globe`, `lightbulb`, `palette`, `camera`, `music`, `coffee`, `wine`, `pizza`, `fish`, `sprout`, `trees`, `sun`, `droplets`, `zap`, `recycle`, `stethoscope`, `pill`, `dumbbell`, `paw-print`, `baby`, `handshake`, `award`, `trophy`, `lock`, `key`, `search`, `message-circle`, `file-text`, `megaphone`, `rocket`, `paint-roller`, `hammer`, `shirt`, `gem`, `flower-2`, `bed`, `bike`, `ship`, `mountain`, `map`, `ticket`, `video`, `scissors`, `smile`, `wheat`, `thermometer`, `snowflake`, `flame`, `sparkles`, `target`, `piggy-bank`, `scale`, `briefcase`, `hard-hat`, `ruler`, `sofa`, `lamp`, `bath`, `package`, `clipboard-check`, `headphones`, `wifi`, `code`, `cloud`, `image`, `pen-tool`.

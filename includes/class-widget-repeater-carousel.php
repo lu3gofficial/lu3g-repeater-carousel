@@ -1218,6 +1218,29 @@ class Repeater_Carousel extends Widget_Base {
 
 
 		$this->add_control(
+			'auto_icon',
+			array(
+				'label'        => __( 'Icona automatica dal testo', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+				'description'  => __( 'Sceglie un\'icona in base alle parole del titolo e del testo ("spedizioni" → furgone). Un\'icona impostata a mano ha sempre la precedenza; le card senza parole riconosciute restano senza icona. Colore e dimensione in Stile → Icona.', 'lu3g-carousel' ),
+			)
+		);
+
+		$this->add_control(
+			'auto_icon_keywords',
+			array(
+				'label'       => __( 'Parole aggiuntive', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'rows'        => 3,
+				'placeholder' => "sartoria, cucito = scissors\ncarta da parati = paint-roller",
+				'description' => __( 'Facoltativo, una riga per gruppo: parole = nome dell\'icona. Vincono sull\'elenco di serie. I nomi delle icone sono in DOCUMENTAZIONE.md.', 'lu3g-carousel' ),
+				'condition'   => array( 'auto_icon' => 'yes' ),
+			)
+		);
+
+		$this->add_control(
 			'title_tag',
 			array(
 				'label'       => __( 'Tag del titolo', 'lu3g-carousel' ),
@@ -4946,6 +4969,39 @@ class Repeater_Carousel extends Widget_Base {
 	 * @return array Elenco di array con chiavi content, url, new_tab, rel.
 	 */
 	private function lu3g_get_cards( $settings ) {
+		$items = $this->lu3g_read_cards( $settings );
+
+		if ( 'yes' !== $settings['auto_icon'] || 'gallery' === $settings['source_type'] ) {
+			return $items;
+		}
+
+		// Icona automatica: solo dove manca, e dal testo più importante al meno importante.
+		$custom = Auto_Icons::parse_custom( $settings['auto_icon_keywords'] );
+
+		foreach ( $items as $i => $item ) {
+			if ( '' !== $item['icon'] ) {
+				continue;
+			}
+
+			$texts = array( $item['content'], $item['kicker'], $item['description'] );
+
+			foreach ( $item['blocks'] as $block ) {
+				$texts[] = $block['html'];
+			}
+
+			$items[ $i ]['icon'] = Auto_Icons::markup( Auto_Icons::pick( $texts, $custom ) );
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Legge le card dalla sorgente scelta.
+	 *
+	 * @param array $settings Impostazioni del widget.
+	 * @return array
+	 */
+	private function lu3g_read_cards( $settings ) {
 		if ( 'manual' === $settings['source_type'] ) {
 			return $this->lu3g_get_manual_cards( $settings );
 		}
@@ -5870,6 +5926,8 @@ class Repeater_Carousel extends Widget_Base {
 				'gallery_images'     => array(),
 				'gallery_link'       => 'none',
 				'gallery_link_new_tab' => '',
+				'auto_icon'          => '',
+				'auto_icon_keywords' => '',
 				'gallery_image_size' => 'large',
 				'indicator_type'     => 'none',
 				'indicator_position' => 'below',

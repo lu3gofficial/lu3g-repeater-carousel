@@ -287,6 +287,11 @@
 	transition: fill var(--lu3g-hover-duration) ease;
 }
 
+/* Icona automatica: è fatta di tratti, il colore del widget (che imposta anche fill) non deve riempirla. */
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon {
+	fill: none !important;
+}
+
 .lu3g-carousel__icon i {
 	font-size: var(--lu3g-icon-size);
 	line-height: 1;
