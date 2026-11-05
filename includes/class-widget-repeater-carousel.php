@@ -948,8 +948,21 @@ class Repeater_Carousel extends Widget_Base {
 					'none'     => __( 'Nessuna azione', 'lu3g-carousel' ),
 					'lightbox' => __( 'Apri nel lightbox', 'lu3g-carousel' ),
 					'file'     => __( 'Apri il file dell\'immagine', 'lu3g-carousel' ),
+					'custom'   => __( 'Link della singola immagine', 'lu3g-carousel' ),
 				),
 				'condition' => array( 'source_type' => 'gallery' ),
+			)
+		);
+
+		$this->add_control(
+			'gallery_link_new_tab',
+			array(
+				'label'        => __( 'Apri in una nuova scheda', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+				'description'  => __( 'Il link si scrive sull\'immagine: clicca una foto nella galleria e compila "Link nel carosello" nei dettagli a destra (oppure da Media). Vale ovunque si usi quella foto; le foto senza link non sono cliccabili.', 'lu3g-carousel' ),
+				'condition'    => array( 'source_type' => 'gallery', 'gallery_link' => 'custom' ),
 			)
 		);
 
@@ -4983,7 +4996,7 @@ class Repeater_Carousel extends Widget_Base {
 			? $settings['gallery_images']
 			: array();
 
-		$link = in_array( $settings['gallery_link'], array( 'none', 'lightbox', 'file' ), true )
+		$link = in_array( $settings['gallery_link'], array( 'none', 'lightbox', 'file', 'custom' ), true )
 			? $settings['gallery_link']
 			: 'none';
 
@@ -4999,7 +5012,12 @@ class Repeater_Carousel extends Widget_Base {
 				continue;
 			}
 
-			$full = $id ? wp_get_attachment_image_url( $id, 'full' ) : $src;
+			// Link della card: il file dell'immagine oppure il link scritto sull'immagine (meta dell'allegato).
+			if ( 'custom' === $link ) {
+				$target = $id ? (string) get_post_meta( $id, \LU3G_Repeater_Carousel::GALLERY_LINK_META, true ) : '';
+			} else {
+				$target = $id ? wp_get_attachment_image_url( $id, 'full' ) : $src;
+			}
 
 			$items[] = array(
 				'class'          => '',
@@ -5009,8 +5027,8 @@ class Repeater_Carousel extends Widget_Base {
 				'desc_style'     => '1',
 				'blocks'         => array(),
 				'icon'           => '',
-				'url'            => ( 'none' !== $link && $full ) ? esc_url( $full ) : '',
-				'new_tab'        => false,
+				'url'            => ( 'none' !== $link && $target ) ? esc_url( $target ) : '',
+				'new_tab'        => 'custom' === $link && ! empty( $settings['gallery_link_new_tab'] ),
 				'rel'            => '',
 				'button_text'    => '',
 				'button_url'     => '',
@@ -5851,6 +5869,7 @@ class Repeater_Carousel extends Widget_Base {
 				'kicker_field'       => '',
 				'gallery_images'     => array(),
 				'gallery_link'       => 'none',
+				'gallery_link_new_tab' => '',
 				'gallery_image_size' => 'large',
 				'indicator_type'     => 'none',
 				'indicator_position' => 'below',

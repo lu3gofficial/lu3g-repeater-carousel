@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.30.0
+- Modalità *Immagini*: nuova voce *Al click → Link della singola immagine*, con *Apri in una nuova scheda*. Il link si scrive sulla foto, nel campo *Link nel carosello* dei dettagli dell'immagine (dalla galleria in Elementor o da *Media*): resta legato alla foto anche riordinando la galleria e vale anche per le gallerie dinamiche. Le foto senza link non sono cliccabili. I widget esistenti non cambiano.
+
 ## 1.29.2
 - Intestazione `Update URI: https://github.com/lu3gofficial/lu3g-repeater-carousel`: WordPress non chiede più questo plugin a wordpress.org, così non può mai proporre al suo posto un plugin di wordpress.org con lo stesso nome di cartella. Gli aggiornamenti continuano ad arrivare da GitHub tramite Plugin Update Checker.
 

@@ -3,7 +3,7 @@
  * Plugin Name:       LU3G Repeater Carousel
  * Plugin URI:        https://lu3g.it
  * Description:       Widget Elementor che trasforma un repeater JetEngine in un carosello a scroll orizzontale con snap, freccia di navigazione e animazione d'ingresso.
- * Version:           1.29.2
+ * Version:           1.30.0
  * Update URI:        https://github.com/lu3gofficial/lu3g-repeater-carousel
  * Author:            LU3G Agenzia Web
  * Author URI:        https://lu3g.it
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LU3G_CAROUSEL_VERSION', '1.29.2' );
+define( 'LU3G_CAROUSEL_VERSION', '1.30.0' );
 define( 'LU3G_CAROUSEL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LU3G_CAROUSEL_URL', plugin_dir_url( __FILE__ ) );
 
@@ -74,6 +74,11 @@ final class LU3G_Repeater_Carousel {
 	const MIN_PHP_VERSION = '7.4';
 
 	/**
+	 * Meta dell'allegato con il link della foto in modalità galleria.
+	 */
+	const GALLERY_LINK_META = '_lu3g_carousel_link';
+
+	/**
 	 * Istanza singola.
 	 *
 	 * @var LU3G_Repeater_Carousel|null
@@ -97,6 +102,49 @@ final class LU3G_Repeater_Carousel {
 	 */
 	private function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Campo "Link nel carosello" nei dettagli delle immagini.
+	 *
+	 * @param array   $fields Campi dell'allegato.
+	 * @param WP_Post $post   Allegato.
+	 * @return array
+	 */
+	public function gallery_link_field( $fields, $post ) {
+		if ( ! wp_attachment_is_image( $post->ID ) ) {
+			return $fields;
+		}
+
+		$fields['lu3g_carousel_link'] = array(
+			'label' => __( 'Link nel carosello', 'lu3g-carousel' ),
+			'input' => 'text',
+			'value' => (string) get_post_meta( $post->ID, self::GALLERY_LINK_META, true ),
+			'helps' => __( 'LU3G Repeater Carousel: pagina che si apre cliccando questa foto, con "Al click: Link della singola immagine".', 'lu3g-carousel' ),
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Salva il link della foto; vuoto lo rimuove.
+	 *
+	 * @param array $post       Dati dell'allegato.
+	 * @param array $attachment Campi inviati.
+	 * @return array
+	 */
+	public function gallery_link_save( $post, $attachment ) {
+		if ( isset( $attachment['lu3g_carousel_link'] ) ) {
+			$url = esc_url_raw( trim( (string) $attachment['lu3g_carousel_link'] ) );
+
+			if ( '' === $url ) {
+				delete_post_meta( $post['ID'], self::GALLERY_LINK_META );
+			} else {
+				update_post_meta( $post['ID'], self::GALLERY_LINK_META, $url );
+			}
+		}
+
+		return $post;
 	}
 
 	/**
@@ -125,6 +173,10 @@ final class LU3G_Repeater_Carousel {
 			add_action( 'admin_notices', array( $this, 'notice_missing_jetengine' ) );
 			return;
 		}
+
+		// Link della singola foto: campo nei dettagli dell'immagine (libreria Media, anche dentro Elementor).
+		add_filter( 'attachment_fields_to_edit', array( $this, 'gallery_link_field' ), 10, 2 );
+		add_filter( 'attachment_fields_to_save', array( $this, 'gallery_link_save' ), 10, 2 );
 
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );

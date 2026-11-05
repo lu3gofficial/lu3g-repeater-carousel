@@ -139,7 +139,7 @@ Nell'editor il widget mostra le card del post di anteprima. Se appare "Nessuna r
 2. In *Contenuto → Card*, imposta **Tipo di contenuto** su *Immagini*.
 3. Aggiungi le foto dal controllo galleria: si scelgono più immagini insieme e si riordinano trascinandole. Nei template di CPT si può collegare una galleria dinamica, per esempio un campo galleria di JetEngine, dall'icona dei tag dinamici.
 4. **Dimensione dell'immagine**: *large* va bene quasi sempre. Il plugin genera anche le versioni ridotte per gli schermi piccoli.
-5. **Al click**: nessuna azione, apertura nel lightbox di Elementor, o apertura del file.
+5. **Al click**: nessuna azione, apertura nel lightbox di Elementor, apertura del file, o link della singola immagine. Il link si scrive sulla foto: clicca una foto nella galleria e compila *Link nel carosello* nei dettagli a destra (oppure da *Media*).
 6. In *Layout → Proporzione* scegli la forma delle card, per esempio 3:4 per foto verticali. Tutte le card avranno la stessa forma, qualunque sia la proporzione delle foto: le immagini vengono ritagliate.
 7. In *Stile → Immagini* scegli il punto di ritaglio, lo zoom in hover e un'eventuale velatura colorata.
 
@@ -174,7 +174,7 @@ I controlli contrassegnati con **R** sono responsive: possono avere valori diver
 | ID del post | *(dinamico)* Vuoto = post corrente. |
 | Immagini | *(immagini)* Le foto del carosello; accetta una galleria dinamica. |
 | Dimensione dell'immagine | *(immagini)* Versione della foto da caricare. |
-| Al click | *(immagini)* Nessuna azione, lightbox, apertura del file. |
+| Al click | *(immagini)* Nessuna azione, lightbox, apertura del file, link della singola immagine (campo *Link nel carosello* della foto). |
 
 **Dentro ogni card statica — tab Contenuto:** Etichetta, Titolo, Testo con il suo stile, blocchi aggiuntivi, Icona, Testo del pulsante, Link, e con *Aggiungi un altro pulsante* fino a due pulsanti in più, ognuno con testo e link. Il loro stile si imposta in *Stile → Pulsante 2* e *Pulsante 3*.
 
