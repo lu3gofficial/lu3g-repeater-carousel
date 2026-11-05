@@ -920,6 +920,7 @@
 
 		setupTruncation( root );
 		setupAnimation( root, reduced );
+		setupTitleFit( root );
 		setupRows( root, track );
 		setupHint( root, viewport, track, arrows, locked, reduced );
 	}
@@ -1064,6 +1065,101 @@
 		}, { threshold: 0.5 } );
 
 		observer.observe( root );
+	}
+
+	/**
+	 * Titoli adattati alla card (opzione "Adatta alla larghezza della card").
+	 *
+	 * Misura la parola più lunga di ogni titolo con la dimensione impostata nel
+	 * widget: se non ci sta, riduce tutti i titoli dello stesso rapporto, così
+	 * restano uguali tra loro, senza scendere sotto la dimensione minima. Si
+	 * riparte sempre dalla dimensione impostata: allargando la finestra il titolo
+	 * torna grande. clientWidth e offsetWidth ignorano la scala della modalità
+	 * centrata. Il ricalcolo avvisa setupRows con lu3g:layout.
+	 *
+	 * @param {HTMLElement} root Elemento del carosello.
+	 */
+	function setupTitleFit( root ) {
+		var min = parseFloat( root.getAttribute( 'data-lu3g-title-fit' ) );
+
+		if ( isNaN( min ) ) {
+			return;
+		}
+
+		var pending = false;
+
+		function fit() {
+			pending = false;
+
+			if ( ! root.isConnected ) {
+				return;
+			}
+
+			var titles = Array.prototype.slice.call( root.querySelectorAll( '.lu3g-carousel__text' ) );
+			var ratio = 1;
+			var probe = document.createElement( 'span' );
+
+			probe.setAttribute( 'aria-hidden', 'true' );
+			probe.style.cssText = 'position:absolute;visibility:hidden;display:inline-block;white-space:nowrap;';
+
+			titles.forEach( function ( title ) {
+				title.style.fontSize = '';
+				title.style.lineHeight = '';
+			} );
+
+			titles.forEach( function ( title ) {
+				var available = title.clientWidth;
+				var words = title.textContent.split( /[\s\-\u2013\u2014\/]+/ );
+
+				if ( ! available ) {
+					return; // widget nascosto: si ricalcola al prossimo resize
+				}
+
+				title.appendChild( probe );
+
+				words.forEach( function ( word ) {
+					if ( word ) {
+						probe.textContent = word;
+						ratio = Math.min( ratio, available / ( probe.offsetWidth + 1 ) );
+					}
+				} );
+
+				title.removeChild( probe );
+			} );
+
+			if ( ratio < 1 ) {
+				titles.forEach( function ( title ) {
+					var style = window.getComputedStyle( title );
+					var base = parseFloat( style.fontSize );
+					var line = parseFloat( style.lineHeight );
+					var size = Math.max( Math.min( min, base ), Math.floor( base * ratio * 2 ) / 2 );
+
+					if ( size < base ) {
+						title.style.fontSize = size + 'px';
+
+						if ( ! isNaN( line ) ) {
+							title.style.lineHeight = ( line / base ).toFixed( 3 );
+						}
+					}
+				} );
+			}
+
+			root.dispatchEvent( new CustomEvent( 'lu3g:layout' ) );
+		}
+
+		function schedule() {
+			if ( ! pending ) {
+				pending = true;
+				window.requestAnimationFrame( fit );
+			}
+		}
+
+		fit();
+		window.addEventListener( 'resize', schedule );
+
+		if ( document.fonts && document.fonts.ready ) {
+			document.fonts.ready.then( schedule );
+		}
 	}
 
 	/**

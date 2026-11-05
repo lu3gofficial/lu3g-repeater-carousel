@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.32.0
+- *Stile → Titolo → Adatta alla larghezza della card* (spenta di serie): su ogni schermo misura la parola più lunga e, se non ci sta nella card, riduce tutti i titoli del widget dello stesso rapporto, senza scendere sotto la *Dimensione minima*. Le parole non si spezzano, i titoli restano uguali tra loro, e allargando la finestra tornano alla dimensione impostata.
+
 ## 1.31.0
 - *Opzioni del contenuto → Icona automatica dal testo* (spenta di serie): il widget legge titolo e testo della card e sceglie un'icona da un elenco di parole italiane ("spedizioni" → furgone), per le card scritte a mano e per quelle da repeater. Niente servizi esterni né costi. Un'icona impostata a mano ha sempre la precedenza; le card senza parole riconosciute restano senza icona.
 - *Parole aggiuntive*: righe "parole = nome-icona" per adattare l'elenco al settore del sito. Icone Lucide (licenza ISC).

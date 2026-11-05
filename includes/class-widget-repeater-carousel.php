@@ -3182,6 +3182,30 @@ class Repeater_Carousel extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'title_fit',
+			array(
+				'label'        => __( 'Adatta alla larghezza della card', 'lu3g-carousel' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+				'description'  => __( 'Su ogni schermo, se la parola più lunga non ci sta nella card, riduce tutti i titoli del widget quanto basta: le parole non si spezzano e i titoli restano uguali tra loro.', 'lu3g-carousel' ),
+			)
+		);
+
+		$this->add_control(
+			'title_fit_min',
+			array(
+				'label'       => __( 'Dimensione minima', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::SLIDER,
+				'size_units'  => array( 'px' ),
+				'range'       => array( 'px' => array( 'min' => 10, 'max' => 40 ) ),
+				'default'     => array( 'unit' => 'px', 'size' => 16 ),
+				'description' => __( 'Sotto questa misura il titolo non scende: una parola molto lunga in una card molto stretta può ancora andare a capo.', 'lu3g-carousel' ),
+				'condition'   => array( 'title_fit' => 'yes' ),
+			)
+		);
+
 		$this->add_responsive_control(
 			'text_align',
 			array(
@@ -5926,6 +5950,7 @@ class Repeater_Carousel extends Widget_Base {
 				'gallery_images'     => array(),
 				'gallery_link'       => 'none',
 				'gallery_link_new_tab' => '',
+				'title_fit'          => '',
 				'auto_icon'          => '',
 				'auto_icon_keywords' => '',
 				'gallery_image_size' => 'large',
@@ -6087,6 +6112,12 @@ class Repeater_Carousel extends Widget_Base {
 
 		// "Riga per riga" è la distribuzione con in più l'allineamento degli
 		// elementi, che fa il JS misurandoli.
+		if ( 'yes' === $settings['title_fit'] ) {
+			$fit_min = isset( $settings['title_fit_min']['size'] ) ? (float) $settings['title_fit_min']['size'] : 16;
+
+			$this->add_render_attribute( 'wrapper', 'data-lu3g-title-fit', (string) $fit_min );
+		}
+
 		if ( in_array( $settings['content_layout'], array( 'spread', 'rows' ), true ) ) {
 			$classes[] = 'lu3g-carousel--spread';
 		}
