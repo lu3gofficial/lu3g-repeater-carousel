@@ -3188,7 +3188,7 @@ class Repeater_Carousel extends Widget_Base {
 				'label'        => __( 'Adatta alla larghezza della card', 'lu3g-carousel' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'default'      => '',
+				'default'      => 'yes',
 				'description'  => __( 'Su ogni schermo, se la parola più lunga non ci sta nella card, riduce tutti i titoli del widget quanto basta: le parole non si spezzano e i titoli restano uguali tra loro.', 'lu3g-carousel' ),
 			)
 		);
@@ -5950,7 +5950,7 @@ class Repeater_Carousel extends Widget_Base {
 				'gallery_images'     => array(),
 				'gallery_link'       => 'none',
 				'gallery_link_new_tab' => '',
-				'title_fit'          => '',
+				'title_fit'          => 'yes',
 				'auto_icon'          => '',
 				'auto_icon_keywords' => '',
 				'gallery_image_size' => 'large',

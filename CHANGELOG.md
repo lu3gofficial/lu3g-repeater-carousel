@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.33.0
+- *Adatta alla larghezza della card* ora è attivo di serie, anche sui widget già salvati: i titoli che si spezzavano vengono ridotti quanto basta, gli altri non cambiano. Si può spegnere widget per widget in *Stile → Titolo*.
+
 ## 1.32.0
 - *Stile → Titolo → Adatta alla larghezza della card* (spenta di serie): su ogni schermo misura la parola più lunga e, se non ci sta nella card, riduce tutti i titoli del widget dello stesso rapporto, senza scendere sotto la *Dimensione minima*. Le parole non si spezzano, i titoli restano uguali tra loro, e allargando la finestra tornano alla dimensione impostata.
 
