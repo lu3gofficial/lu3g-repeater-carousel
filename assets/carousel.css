@@ -290,6 +290,51 @@
 /* Icona automatica: è fatta di tratti, il colore del widget (che imposta anche fill) non deve riempirla. */
 .lu3g-carousel__icon svg.lu3g-carousel__auto-icon {
 	fill: none !important;
+	box-sizing: content-box;
+}
+
+/* Stili dell'icona automatica. Con cerchio e quadrato --lu3g-icon-size resta la misura del disegno, il fondo si aggiunge attorno. */
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--thin {
+	stroke-width: 1.25;
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--bold {
+	stroke-width: 2.75;
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--duotone {
+	fill: currentColor !important;
+	fill-opacity: 0.22;
+	stroke-width: 1.75;
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--disc,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--ring,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tile,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tileline {
+	max-width: none;
+	padding: calc(var(--lu3g-icon-size) * 0.35);
+	stroke-width: 1.75;
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--disc,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--ring {
+	border-radius: 50%;
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tile,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tileline {
+	border-radius: calc(var(--lu3g-icon-size) * 0.3);
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--disc,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tile {
+	background: color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--ring,
+.lu3g-carousel__icon svg.lu3g-carousel__auto-icon--tileline {
+	border: 1px solid currentColor;
 }
 
 .lu3g-carousel__icon i {

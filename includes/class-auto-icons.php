@@ -21,22 +21,22 @@ final class Auto_Icons {
 	/** Nome dell'icona => parole. */
 	const KEYWORDS = array(
 		'truck' => 'spedizion,corriere,logistic,trasport,consegn,spedisc,camion,furgon,traslo',
-		'utensils' => 'ristorazion,gastronom,ristorant,trattoria,catering,osteria,cucina,mangia,pasta!,piatti,piatto,pranzo,cucin,menu!,cena,chef',
+		'utensils' => 'alimentazion,nutrizionist,ristorazion,alimentar,gastronom,nutrizion,ristorant,trattoria,catering,dietetic,dietolog,mangiare,dietist,osteria,ricetta,ricette,cucina,mangia,pasta!,piatti,piatto,pranzo,cucin,dieta,diete,menu!,pasti,pasto,cena,chef,cibi,cibo',
 		'phone' => 'numero verde,centralino,chiamata,contatt,telefon,chiama',
 		'mail' => 'newsletter,scrivici,e-mail,email,mail!,posta',
 		'map-pin' => 'come arrivare,raggiungici,dove siamo,indirizzo,posizione,mappa,sede',
 		'clock' => 'puntual,orario,veloce,orari,rapid,tempo,ore!',
-		'calendar' => 'appuntament,prenotazion,calendario,prenota,scadenz,agenda,eventi,evento,data!,date!',
-		'users' => 'collaborator,chi siamo,community,dipendent,comunita,famiglia,persone,squadra,gruppi,gruppo,staff,team',
-		'user' => 'consulente,account,cliente,clienti,persona,profilo',
-		'shield-check' => 'assicurazion,certificat,affidabil,protezion,sicurezza,garantit,garanzia,sicura,sicuro',
+		'calendar' => 'organizzazion,pianificazion,appuntament,prenotazion,settimanale,calendario,organizza,pianifica,programma,programmi,settimana,abitudin,giornata,giornate,planning,prenota,routine,scadenz,agenda,eventi,evento,data!,date!',
+		'users' => 'collaborator,chi siamo,community,dipendent,comunita,famiglia,insieme,persone,sociale,squadra,coppia,coppie,gruppi,gruppo,staff,team',
+		'user' => 'consulente,persona!,account,cliente,clienti,profilo',
+		'shield-check' => 'assicurazion,intolleranz,certificat,affidabil,protezion,sicurezza,garantit,garanzia,allergi,sicura,sicuro,tutela',
 		'circle-check' => 'controllo,verificat,approvat,completa,completo,conform,qualita,soddisf',
-		'star' => 'valutazion,recension,eccellen,migliore,migliori,premium,stella,stelle',
-		'heart' => 'benessere,dedizione,passione,salute,amore,cuore,cura!',
+		'star' => 'recension,eccellen,migliore,migliori,premium,stella,stelle',
+		'heart' => 'stile di vita,prevenzione,benessere,dedizione,vita sana,passione,relazion,sostegno,emozion,salute,amore,cuore,cura!,sana,sano',
 		'leaf' => 'sostenibil,ambiente,biologic,ecologic,natural,vegetal,foglia,green!,natura,bio!,erbe',
 		'wrench' => 'assistenza tecnica,manutenzion,riparazion,idraulic,meccanic,officina,guasti,guasto,ripara',
-		'settings' => 'personalizza,impostazion,automazion,tecnologia,configura,impianti,impianto,processi,processo',
-		'trending-up' => 'performance,statistich,fatturato,marketing,risultati,strategia,crescita,analisi,vendite,seo!',
+		'settings' => 'impostazion,automazion,tecnologia,configura,impianti,impianto,processi,processo',
+		'trending-up' => 'miglioramento,monitoraggio,performance,evoluzione,statistich,andamento,fatturato,follow up,follow-up,marketing,progressi,risultati,strategia,crescita,analisi,vendite,seo!',
 		'euro' => 'preventiv,risparmio,economic,listino,finanz,prezzi,prezzo,tariff,costi,costo,euro!',
 		'credit-card' => 'carta di credito,bonifico,pagament,rateizz,rate!',
 		'shopping-cart' => 'e-commerce,ecommerce,carrello,prodotti,prodotto,acquist,negozio,compra,store!,shop!',
@@ -46,11 +46,11 @@ final class Auto_Icons {
 		'car' => 'autonoleggio,concessionar,carrozzeria,autoveicol,parcheggio,automobil,noleggio,veicol,auto!',
 		'plane' => 'escursion,viaggio,turism,vacanz,viaggi,aereo,voli,volo',
 		'graduation-cap' => 'universita,didattica,formazion,studenti,insegna,lezioni,laurea,scuola,corsi,corso',
-		'book-open' => 'biblioteca,catalogo,racconto,lettura,manuale,storia,guida,libri,libro',
+		'book-open' => 'percorso formativo,storia personale,biblioteca,biografia,catalogo,racconto,lettura,manuale,storia,guida,libri,libro',
 		'laptop' => 'gestionale,informatic,computer,digitale,siti web,sito web,software,online',
 		'smartphone' => 'applicazion,smartphone,cellulare,mobile,app!',
 		'globe' => 'internazional,traduzion,globale,estero,lingue,mondo,sito!,web!',
-		'lightbulb' => 'illuminazion,innovazion,consiglio,creativit,consigli,progetti,progetto,soluzion,idea,idee',
+		'lightbulb' => 'consapevolezza,illuminazion,conoscenza,educazione,innovazion,consiglio,creativit,consigli,imparare,progetti,progetto,scoperta,soluzion,idea,idee',
 		'palette' => 'decorazion,creativ,grafica,pittura,artist,colore,colori,design,arte!',
 		'camera' => 'servizio fotografico,reportage,fotograf,immagini,foto!',
 		'music' => 'orchestra,concerti,concerto,strument,musica,canto,dj!',
@@ -64,27 +64,27 @@ final class Auto_Icons {
 		'droplets' => 'lavanderia,lavaggio,fontana,piscina,pulizia,pulizie,sanific,idrata,acqua,igien',
 		'zap' => 'impianto elettrico,luce e gas,batteria,batterie,elettric,ricarica,energia,potenza',
 		'recycle' => 'economia circolare,riciclabil,riciclo,rifiuti,riuso',
-		'stethoscope' => 'ambulatorio,cardiolog,diagnosi,ospedale,sanitari,clinica,pediatr,dottor,visita,visite,medic',
+		'stethoscope' => 'condizioni di salute,ambulatorio,cardiolog,diagnosi,malattia,malattie,ospedale,patologi,sanitari,clinica,clinici,clinico,pediatr,dottor,sangue,visita,visite,medic',
 		'pill' => 'cura farmacologica,integrator,farmacia,medicina,farmaci,farmaco,terapia,terapie',
-		'dumbbell' => 'personal trainer,fisioterapia,allenament,palestra,fitness,atleti,muscol,sport',
+		'dumbbell' => 'personal trainer,attivita fisica,fisioterapia,forma fisica,allenament,esercizio,movimento,esercizi,palestra,fitness,atleti,muscol,sport',
 		'paw-print' => 'veterinar,animale,animali,gatti,gatto,cane,cani,pet!',
-		'baby' => 'pediatria,infanzia,bambin,neonat,asilo,bimbi,bimbo,mamma',
+		'baby' => 'allattamento,gravidanza,pediatria,infanzia,bambin,neonat,asilo,bimbi,bimbo,mamma',
 		'handshake' => 'collaborazion,consulenza,consulenze,mediazion,accordi,accordo,fiducia,partner',
 		'award' => 'certificazion,riconosciment,esperienza,storia dal,tradizione,anni di,premio,premi',
 		'trophy' => 'obiettivi raggiunti,competizion,vittoria,campion,torneo,gara,gare',
 		'lock' => 'cassaforte,password,riservat,serratur,accesso,privacy,gdpr',
 		'key' => 'agenzia immobiliare,vendita casa,locazion,affitt,chiave,chiavi',
 		'search' => 'indagine,esplora,ricerca,scopri,cerca,trova',
-		'message-circle' => 'comunicazion,assistenza,messaggio,parla con,messaggi,supporto,whatsapp,ascolto,domande,chat,faq!',
+		'message-circle' => 'comunicazion,assistenza,colloquio,confronto,messaggio,parla con,colloqui,messaggi,supporto,whatsapp,ascolto,dialogo,domande,chat,faq!',
 		'file-text' => 'commercialist,contabil,contratt,document,pratiche,burocra,pratica,fattur,fiscal,moduli,modulo,fisco,tasse',
 		'megaphone' => 'social media,comunicati,pubblicit,annuncio,campagna,annunci,notizie,social!,novita',
-		'rocket' => 'partenza,decolla,startup,lancio,start!,subito,avvio',
+		'rocket' => 'primo passo,motivazion,iniziare,partenza,decolla,startup,inizia,lancio,start!,subito,avvio',
 		'paint-roller' => 'carta da parati,rivestiment,verniciatur,tinteggi,imbianc,pareti',
 		'hammer' => 'installazion,costruzion,montaggio,artigian,falegnam,cantier,lavori,posa!,edil',
 		'shirt' => 'abbigliament,sartoria,camicie,maglie,stoffe,tessut,vestit,abiti,abito,moda',
 		'gem' => 'matrimoni,esclusiv,preziosi,diamant,gioiell,lusso,nozze,orafo,sposa,sposi',
 		'flower-2' => 'trattamenti,bellezza,estetica,massaggi,bouquet,fiorist,fiore,fiori,spa!',
-		'bed' => 'bed and breakfast,soggiorno,alloggio,materass,alloggi,dormire,pernott,camera,camere,riposo,b&b',
+		'bed' => 'bed and breakfast,soggiorno,alloggio,materass,alloggi,dormire,pernott,camera,camere,riposo,dormi,sonno,b&b',
 		'bike' => 'bicicletta,e-bike,ebike,bici,cicl,mtb',
 		'ship' => 'crociera,nautica,barche,marina,barca,porto,nave,navi',
 		'mountain' => 'natura incontaminata,dolomiti,montagna,sentieri,trekking,neve e,alpi!,monti,sci!',
@@ -97,18 +97,18 @@ final class Auto_Icons {
 		'thermometer' => 'termoidraulic,riscaldament,temperatura,climatizza,caldaia,caldaie,termico',
 		'snowflake' => 'condizionator,refrigera,invernal,surgelat,inverno,freddo,neve',
 		'flame' => 'barbecue,griglia,camino,brace,fuoco,stufa,stufe,gas!',
-		'sparkles' => 'novita assolute,brillante,detailing,restyling,splendore,trasforma,speciale,effetto,magia',
-		'target' => 'precisione,obiettivi,obiettivo,mission,visione,focus,mira',
+		'sparkles' => 'novita assolute,trasformazione,cambiamento,equilibrio,brillante,detailing,restyling,rinascita,splendore,trasforma,speciale,effetto,magia',
+		'target' => 'su misura per,personalizza,precisione,obiettivi,obiettivo,traguardi,traguardo,mission,visione,focus,mira',
 		'piggy-bank' => 'finanziament,investiment,incentiv,risparmi,prestit,bonus!,banca,mutui,mutuo',
 		'scale' => 'giustizia,tribunale,giuridic,avvocat,diritto,legale,notaio,causa,notai',
-		'briefcase' => 'consulenza aziendale,professional,assunzion,business,carriera,curricul,impiego,lavoro',
+		'briefcase' => 'consulenza aziendale,professional,professione,assunzion,lavorativ,ufficio e,business,carriera,curricul,impiego,lavoro',
 		'hard-hat' => 'sicurezza sul lavoro,impresa edile,cantiere,geometra,ingegner,operai',
-		'ruler' => 'progettazion,architett,planimetr,su misura,rilievo,misura,misure',
+		'ruler' => 'composizione corporea,progettazion,misurazion,architett,planimetr,su misura,bilancia,rilievo,misura,misure,taglia,massa,peso',
 		'sofa' => 'arredament,soggiorno,interni,salotto,arredi,arredo,divani,divano,mobili',
 		'lamp' => 'lampadari,illumina,faretti,lampad,luci',
 		'bath' => 'idromassaggio,sanitari per,termale,doccia,bagni,bagno,terme,vasca',
 		'package' => 'imballagg,magazzino,ordine,ordini,pacchi,ritiro,scatol,pacco,box!',
-		'clipboard-check' => 'sopralluogo,checklist,procedura,procedure,collaudo,ispezion,servizio,verifica,servizi',
+		'clipboard-check' => 'questionario,sopralluogo,valutazion,checklist,procedura,procedure,screening,anamnesi,bilancio,check up,check-up,collaudo,ispezion,servizio,verifica,servizi,metodo,piano!,esame,esami,fasi!',
 		'headphones' => 'assistenza clienti,customer care,call center,ascolta,podcast,audio',
 		'wifi' => 'connession,internet,network,fibra,rete!,wi-fi,wifi',
 		'code' => 'programmazion,developer,wordpress,sviluppo,codice,plugin',
@@ -326,16 +326,49 @@ final class Auto_Icons {
 	}
 
 	/**
+	 * Stili disponibili: chiave => etichetta.
+	 *
+	 * @return array
+	 */
+	public static function styles() {
+		return array(
+			'regular'  => __( 'Normale', 'lu3g-carousel' ),
+			'thin'     => __( 'Minimale (tratto sottile)', 'lu3g-carousel' ),
+			'bold'     => __( 'Marcato', 'lu3g-carousel' ),
+			'duotone'  => __( 'Bicolore', 'lu3g-carousel' ),
+			'disc'     => __( 'Su cerchio colorato', 'lu3g-carousel' ),
+			'ring'     => __( 'Con contorno a cerchio', 'lu3g-carousel' ),
+			'tile'     => __( 'Su quadrato colorato', 'lu3g-carousel' ),
+			'tileline' => __( 'Con contorno quadrato', 'lu3g-carousel' ),
+		);
+	}
+
+	/**
+	 * Nomi delle icone, per il selettore del widget.
+	 *
+	 * @return array Nome => nome.
+	 */
+	public static function names() {
+		$names = array_keys( self::SHAPES );
+		sort( $names );
+
+		return array_combine( $names, $names );
+	}
+
+	/**
 	 * SVG di un'icona, che prende il colore dal testo.
 	 *
-	 * @param string $icon Nome dell'icona.
+	 * @param string $icon  Nome dell'icona.
+	 * @param string $style Stile, vedi styles().
 	 * @return string
 	 */
-	public static function markup( $icon ) {
+	public static function markup( $icon, $style = 'regular' ) {
 		if ( ! isset( self::SHAPES[ $icon ] ) ) {
 			return '';
 		}
 
-		return '<svg class="lu3g-carousel__auto-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . self::SHAPES[ $icon ] . '</svg>';
+		$class = isset( self::styles()[ $style ] ) ? ' lu3g-carousel__auto-icon--' . $style : '';
+
+		return '<svg class="lu3g-carousel__auto-icon' . $class . '" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . self::SHAPES[ $icon ] . '</svg>';
 	}
 }

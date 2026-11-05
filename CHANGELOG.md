@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.34.0
+- Icona automatica: nuovo *Stile dell'icona*: normale, minimale (tratto sottile), marcato, bicolore, su cerchio o quadrato colorato, con contorno a cerchio o quadrato. Il colore resta quello di *Stile → Icona*.
+- Icona automatica: nuova *Icona di riserva* per le card in cui nessuna parola viene riconosciuta (di serie la spunta, oppure *Nessuna*), così tutte hanno un'icona.
+- Elenco di parole ampliato, soprattutto salute, nutrizione e organizzazione ("alimentari", "giornata", "valutazione", "personalizzazione"...). "Personale" non viene più scambiato per "persona". Alcune icone già scelte in automatico possono quindi cambiare.
+
 ## 1.33.0
 - *Adatta alla larghezza della card* ora è attivo di serie, anche sui widget già salvati: i titoli che si spezzavano vengono ridotti quanto basta, gli altri non cambiano. Si può spegnere widget per widget in *Stile → Titolo*.
 

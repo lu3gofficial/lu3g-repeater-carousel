@@ -1224,7 +1224,30 @@ class Repeater_Carousel extends Widget_Base {
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => '',
-				'description'  => __( 'Sceglie un\'icona in base alle parole del titolo e del testo ("spedizioni" → furgone). Un\'icona impostata a mano ha sempre la precedenza; le card senza parole riconosciute restano senza icona. Colore e dimensione in Stile → Icona.', 'lu3g-carousel' ),
+				'description'  => __( 'Sceglie un\'icona in base alle parole del titolo e del testo ("spedizioni" → furgone). Un\'icona impostata a mano ha sempre la precedenza. Colore e dimensione in Stile → Icona.', 'lu3g-carousel' ),
+			)
+		);
+
+		$this->add_control(
+			'auto_icon_style',
+			array(
+				'label'     => __( 'Stile dell\'icona', 'lu3g-carousel' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'regular',
+				'options'   => Auto_Icons::styles(),
+				'condition' => array( 'auto_icon' => 'yes' ),
+			)
+		);
+
+		$this->add_control(
+			'auto_icon_fallback',
+			array(
+				'label'       => __( 'Icona di riserva', 'lu3g-carousel' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'circle-check',
+				'options'     => array( '' => __( 'Nessuna', 'lu3g-carousel' ) ) + Auto_Icons::names(),
+				'description' => __( 'Per le card in cui nessuna parola viene riconosciuta, così tutte hanno un\'icona.', 'lu3g-carousel' ),
+				'condition'   => array( 'auto_icon' => 'yes' ),
 			)
 		);
 
@@ -5013,7 +5036,9 @@ class Repeater_Carousel extends Widget_Base {
 				$texts[] = $block['html'];
 			}
 
-			$items[ $i ]['icon'] = Auto_Icons::markup( Auto_Icons::pick( $texts, $custom ) );
+			$icon = Auto_Icons::pick( $texts, $custom );
+
+			$items[ $i ]['icon'] = Auto_Icons::markup( '' !== $icon ? $icon : $settings['auto_icon_fallback'], $settings['auto_icon_style'] );
 		}
 
 		return $items;
@@ -5953,6 +5978,8 @@ class Repeater_Carousel extends Widget_Base {
 				'title_fit'          => 'yes',
 				'auto_icon'          => '',
 				'auto_icon_keywords' => '',
+				'auto_icon_fallback' => 'circle-check',
+				'auto_icon_style'    => 'regular',
 				'gallery_image_size' => 'large',
 				'indicator_type'     => 'none',
 				'indicator_position' => 'below',
