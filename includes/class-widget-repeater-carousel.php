@@ -1246,7 +1246,7 @@ class Repeater_Carousel extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => 'circle-check',
 				'options'     => array( '' => __( 'Nessuna', 'lu3g-carousel' ) ) + Auto_Icons::names(),
-				'description' => __( 'Per le card in cui nessuna parola viene riconosciuta, così tutte hanno un\'icona.', 'lu3g-carousel' ),
+				'description' => __( 'Per le card in cui nessuna parola viene riconosciuta. Le icone non si ripetono mai nello stesso carosello: se questa è già in uso, ne viene scelta un\'altra libera.', 'lu3g-carousel' ),
 				'condition'   => array( 'auto_icon' => 'yes' ),
 			)
 		);
@@ -5022,23 +5022,30 @@ class Repeater_Carousel extends Widget_Base {
 			return $items;
 		}
 
-		// Icona automatica: solo dove manca, e dal testo più importante al meno importante.
-		$custom = Auto_Icons::parse_custom( $settings['auto_icon_keywords'] );
+		// Icona automatica: solo dove manca, dal testo più importante al meno importante,
+		// e mai la stessa due volte nel carosello.
+		$cards = array();
 
 		foreach ( $items as $i => $item ) {
 			if ( '' !== $item['icon'] ) {
 				continue;
 			}
 
-			$texts = array( $item['content'], $item['kicker'], $item['description'] );
+			$cards[ $i ] = array( $item['content'], $item['kicker'], $item['description'] );
 
 			foreach ( $item['blocks'] as $block ) {
-				$texts[] = $block['html'];
+				$cards[ $i ][] = $block['html'];
 			}
+		}
 
-			$icon = Auto_Icons::pick( $texts, $custom );
+		$icons = Auto_Icons::assign(
+			$cards,
+			Auto_Icons::parse_custom( $settings['auto_icon_keywords'] ),
+			$settings['auto_icon_fallback']
+		);
 
-			$items[ $i ]['icon'] = Auto_Icons::markup( '' !== $icon ? $icon : $settings['auto_icon_fallback'], $settings['auto_icon_style'] );
+		foreach ( $icons as $i => $icon ) {
+			$items[ $i ]['icon'] = Auto_Icons::markup( $icon, $settings['auto_icon_style'] );
 		}
 
 		return $items;

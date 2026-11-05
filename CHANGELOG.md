@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.35.0
+- Icona automatica: mai la stessa icona due volte nello stesso carosello. Se la prima scelta è già occupata, la card prende la successiva adatta al suo testo, poi quella di riserva e infine un'altra libera. Si ripete solo con più card che icone. Vale per le icone automatiche, non per quelle scelte a mano.
+
 ## 1.34.0
 - Icona automatica: nuovo *Stile dell'icona*: normale, minimale (tratto sottile), marcato, bicolore, su cerchio o quadrato colorato, con contorno a cerchio o quadrato. Il colore resta quello di *Stile → Icona*.
 - Icona automatica: nuova *Icona di riserva* per le card in cui nessuna parola viene riconosciuta (di serie la spunta, oppure *Nessuna*), così tutte hanno un'icona.

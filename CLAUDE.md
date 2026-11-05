@@ -7,7 +7,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `lu3gofficial/lu3g-repeater-carousel` (pubblico, branch `main`; fino alla 1.29.0 era `violix96/lu3g-repeater-carousel`, che ora rimanda qui). È la fonte di verità.
-- Versione attuale: **1.34.0**. L'intestazione ha `Update URI` (github.com/lu3gofficial/...): non toglierla.
+- Versione attuale: **1.35.0**. L'intestazione ha `Update URI` (github.com/lu3gofficial/...): non toglierla.
 
 ## File
 
@@ -85,6 +85,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - 1.32.0: `title_fit`, `title_fit_min`; attributo `data-lu3g-title-fit` e JS `setupTitleFit()`: rapporto unico per i titoli del widget, stile inline `font-size`/`line-height`, poi `lu3g:layout`.
 - 1.33.0: `title_fit` attivo di serie, per scelta di Vincenzo (eccezione voluta alla regola 2): cambia solo i titoli che altrimenti si spezzerebbero.
 - 1.34.0: `auto_icon_fallback` (select da `Auto_Icons::names()`, default `circle-check`), `auto_icon_style` (`Auto_Icons::styles()`, classi `lu3g-carousel__auto-icon--*`; solo icone automatiche), parole aggiunte.
+- 1.35.0: `Auto_Icons::assign()` (icone uniche nel carosello: prima le card con meno alternative), `candidates()`, `RESERVE`.
 - 1.12.0/1.12.1: modalità centrata (`center_mode`, `center_side_scale`, `center_side_opacity`, `center_main_scale` default 1.04, `center_shadow`); con 3 card visibili la seconda è subito al centro senza scorrere. JS: `updateCenter`/`scheduleCenter` assegnano `.is-center`.
 
 ## Come si testa

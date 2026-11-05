@@ -704,7 +704,7 @@ CSS e JS sono registrati, non accodati: il widget li dichiara in `get_style_depe
 
 ## Icona automatica dal testo
 
-In *Opzioni del contenuto* attiva **Icona automatica dal testo**: il widget legge titolo, etichetta e testi della card (in quest'ordine) e sceglie un'icona da un elenco di parole italiane. Tutto avviene sul sito, senza servizi esterni. Un'icona impostata a mano ha la precedenza; se nessuna parola corrisponde, si usa l'**Icona di riserva** (di serie la spunta; con *Nessuna* la card resta senza). **Stile dell'icona**: normale, minimale, marcato, bicolore, su cerchio o quadrato colorato, con contorno a cerchio o quadrato.
+In *Opzioni del contenuto* attiva **Icona automatica dal testo**: il widget legge titolo, etichetta e testi della card (in quest'ordine) e sceglie un'icona da un elenco di parole italiane. Tutto avviene sul sito, senza servizi esterni. Un'icona impostata a mano ha la precedenza; se nessuna parola corrisponde, si usa l'**Icona di riserva** (di serie la spunta; con *Nessuna* la card resta senza). Le icone automatiche non si ripetono mai nello stesso carosello: se la prima scelta è occupata, la card prende la successiva adatta al suo testo, poi la riserva e infine un'altra libera. **Stile dell'icona**: normale, minimale, marcato, bicolore, su cerchio o quadrato colorato, con contorno a cerchio o quadrato.
 
 **Parole aggiuntive**: una riga per gruppo, `parole separate da virgola = nome-icona`, per esempio `sartoria, cucito = scissors`. Vincono sull'elenco di serie. Una parola vale anche come inizio di parola; con `!` in fondo solo la parola esatta (`auto!` non trova "automatico").
 

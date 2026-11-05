@@ -22,18 +22,18 @@ final class Auto_Icons {
 	const KEYWORDS = array(
 		'truck' => 'spedizion,corriere,logistic,trasport,consegn,spedisc,camion,furgon,traslo',
 		'utensils' => 'alimentazion,nutrizionist,ristorazion,alimentar,gastronom,nutrizion,ristorant,trattoria,catering,dietetic,dietolog,mangiare,dietist,osteria,ricetta,ricette,cucina,mangia,pasta!,piatti,piatto,pranzo,cucin,dieta,diete,menu!,pasti,pasto,cena,chef,cibi,cibo',
-		'phone' => 'numero verde,centralino,chiamata,contatt,telefon,chiama',
+		'phone' => 'numero verde,assistenza,centralino,chiamata,contatt,telefon,chiama',
 		'mail' => 'newsletter,scrivici,e-mail,email,mail!,posta',
 		'map-pin' => 'come arrivare,raggiungici,dove siamo,indirizzo,posizione,mappa,sede',
-		'clock' => 'puntual,orario,veloce,orari,rapid,tempo,ore!',
+		'clock' => 'abitudin,giornata,giornate,puntual,routine,orario,veloce,orari,rapid,tempo,ore!',
 		'calendar' => 'organizzazion,pianificazion,appuntament,prenotazion,settimanale,calendario,organizza,pianifica,programma,programmi,settimana,abitudin,giornata,giornate,planning,prenota,routine,scadenz,agenda,eventi,evento,data!,date!',
-		'users' => 'collaborator,chi siamo,community,dipendent,comunita,famiglia,insieme,persone,sociale,squadra,coppia,coppie,gruppi,gruppo,staff,team',
+		'users' => 'collaborator,consulenza,consulenze,chi siamo,community,dipendent,comunita,famiglia,insieme,persone,sociale,squadra,coppia,coppie,gruppi,gruppo,staff,team',
 		'user' => 'consulente,persona!,account,cliente,clienti,profilo',
-		'shield-check' => 'assicurazion,intolleranz,certificat,affidabil,protezion,sicurezza,garantit,garanzia,allergi,sicura,sicuro,tutela',
+		'shield-check' => 'assicurazion,intolleranz,assistenza,certificat,affidabil,protezion,sicurezza,garantit,garanzia,allergi,sicura,sicuro,tutela',
 		'circle-check' => 'controllo,verificat,approvat,completa,completo,conform,qualita,soddisf',
-		'star' => 'recension,eccellen,migliore,migliori,premium,stella,stelle',
-		'heart' => 'stile di vita,prevenzione,benessere,dedizione,vita sana,passione,relazion,sostegno,emozion,salute,amore,cuore,cura!,sana,sano',
-		'leaf' => 'sostenibil,ambiente,biologic,ecologic,natural,vegetal,foglia,green!,natura,bio!,erbe',
+		'star' => 'recension,eccellen,migliore,migliori,premium,qualita,stella,stelle',
+		'heart' => 'alimentazione sana,stile di vita,prevenzione,benessere,dedizione,nutrizion,vita sana,passione,relazion,sostegno,emozion,salute,amore,cuore,cura!,sana,sano',
+		'leaf' => 'alimentazion,nutrizionist,sostenibil,alimentar,nutrizion,ambiente,biologic,dietetic,ecologic,natural,vegetal,foglia,green!,natura,salute,dieta,diete,bio!,erbe',
 		'wrench' => 'assistenza tecnica,manutenzion,riparazion,idraulic,meccanic,officina,guasti,guasto,ripara',
 		'settings' => 'impostazion,automazion,tecnologia,configura,impianti,impianto,processi,processo',
 		'trending-up' => 'miglioramento,monitoraggio,performance,evoluzione,statistich,andamento,fatturato,follow up,follow-up,marketing,progressi,risultati,strategia,crescita,analisi,vendite,seo!',
@@ -54,13 +54,13 @@ final class Auto_Icons {
 		'palette' => 'decorazion,creativ,grafica,pittura,artist,colore,colori,design,arte!',
 		'camera' => 'servizio fotografico,reportage,fotograf,immagini,foto!',
 		'music' => 'orchestra,concerti,concerto,strument,musica,canto,dj!',
-		'coffee' => 'caffetteria,cappuccino,colazion,caffe,pausa,bar!',
+		'coffee' => 'caffetteria,cappuccino,abitudin,colazion,caffe,pasti,pasto,pausa,bar!',
 		'wine' => 'degustazion,aperitiv,brindisi,cantina,enoteca,vigneto,vini,vino',
 		'pizza' => 'forno a legna,pizzeria,pizza',
 		'fish' => 'frutti di mare,acquario,mare e,pesca!,pesce,sushi',
-		'sprout' => 'agricol,giardin,coltiv,pianta,piante,semina,vivaio,orto!',
+		'sprout' => 'alimentazion,benessere,nutrizion,crescita,agricol,giardin,coltiv,pianta,piante,semina,vivaio,orto!',
 		'trees' => 'montagna verde,foresta,alberi,albero,bosco,parco',
-		'sun' => 'fotovoltaic,spiaggia,terrazza,estate,solare,estiv,luce,sole',
+		'sun' => 'fotovoltaic,giornata,giornate,spiaggia,terrazza,routine,estate,solare,estiv,luce,sole',
 		'droplets' => 'lavanderia,lavaggio,fontana,piscina,pulizia,pulizie,sanific,idrata,acqua,igien',
 		'zap' => 'impianto elettrico,luce e gas,batteria,batterie,elettric,ricarica,energia,potenza',
 		'recycle' => 'economia circolare,riciclabil,riciclo,rifiuti,riuso',
@@ -70,12 +70,12 @@ final class Auto_Icons {
 		'paw-print' => 'veterinar,animale,animali,gatti,gatto,cane,cani,pet!',
 		'baby' => 'allattamento,gravidanza,pediatria,infanzia,bambin,neonat,asilo,bimbi,bimbo,mamma',
 		'handshake' => 'collaborazion,consulenza,consulenze,mediazion,accordi,accordo,fiducia,partner',
-		'award' => 'certificazion,riconosciment,esperienza,storia dal,tradizione,anni di,premio,premi',
+		'award' => 'certificazion,riconosciment,esperienza,storia dal,tradizione,anni di,qualita,premio,premi',
 		'trophy' => 'obiettivi raggiunti,competizion,vittoria,campion,torneo,gara,gare',
 		'lock' => 'cassaforte,password,riservat,serratur,accesso,privacy,gdpr',
 		'key' => 'agenzia immobiliare,vendita casa,locazion,affitt,chiave,chiavi',
 		'search' => 'indagine,esplora,ricerca,scopri,cerca,trova',
-		'message-circle' => 'comunicazion,assistenza,colloquio,confronto,messaggio,parla con,colloqui,messaggi,supporto,whatsapp,ascolto,dialogo,domande,chat,faq!',
+		'message-circle' => 'comunicazion,assistenza,consulenza,consulenze,colloquio,confronto,messaggio,parla con,colloqui,messaggi,supporto,whatsapp,ascolto,dialogo,domande,chat,faq!',
 		'file-text' => 'commercialist,contabil,contratt,document,pratiche,burocra,pratica,fattur,fiscal,moduli,modulo,fisco,tasse',
 		'megaphone' => 'social media,comunicati,pubblicit,annuncio,campagna,annunci,notizie,social!,novita',
 		'rocket' => 'primo passo,motivazion,iniziare,partenza,decolla,startup,inizia,lancio,start!,subito,avvio',
@@ -83,21 +83,21 @@ final class Auto_Icons {
 		'hammer' => 'installazion,costruzion,montaggio,artigian,falegnam,cantier,lavori,posa!,edil',
 		'shirt' => 'abbigliament,sartoria,camicie,maglie,stoffe,tessut,vestit,abiti,abito,moda',
 		'gem' => 'matrimoni,esclusiv,preziosi,diamant,gioiell,lusso,nozze,orafo,sposa,sposi',
-		'flower-2' => 'trattamenti,bellezza,estetica,massaggi,bouquet,fiorist,fiore,fiori,spa!',
+		'flower-2' => 'trattamenti,benessere,bellezza,estetica,massaggi,bouquet,fiorist,fiore,fiori,spa!',
 		'bed' => 'bed and breakfast,soggiorno,alloggio,materass,alloggi,dormire,pernott,camera,camere,riposo,dormi,sonno,b&b',
 		'bike' => 'bicicletta,e-bike,ebike,bici,cicl,mtb',
 		'ship' => 'crociera,nautica,barche,marina,barca,porto,nave,navi',
 		'mountain' => 'natura incontaminata,dolomiti,montagna,sentieri,trekking,neve e,alpi!,monti,sci!',
-		'map' => 'visite guidate,territorio,itinerar,percorsi,percorso,tour!,zona,zone',
+		'map' => 'visite guidate,territorio,spedizion,itinerar,percorsi,percorso,consegn,tour!,zona,zone',
 		'ticket' => 'abbonament,prevendita,biglietti,biglietto,ingressi,ingresso,lotteria',
 		'video' => 'videochiamata,streaming,filmati,riprese,cinema,film!,video',
 		'scissors' => 'acconciatur,parrucchier,sartoriale,barbier,capelli,salone,taglio',
-		'smile' => 'divertiment,odontoiatr,ortodonz,dentist,sorriso,felici,dente,denti',
-		'wheat' => 'pasticceria,panetteria,panificio,cereali,farina,forno!,dolci,grano,pane',
+		'smile' => 'divertiment,odontoiatr,benessere,felicita,ortodonz,dentist,sorriso,felici,dente,denti',
+		'wheat' => 'alimentazion,pasticceria,panetteria,alimentar,nutrizion,panificio,cereali,farina,forno!,dieta,diete,dolci,grano,pasti,cibi,cibo,pane',
 		'thermometer' => 'termoidraulic,riscaldament,temperatura,climatizza,caldaia,caldaie,termico',
 		'snowflake' => 'condizionator,refrigera,invernal,surgelat,inverno,freddo,neve',
 		'flame' => 'barbecue,griglia,camino,brace,fuoco,stufa,stufe,gas!',
-		'sparkles' => 'novita assolute,trasformazione,cambiamento,equilibrio,brillante,detailing,restyling,rinascita,splendore,trasforma,speciale,effetto,magia',
+		'sparkles' => 'novita assolute,trasformazione,cambiamento,equilibrio,benessere,brillante,detailing,restyling,rinascita,splendore,trasforma,speciale,effetto,magia',
 		'target' => 'su misura per,personalizza,precisione,obiettivi,obiettivo,traguardi,traguardo,mission,visione,focus,mira',
 		'piggy-bank' => 'finanziament,investiment,incentiv,risparmi,prestit,bonus!,banca,mutui,mutuo',
 		'scale' => 'giustizia,tribunale,giuridic,avvocat,diritto,legale,notaio,causa,notai',
@@ -107,8 +107,8 @@ final class Auto_Icons {
 		'sofa' => 'arredament,soggiorno,interni,salotto,arredi,arredo,divani,divano,mobili',
 		'lamp' => 'lampadari,illumina,faretti,lampad,luci',
 		'bath' => 'idromassaggio,sanitari per,termale,doccia,bagni,bagno,terme,vasca',
-		'package' => 'imballagg,magazzino,ordine,ordini,pacchi,ritiro,scatol,pacco,box!',
-		'clipboard-check' => 'questionario,sopralluogo,valutazion,checklist,procedura,procedure,screening,anamnesi,bilancio,check up,check-up,collaudo,ispezion,servizio,verifica,servizi,metodo,piano!,esame,esami,fasi!',
+		'package' => 'imballagg,magazzino,spedizion,corriere,logistic,consegn,spedisc,ordine,ordini,pacchi,ritiro,scatol,pacco,box!',
+		'clipboard-check' => 'questionario,sopralluogo,valutazion,checklist,nutrizion,procedura,procedure,screening,anamnesi,bilancio,check up,check-up,collaudo,ispezion,servizio,verifica,servizi,metodo,piano!,dieta,diete,esame,esami,fasi!',
 		'headphones' => 'assistenza clienti,customer care,call center,ascolta,podcast,audio',
 		'wifi' => 'connession,internet,network,fibra,rete!,wi-fi,wifi',
 		'code' => 'programmazion,developer,wordpress,sviluppo,codice,plugin',
@@ -116,6 +116,9 @@ final class Auto_Icons {
 		'image' => 'foto gallery,portfolio,galleria,gallery,album',
 		'pen-tool' => 'immagine coordinata,illustrazion,tipografia,branding,logotipo,disegno,brand!,logo',
 	);
+
+	/** Icone generiche, adatte a qualsiasi testo: si usano dopo quella di riserva. */
+	const RESERVE = array( 'circle-check', 'sparkles', 'star', 'target', 'lightbulb', 'award', 'heart', 'gem', 'leaf', 'sun', 'zap', 'rocket', 'key', 'globe', 'flame' );
 
 	/** Nome dell'icona => forme SVG. */
 	const SHAPES = array(
@@ -278,13 +281,16 @@ final class Auto_Icons {
 	}
 
 	/**
-	 * Sceglie l'icona: un testo alla volta, dal più importante; le parole personalizzate vincono.
+	 * Icone adatte a una card, dalla migliore: prima i testi più importanti e le parole
+	 * personalizzate; a parità di testo, la parola più lunga.
 	 *
 	 * @param array $texts  Testi della card, dal più importante.
 	 * @param array $custom Risultato di parse_custom().
-	 * @return string Nome dell'icona, vuoto se nessuna parola corrisponde.
+	 * @return array Nomi delle icone.
 	 */
-	public static function pick( array $texts, array $custom = array() ) {
+	public static function candidates( array $texts, array $custom = array() ) {
+		$out = array();
+
 		foreach ( $texts as $raw ) {
 			$text = self::normalize( $raw );
 
@@ -292,37 +298,128 @@ final class Auto_Icons {
 				continue;
 			}
 
-			$best = '';
-			$size = 0;
+			foreach ( array( $custom, self::KEYWORDS ) as $source ) {
+				$found = array();
 
-			foreach ( $custom as $icon => $words ) {
-				foreach ( $words as $word ) {
-					if ( strlen( $word ) > $size && self::has_word( $word, $text ) ) {
-						$best = $icon;
-						$size = strlen( $word );
+				foreach ( $source as $icon => $words ) {
+					foreach ( is_array( $words ) ? $words : explode( ',', $words ) as $word ) {
+						if ( strlen( $word ) > ( isset( $found[ $icon ] ) ? $found[ $icon ] : 0 ) && self::has_word( $word, $text ) ) {
+							$found[ $icon ] = strlen( $word );
+						}
 					}
 				}
-			}
 
-			if ( '' !== $best ) {
-				return $best;
-			}
+				// A parità di lunghezza resta l'ordine dell'elenco.
+				$names  = array_keys( $found );
+				$places = array_flip( $names );
 
-			foreach ( self::KEYWORDS as $icon => $list ) {
-				foreach ( explode( ',', $list ) as $word ) {
-					if ( strlen( $word ) > $size && self::has_word( $word, $text ) ) {
-						$best = $icon;
-						$size = strlen( $word );
+				usort(
+					$names,
+					static function ( $a, $b ) use ( $found, $places ) {
+						return ( $found[ $b ] <=> $found[ $a ] ) ?: ( $places[ $a ] <=> $places[ $b ] );
 					}
-				}
-			}
+				);
 
-			if ( '' !== $best ) {
-				return $best;
+				$out = array_merge( $out, $names );
 			}
 		}
 
-		return '';
+		return array_values( array_unique( $out ) );
+	}
+
+	/**
+	 * L'icona migliore per un testo.
+	 *
+	 * @param array $texts  Testi della card, dal più importante.
+	 * @param array $custom Risultato di parse_custom().
+	 * @return string Nome dell'icona, vuoto se nessuna parola corrisponde.
+	 */
+	public static function pick( array $texts, array $custom = array() ) {
+		$names = self::candidates( $texts, $custom );
+
+		return $names ? $names[0] : '';
+	}
+
+	/**
+	 * Icone di tutte le card di un carosello, ognuna usata una volta sola.
+	 *
+	 * Le card con meno alternative scelgono per prime, così una card con una sola icona
+	 * adatta non la perde a favore di una che ne ha altre. Chi resta senza prende l'icona
+	 * di riserva e poi le altre libere. Si ripete un'icona solo se le card sono più delle icone.
+	 *
+	 * @param array  $cards    Indice della card => testi, dal più importante.
+	 * @param array  $custom   Risultato di parse_custom().
+	 * @param string $fallback Icona di riserva; vuota = chi non ha parole riconosciute resta senza icona.
+	 * @param array  $taken    Icone già in uso.
+	 * @return array Indice della card => nome dell'icona.
+	 */
+	public static function assign( array $cards, array $custom = array(), $fallback = '', array $taken = array() ) {
+		$lists = array();
+
+		foreach ( $cards as $index => $texts ) {
+			$lists[ $index ] = self::candidates( $texts, $custom );
+		}
+
+		$order = array_keys( $lists );
+
+		// A parità di alternative resta l'ordine delle card.
+		$places = array_flip( $order );
+
+		usort(
+			$order,
+			static function ( $a, $b ) use ( $lists, $places ) {
+				return ( count( $lists[ $a ] ) <=> count( $lists[ $b ] ) ) ?: ( $places[ $a ] <=> $places[ $b ] );
+			}
+		);
+
+		$used = array_fill_keys( $taken, true );
+		$out  = array();
+
+		foreach ( $order as $index ) {
+			foreach ( $lists[ $index ] as $icon ) {
+				if ( ! isset( $used[ $icon ] ) ) {
+					$out[ $index ]  = $icon;
+					$used[ $icon ] = true;
+					break;
+				}
+			}
+		}
+
+		$pool = array_merge( array( $fallback ), self::RESERVE, array_keys( self::SHAPES ) );
+
+		foreach ( array_keys( $cards ) as $index ) {
+			if ( isset( $out[ $index ] ) ) {
+				continue;
+			}
+
+			// Con "Nessuna" la card senza parole riconosciute resta senza icona.
+			if ( '' === $fallback && ! $lists[ $index ] ) {
+				$out[ $index ] = '';
+				continue;
+			}
+
+			$free = '';
+
+			foreach ( $pool as $icon ) {
+				if ( '' !== $icon && isset( self::SHAPES[ $icon ] ) && ! isset( $used[ $icon ] ) ) {
+					$free = $icon;
+					break;
+				}
+			}
+
+			// Più card che icone: si ricomincia dall'inizio.
+			if ( '' === $free ) {
+				$used = array();
+				$free = isset( self::SHAPES[ $fallback ] ) ? $fallback : self::RESERVE[0];
+			}
+
+			$out[ $index ] = $free;
+			$used[ $free ] = true;
+		}
+
+		ksort( $out );
+
+		return $out;
 	}
 
 	/**
