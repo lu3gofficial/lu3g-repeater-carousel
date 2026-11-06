@@ -1541,10 +1541,7 @@
 		if ( 'IntersectionObserver' in window ) {
 			var visibility = new IntersectionObserver( function ( entries ) {
 				entries.forEach( function ( entry ) {
-					// Metà carosello visibile, oppure metà schermo occupata
-				// (un carosello più alto di due schermi non arriva mai al 50%).
-				if ( entry.isIntersecting && ( entry.intersectionRatio >= 0.5
-					|| entry.intersectionRect.height >= window.innerHeight * 0.5 ) ) {
+					if ( entry.isIntersecting ) {
 						refresh();
 					}
 				} );
@@ -1584,10 +1581,7 @@
 
 		var observer = new IntersectionObserver( function ( entries ) {
 			entries.forEach( function ( entry ) {
-				// Metà carosello visibile, oppure metà schermo occupata
-				// (un carosello più alto di due schermi non arriva mai al 50%).
-				if ( entry.isIntersecting && ( entry.intersectionRatio >= 0.5
-					|| entry.intersectionRect.height >= window.innerHeight * 0.5 ) ) {
+				if ( entry.isIntersecting ) {
 					root.classList.add( 'is-in-view' );
 
 					if ( ! repeat ) {

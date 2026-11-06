@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.35.2
+- Corretto un errore della 1.35.1: le card con l'animazione d'ingresso restavano invisibili. La nuova regola "metà carosello sullo schermo", pensata solo per l'invito a scorrere, era finita anche nell'animazione d'ingresso e nel ricalcolo delle altezze: l'ingresso partiva al 25% e la regola chiedeva il 50%, quindi le card non comparivano più.
+
 ## 1.35.1
 - Invito a scorrere (mobile): ora compare anche quando le frecce sono visibili. Prima si accendeva solo con le frecce nascoste su mobile, e di serie su mobile si vedono: per questo sembrava non funzionare.
 - Invito a scorrere: attivarlo non cambia più i colori del "Mostra di più" (e delle card) al tocco su iPhone. Il tocco si ascoltava sulle card, e Safari su iPhone dà a un elemento con un ascoltatore del tocco lo stato :hover, quindi i colori dell'hover restavano accesi. Ora si ascolta sulla pagina.
