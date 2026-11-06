@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.35.1
+- Invito a scorrere (mobile): ora compare anche quando le frecce sono visibili. Prima si accendeva solo con le frecce nascoste su mobile, e di serie su mobile si vedono: per questo sembrava non funzionare.
+- Invito a scorrere: attivarlo non cambia più i colori del "Mostra di più" (e delle card) al tocco su iPhone. Il tocco si ascoltava sulle card, e Safari su iPhone dà a un elemento con un ascoltatore del tocco lo stato :hover, quindi i colori dell'hover restavano accesi. Ora si ascolta sulla pagina.
+- Compare anche con caroselli più alti di due schermi (basta che occupino metà schermo).
+- Editor di Elementor: dopo una modifica dei controlli il widget ridisegnato riprende il JS (scorrimento, mostra di più, invito). L'aggancio a Elementor ascoltava "elementor/frontend/init" come evento del browser, ma è un evento jQuery.
+
 ## 1.35.0
 - Icona automatica: mai la stessa icona due volte nello stesso carosello. Se la prima scelta è già occupata, la card prende la successiva adatta al suo testo, poi quella di riserva e infine un'altra libera. Si ripete solo con più card che icone. Vale per le icone automatiche, non per quelle scelte a mano.
 

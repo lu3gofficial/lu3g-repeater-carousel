@@ -1777,7 +1777,7 @@ class Repeater_Carousel extends Widget_Base {
 				'type'         => Controls_Manager::SWITCHER,
 				'default'      => '',
 				'return_value' => 'yes',
-				'description'  => __( 'Solo su mobile e solo quando le frecce non si vedono: un\'animazione sopra le card suggerisce di scorrere. Compare quando il carosello entra nello schermo, se c\'è qualcosa da scorrere, e sparisce al primo tocco o dopo la durata indicata.', 'lu3g-carousel' ),
+				'description'  => __( 'Solo su mobile (anche con le frecce visibili): un\'animazione sopra le card suggerisce di scorrere. Compare quando il carosello entra nello schermo, se c\'è qualcosa da scorrere, e sparisce al primo tocco o dopo la durata indicata.', 'lu3g-carousel' ),
 			)
 		);
 

@@ -4,7 +4,7 @@ Tags: elementor, jetengine, carousel, repeater, slider
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.35.0
+Stable tag: 1.35.1
 License: GPLv2 or later
 
 Widget Elementor per caroselli di card da repeater JetEngine, da contenuto statico o da sole immagini.
@@ -16,6 +16,9 @@ Carosello a scorrimento orizzontale nativo (scroll-snap, swipe, trackpad) con ca
 La documentazione completa è nel file DOCUMENTAZIONE.md incluso nel plugin.
 
 == Changelog ==
+
+= 1.35.1 =
+* Invito a scorrere: compare anche con le frecce visibili; toccarlo non dà più alle card i colori dell'hover su iPhone; nell'editor il widget ridisegnato riprende il JS.
 
 = 1.35.0 =
 * Icona automatica: mai la stessa icona due volte nello stesso carosello.

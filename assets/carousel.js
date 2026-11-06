@@ -922,15 +922,22 @@
 		setupAnimation( root, reduced );
 		setupTitleFit( root );
 		setupRows( root, track );
-		setupHint( root, viewport, track, arrows, locked, reduced );
+		setupHint( root, viewport, track, locked, reduced );
 	}
 
 	/**
 	 * Invito a scorrere su mobile.
 	 *
 	 * Compare una volta, quando il carosello entra nello schermo, solo se:
-	 * lo schermo è entro il breakpoint mobile, nessuna freccia è visibile,
-	 * lo scorrimento non è bloccato e c'è davvero qualcosa da scorrere.
+	 * lo schermo è entro il breakpoint mobile, lo scorrimento non è bloccato
+	 * e c'è davvero qualcosa da scorrere. Con le frecce visibili compare lo
+	 * stesso: l'opzione è accesa apposta (fino alla 1.35.0 le frecce lo
+	 * spegnevano, e su mobile sono visibili di serie).
+	 *
+	 * Tocco, puntatore e rotella si ascoltano sul document, non sul viewport:
+	 * su iPhone un elemento con un ascoltatore touch o pointer diventa
+	 * "cliccabile" e al tocco riceve :hover, così le card prendevano i colori
+	 * dell'hover (anche quelli del "Mostra di più") appena le si toccava.
 	 * Sparisce al primo tocco, rotella o scorrimento, oppure dopo la durata
 	 * impostata. "nudge" non aggiunge niente sopra le card: sposta il track
 	 * per un attimo con una trasformazione, senza toccare lo scroll.
@@ -938,11 +945,10 @@
 	 * @param {HTMLElement}   root     Elemento del carosello.
 	 * @param {HTMLElement}   viewport Elemento che scorre.
 	 * @param {HTMLElement}   track    Contenitore delle card.
-	 * @param {HTMLElement[]} arrows   Frecce.
 	 * @param {boolean}       locked   Scorrimento bloccato.
 	 * @param {boolean}       reduced  Movimento ridotto richiesto.
 	 */
-	function setupHint( root, viewport, track, arrows, locked, reduced ) {
+	function setupHint( root, viewport, track, locked, reduced ) {
 		var type = root.getAttribute( 'data-lu3g-hint' );
 
 		if ( ! type || locked || ! ( 'IntersectionObserver' in window ) ) {
@@ -955,16 +961,15 @@
 		var hint = null;
 		var timer = null;
 
-		function arrowsVisible() {
-			return arrows.some( function ( arrow ) {
-				return null !== arrow.offsetParent;
-			} );
-		}
-
 		function canShow() {
 			return window.matchMedia( '(max-width: ' + bp + 'px)' ).matches
-				&& ! arrowsVisible()
 				&& track.scrollWidth - viewport.clientWidth > 2;
+		}
+
+		function onTouch( event ) {
+			if ( event.target && root.contains( event.target ) ) {
+				hide();
+			}
 		}
 
 		function hide() {
@@ -985,9 +990,10 @@
 				}, 400 );
 			}
 
-			[ 'pointerdown', 'touchstart', 'wheel', 'scroll' ].forEach( function ( name ) {
-				viewport.removeEventListener( name, hide );
+			[ 'pointerdown', 'touchstart', 'wheel' ].forEach( function ( name ) {
+				document.removeEventListener( name, onTouch, true );
 			} );
+			viewport.removeEventListener( 'scroll', hide );
 		}
 
 		function build() {
@@ -1047,22 +1053,26 @@
 				} );
 			}
 
-			[ 'pointerdown', 'touchstart', 'wheel', 'scroll' ].forEach( function ( name ) {
-				viewport.addEventListener( name, hide, { passive: true } );
+			[ 'pointerdown', 'touchstart', 'wheel' ].forEach( function ( name ) {
+				document.addEventListener( name, onTouch, { passive: true, capture: true } );
 			} );
+			viewport.addEventListener( 'scroll', hide, { passive: true } );
 
 			timer = window.setTimeout( hide, duration );
 		}
 
 		var observer = new IntersectionObserver( function ( entries ) {
 			entries.forEach( function ( entry ) {
-				if ( entry.isIntersecting ) {
+				// Metà carosello visibile, oppure metà schermo occupata
+				// (un carosello più alto di due schermi non arriva mai al 50%).
+				if ( entry.isIntersecting && ( entry.intersectionRatio >= 0.5
+					|| entry.intersectionRect.height >= window.innerHeight * 0.5 ) ) {
 					observer.disconnect();
 					// Un attimo di respiro dopo l'ingresso e le animazioni.
 					window.setTimeout( show, 600 );
 				}
 			} );
-		}, { threshold: 0.5 } );
+		}, { threshold: [ 0.1, 0.25, 0.5 ] } );
 
 		observer.observe( root );
 	}
@@ -1531,7 +1541,10 @@
 		if ( 'IntersectionObserver' in window ) {
 			var visibility = new IntersectionObserver( function ( entries ) {
 				entries.forEach( function ( entry ) {
-					if ( entry.isIntersecting ) {
+					// Metà carosello visibile, oppure metà schermo occupata
+				// (un carosello più alto di due schermi non arriva mai al 50%).
+				if ( entry.isIntersecting && ( entry.intersectionRatio >= 0.5
+					|| entry.intersectionRect.height >= window.innerHeight * 0.5 ) ) {
 						refresh();
 					}
 				} );
@@ -1571,7 +1584,10 @@
 
 		var observer = new IntersectionObserver( function ( entries ) {
 			entries.forEach( function ( entry ) {
-				if ( entry.isIntersecting ) {
+				// Metà carosello visibile, oppure metà schermo occupata
+				// (un carosello più alto di due schermi non arriva mai al 50%).
+				if ( entry.isIntersecting && ( entry.intersectionRatio >= 0.5
+					|| entry.intersectionRect.height >= window.innerHeight * 0.5 ) ) {
 					root.classList.add( 'is-in-view' );
 
 					if ( ! repeat ) {
@@ -1678,7 +1694,10 @@
 
 	// Editor e frontend di Elementor: i widget vengono montati dopo il load,
 	// e nell'editor rimontati a ogni modifica dei controlli.
-	window.addEventListener( 'elementor/frontend/init', function () {
+	// "elementor/frontend/init" è un evento jQuery: un addEventListener nativo
+	// non lo riceve mai (fino alla 1.35.0 nell'editor il widget ridisegnato
+	// restava senza JS). initCarousel salta i caroselli già avviati.
+	function hookElementor() {
 		if ( ! window.elementorFrontend || ! window.elementorFrontend.hooks ) {
 			return;
 		}
@@ -1690,5 +1709,13 @@
 				initAll( el );
 			}
 		);
-	} );
+	}
+
+	if ( window.elementorFrontend && window.elementorFrontend.hooks ) {
+		hookElementor();
+	} else if ( window.jQuery ) {
+		window.jQuery( window ).on( 'elementor/frontend/init', hookElementor );
+	} else {
+		window.addEventListener( 'elementor/frontend/init', hookElementor );
+	}
 }() );
