@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.35.4
+- Gli aggiornamenti da GitHub usano ora lo stesso sistema degli altri plugin LU3G (generato da lu3g-updater) al posto della libreria Plugin Update Checker, che è stata tolta: il plugin è più leggero e si rilascia come gli altri, con *Actions → Release → Run workflow*. Sui siti non cambia nulla: questa versione arriva ancora col sistema vecchio, dalla prossima si usa quello nuovo. Al primo accesso in bacheca vengono tolti il controllo pianificato e i dati salvati dalla vecchia libreria. Nessun cambiamento nel widget.
+
 ## 1.35.3
 - L'intestazione dichiara `Requires Plugins: elementor, jet-engine`, come gli altri plugin LU3G che usano Elementor. WordPress non lascia attivare il carosello se mancano Elementor o JetEngine, e non lascia disattivarli mentre il carosello è attivo. Anche LU3G Hub lo segnala prima di attivare. Nessun cambiamento nel widget.
 
