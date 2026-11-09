@@ -101,7 +101,7 @@ Nel container PHP si installa con `apt-get install php-cli`: usare `php -l` e sc
 ## Pubblicare una versione
 
 1. Modifica, aumenta la versione (regola 5), commit e push su `main`. Commit firmati come `violix96 <vincy1621@gmail.com>`.
-2. La **Release la crea Vincenzo** su GitHub (dalla sessione Claude la creazione di Release è rifiutata).
+2. La **Release la crea Vincenzo** su GitHub (dalla sessione Claude la creazione di Release è rifiutata): a mano, oppure con *Actions → Zip del plugin per la Release → Run workflow* su `main`, che crea tag `vX.Y.Z` e Release dalla `Version` del plugin e allega lo zip.
 3. **Tag = versione esatta**, es. `1.12.1` oppure `v1.12.1` (v minuscola). Tag come `V_1.12.1` o `V_11.0` fanno fallire l'Action (niente zip allegato) e la libreria di aggiornamento non li legge correttamente.
 4. Verificare in *Actions* che sia verde e che la Release abbia `lu3g-repeater-carousel.zip`.
 5. Sui siti: *Plugin → Verifica aggiornamenti* per non aspettare le 12 ore.
