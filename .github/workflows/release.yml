@@ -6,6 +6,11 @@
 # lo zip generato da GitHub, con il numero di versione nel nome della
 # cartella, e installerebbe il plugin come se fosse un altro.
 #
+# In alternativa, senza creare la Release a mano: Actions → "Zip del plugin per la
+# Release" → Run workflow (branch main). Legge la Version del plugin, crea tag
+# vX.Y.Z e Release con le note del CHANGELOG e allega lo zip; si ferma se quella
+# versione è già pubblicata.
+#
 # Per riusarlo in un altro plugin basta cambiare PLUGIN_SLUG.
 
 name: Zip del plugin per la Release
@@ -13,6 +18,7 @@ name: Zip del plugin per la Release
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -27,9 +33,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Controlla che la versione corrisponda al tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
           VERSION=$(grep -m1 -E '^[[:space:]*]*Version:' "$PLUGIN_SLUG.php" | sed -E 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            [ "$GITHUB_REF_NAME" = "main" ] || { echo "::error::Avvia il workflow dal branch main (ora: $GITHUB_REF_NAME)"; exit 1; }
+            for t in "v$VERSION" "$VERSION"; do
+              if gh release view "$t" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "refs/tags/$t" >/dev/null; then
+                echo "::error::La versione $VERSION è già pubblicata ($t): aumenta la Version del plugin prima di rilasciare"; exit 1
+              fi
+            done
+            echo "RELEASE_TAG=v$VERSION" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          echo "RELEASE_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+          TAG="${GITHUB_REF_NAME#v}"
           echo "Tag: $TAG — Version nel plugin: $VERSION"
           if [ "$TAG" != "$VERSION" ]; then
             echo "::error::Il tag ($TAG) non corrisponde a 'Version:' in $PLUGIN_SLUG.php ($VERSION). Il tag deve essere la versione esatta, es. 1.12.1 oppure v1.12.1 (niente V maiuscola o trattini bassi)."
@@ -49,6 +68,17 @@ jobs:
           unzip -l "$PLUGIN_SLUG.zip" | tail -3
 
       - name: Allega lo zip alla Release
+        if: github.event_name == 'release'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "$GITHUB_REF_NAME" "build/$PLUGIN_SLUG.zip" --clobber
+        run: gh release upload "$RELEASE_TAG" "build/$PLUGIN_SLUG.zip" --clobber
+
+      - name: Crea la Release con lo zip (Run workflow)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          v=${RELEASE_TAG#v}
+          awk -v v="$v" '$0 ~ "^## "v"$" {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "Versione $v" > notes.md
+          gh release create "$RELEASE_TAG" "build/$PLUGIN_SLUG.zip" --target "$GITHUB_SHA" --title "$RELEASE_TAG" --notes-file notes.md
