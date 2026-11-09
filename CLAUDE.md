@@ -7,21 +7,22 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - Autore: Vincenzo, LU3G Agenzia Web (GitHub `violix96`). Si lavora in **italiano**, risposte brevi e pratiche.
 - Plugin WordPress: widget Elementor **"Carosello repeater"** (nome `lu3g-repeater-carousel`, categoria LU3G). Carosello a scroll orizzontale nativo con snap, alimentato da un repeater JetEngine, da card scritte a mano o da una galleria di immagini.
 - Repository: `lu3gofficial/lu3g-repeater-carousel` (pubblico, branch `main`; fino alla 1.29.0 era `violix96/lu3g-repeater-carousel`, che ora rimanda qui). È la fonte di verità.
-- Versione attuale: **1.35.3**. L'intestazione ha `Update URI` (github.com/lu3gofficial/...): non toglierla.
+- Versione attuale: **1.35.4**. L'intestazione ha `Update URI` (github.com/lu3gofficial/...): non toglierla.
 
 ## File
 
 | File | Contenuto |
 |---|---|
-| `lu3g-repeater-carousel.php` | Bootstrap, `Version:`, costante `LU3G_CAROUSEL_VERSION`, updater GitHub (prima dei controlli sulle dipendenze), registrazione widget/asset |
+| `lu3g-repeater-carousel.php` | Bootstrap, `Version:`, costante `LU3G_CAROUSEL_VERSION`, avvio dell'updater (prima dei controlli sulle dipendenze), registrazione widget/asset |
 | `includes/class-widget-repeater-carousel.php` | Il widget (~5000 righe): controlli, lettura dati, render |
 | `assets/carousel.css` | Stili (variabili `--lu3g-*`) |
 | `assets/carousel.js` | Scorrimento, loop, autoplay, indicatori, mostra di più, animazioni, modalità centrata |
-| `vendor/plugin-update-checker/` | Plugin Update Checker 5.7, non modificare |
-| `.github/workflows/release.yml` | Crea `lu3g-repeater-carousel.zip` e lo allega alla Release |
+| `includes/class-updater.php` | Updater GitHub **generato** da `lu3gofficial/lu3g-updater` (`bin/sync.sh`), classe `LU3G_Repeater_Carousel_Updater`: non modificarlo a mano |
+| `.lu3g-updater` | Configurazione per `sync.sh` (CLASS, REPO, SLUG); non finisce nello zip |
+| `bin/build.sh` | Crea `dist/lu3g-repeater-carousel.zip`, usato dall'Action di release |
+| `.github/workflows/release.yml` | Release uguale agli altri plugin LU3G: tag `vX.Y.Z` o Run workflow, zip allegato, note dal CHANGELOG |
 | `CHANGELOG.md`, `readme.txt` | Novità per versione, `Stable tag:` |
 | `DOCUMENTAZIONE.md` | Guida d'uso del widget |
-| `AGGIORNAMENTI.md` | Guida aggiornamenti automatici (riusabile per gli altri plugin) |
 
 ## Struttura del widget
 
@@ -85,6 +86,7 @@ Questo file serve a riprendere il lavoro in una nuova sessione. Leggilo prima di
 - 1.32.0: `title_fit`, `title_fit_min`; attributo `data-lu3g-title-fit` e JS `setupTitleFit()`: rapporto unico per i titoli del widget, stile inline `font-size`/`line-height`, poi `lu3g:layout`.
 - 1.33.0: `title_fit` attivo di serie, per scelta di Vincenzo (eccezione voluta alla regola 2): cambia solo i titoli che altrimenti si spezzerebbero.
 - 1.34.0: `auto_icon_fallback` (select da `Auto_Icons::names()`, default `circle-check`), `auto_icon_style` (`Auto_Icons::styles()`, classi `lu3g-carousel__auto-icon--*`; solo icone automatiche), parole aggiunte.
+- 1.35.4: tolto Plugin Update Checker (`vendor/`, `AGGIORNAMENTI.md`); aggiornamenti con l'updater comune di lu3g-updater, release e `bin/build.sh` come gli altri plugin. Pulizia una tantum in `admin_init` del cron `puc_cron_check_updates-lu3g-repeater-carousel` e dell'opzione `external_updates-lu3g-repeater-carousel` (flag `lu3g_carousel_puc_cleaned`).
 - 1.35.3: `Requires Plugins: elementor, jet-engine` nell'intestazione e in readme.txt (WordPress 6.5+ blocca l'attivazione senza le dipendenze; LU3G Hub lo legge). L'updater resta fuori dalla classe come prima.
 - 1.35.2: fix della 1.35.1, che aveva cambiato per sbaglio (replace su tutte le occorrenze di `if ( entry.isIntersecting ) {`) anche gli IntersectionObserver di setupAnimation e setupRows: card invisibili. Una modifica a una riga che compare più volte va fatta con un contesto unico, poi va confrontato il diff con la versione prima.
 - 1.35.1: invito a scorrere anche con frecce visibili; ascoltatori pointerdown/touchstart/wheel sul document in cattura (su iPhone un ascoltatore touch sull'elemento gli dà :hover al tocco: i colori hover del toggle restavano accesi); IO con soglie [0.1,0.25,0.5] + metà schermo; `elementor/frontend/init` agganciato con jQuery (è un evento jQuery: con addEventListener nell'editor i widget ridisegnati restavano senza JS). Banco di prova: `_strumenti/carousel-prova.php`.
@@ -101,10 +103,10 @@ Nel container PHP si installa con `apt-get install php-cli`: usare `php -l` e sc
 ## Pubblicare una versione
 
 1. Modifica, aumenta la versione (regola 5), commit e push su `main`. Commit firmati come `violix96 <vincy1621@gmail.com>`.
-2. La **Release la crea Vincenzo** su GitHub (dalla sessione Claude la creazione di Release è rifiutata): a mano, oppure con *Actions → Zip del plugin per la Release → Run workflow* su `main`, che crea tag `vX.Y.Z` e Release dalla `Version` del plugin e allega lo zip.
-3. **Tag = versione esatta**, es. `1.12.1` oppure `v1.12.1` (v minuscola). Tag come `V_1.12.1` o `V_11.0` fanno fallire l'Action (niente zip allegato) e la libreria di aggiornamento non li legge correttamente.
+2. La **Release la crea Vincenzo** (dalla sessione Claude la creazione di Release è rifiutata): *Actions → Release → Run workflow* su `main`, che legge la `Version`, crea tag `vX.Y.Z` e Release con le note del CHANGELOG e allega lo zip; oppure inviando un tag `vX.Y.Z` dal computer. Non creare la Release a mano dalla pagina Releases: l'Action la creerebbe di nuovo e fallirebbe.
+3. **Tag = `v` + versione esatta**, es. `v1.12.1`: l'Action si ferma se tag e `Version:` non coincidono.
 4. Verificare in *Actions* che sia verde e che la Release abbia `lu3g-repeater-carousel.zip`.
-5. Sui siti: *Plugin → Verifica aggiornamenti* per non aspettare le 12 ore.
+5. Sui siti: *Bacheca → Aggiornamenti → Controlla di nuovo* (o il link *Controlla aggiornamenti* nella pagina Plugin) per non aspettare le 6 ore di cache.
 
 ## Idee non ancora fatte
 

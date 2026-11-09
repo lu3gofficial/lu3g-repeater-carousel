@@ -1,84 +1,45 @@
-# Crea lo zip installabile del plugin e lo allega alla Release.
-#
-# Si attiva quando pubblichi una Release su GitHub. Lo zip contiene una
-# cartella chiamata esattamente come il plugin: è quello che il sistema di
-# aggiornamento scarica sui siti. Senza questo passaggio WordPress userebbe
-# lo zip generato da GitHub, con il numero di versione nel nome della
-# cartella, e installerebbe il plugin come se fosse un altro.
-#
-# In alternativa, senza creare la Release a mano: Actions → "Zip del plugin per la
-# Release" → Run workflow (branch main). Legge la Version del plugin, crea tag
-# vX.Y.Z e Release con le note del CHANGELOG e allega lo zip; si ferma se quella
-# versione è già pubblicata.
-#
-# Per riusarlo in un altro plugin basta cambiare PLUGIN_SLUG.
-
-name: Zip del plugin per la Release
-
+# Pubblica una release, in due modi:
+# - inviando un tag di versione (es. v1.2.0) dal computer;
+# - da GitHub, senza computer: Actions → Release → Run workflow (sul branch main). Il tag lo crea l'automazione
+#   leggendo la "Version" del plugin, e si ferma se quella versione è già stata pubblicata.
+# In entrambi i casi controlla la versione, crea lo zip e lo allega alla release con le note del CHANGELOG.
+# I siti con il plugin installato vedono l'aggiornamento in Bacheca → Aggiornamenti (entro 6 ore, o subito con "Controlla di nuovo").
+name: Release
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['v*']
   workflow_dispatch:
-
 permissions:
   contents: write
-
-env:
-  PLUGIN_SLUG: lu3g-repeater-carousel
-
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Controlla che la versione corrisponda al tag
+      - uses: actions/checkout@v5
+      - name: Controllo versione
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=$(grep -m1 -E '^[[:space:]*]*Version:' "$PLUGIN_SLUG.php" | sed -E 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
-            [ "$GITHUB_REF_NAME" = "main" ] || { echo "::error::Avvia il workflow dal branch main (ora: $GITHUB_REF_NAME)"; exit 1; }
-            for t in "v$VERSION" "$VERSION"; do
-              if gh release view "$t" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "refs/tags/$t" >/dev/null; then
-                echo "::error::La versione $VERSION è già pubblicata ($t): aumenta la Version del plugin prima di rilasciare"; exit 1
-              fi
-            done
-            echo "RELEASE_TAG=v$VERSION" >> "$GITHUB_ENV"
-            exit 0
+          v=$(grep -m1 -E '^\s*\*\s*Version:' lu3g-repeater-carousel.php | awk '{print $NF}')
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            [ "${GITHUB_REF_NAME}" = "main" ] || { echo "Avvia il workflow dal branch main (ora: ${GITHUB_REF_NAME})"; exit 1; }
+            if gh release view "v$v" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "refs/tags/v$v" >/dev/null; then
+              echo "La versione $v è già pubblicata: aumenta la Version del plugin prima di rilasciare"; exit 1
+            fi
+            tag="v$v"
+          else
+            tag="${GITHUB_REF_NAME}"
+            [ "v$v" = "$tag" ] || { echo "Tag $tag diverso dalla Version del plugin ($v)"; exit 1; }
           fi
-          echo "RELEASE_TAG=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
-          TAG="${GITHUB_REF_NAME#v}"
-          echo "Tag: $TAG — Version nel plugin: $VERSION"
-          if [ "$TAG" != "$VERSION" ]; then
-            echo "::error::Il tag ($TAG) non corrisponde a 'Version:' in $PLUGIN_SLUG.php ($VERSION). Il tag deve essere la versione esatta, es. 1.12.1 oppure v1.12.1 (niente V maiuscola o trattini bassi)."
-            exit 1
-          fi
-
-      - name: Crea lo zip
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+      - name: Pacchetto
+        run: sh bin/build.sh
+      - name: Note dal CHANGELOG
         run: |
-          mkdir -p "build/$PLUGIN_SLUG"
-          rsync -a ./ "build/$PLUGIN_SLUG/" \
-            --exclude '.git' \
-            --exclude '.github' \
-            --exclude 'build' \
-            --exclude '.gitignore' \
-            --exclude '.DS_Store'
-          cd build && zip -rq "$PLUGIN_SLUG.zip" "$PLUGIN_SLUG"
-          unzip -l "$PLUGIN_SLUG.zip" | tail -3
-
-      - name: Allega lo zip alla Release
-        if: github.event_name == 'release'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "$RELEASE_TAG" "build/$PLUGIN_SLUG.zip" --clobber
-
-      - name: Crea la Release con lo zip (Run workflow)
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          v=${RELEASE_TAG#v}
-          awk -v v="$v" '$0 ~ "^## "v"$" {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+          v=${TAG#v}
+          awk -v v="$v" '$0 ~ "^## "v {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
           [ -s notes.md ] || echo "Versione $v" > notes.md
-          gh release create "$RELEASE_TAG" "build/$PLUGIN_SLUG.zip" --target "$GITHUB_SHA" --title "$RELEASE_TAG" --notes-file notes.md
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$TAG" dist/lu3g-repeater-carousel.zip --target "$GITHUB_SHA" --title "$TAG" --notes-file notes.md

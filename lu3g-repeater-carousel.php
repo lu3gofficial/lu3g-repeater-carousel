@@ -3,7 +3,7 @@
  * Plugin Name:       LU3G Repeater Carousel
  * Plugin URI:        https://lu3g.it
  * Description:       Widget Elementor che trasforma un repeater JetEngine in un carosello a scroll orizzontale con snap, freccia di navigazione e animazione d'ingresso.
- * Version:           1.35.3
+ * Version:           1.35.4
  * Update URI:        https://github.com/lu3gofficial/lu3g-repeater-carousel
  * Author:            LU3G Agenzia Web
  * Author URI:        https://lu3g.it
@@ -20,41 +20,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LU3G_CAROUSEL_VERSION', '1.35.3' );
+define( 'LU3G_CAROUSEL_VERSION', '1.35.4' );
 define( 'LU3G_CAROUSEL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LU3G_CAROUSEL_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Aggiornamenti automatici da GitHub.
- *
- * Ogni sito controlla periodicamente l'ultima Release del repository e, se
- * la versione è più nuova di quella installata, mostra l'aggiornamento in
- * bacheca come per qualsiasi plugin. Lo zip scaricato è quello allegato
- * alla Release dalla GitHub Action, che ha la cartella con il nome giusto.
+ * Aggiornamenti automatici dalle release GitHub di https://github.com/lu3gofficial/lu3g-repeater-carousel
+ * (vedi includes/class-updater.php, generato da lu3g-updater come per gli altri plugin LU3G).
  *
  * Sta fuori dalla classe e prima dei controlli sulle dipendenze: il plugin
  * deve potersi aggiornare anche su un sito dove Elementor è disattivato.
- *
- * Repository privato: definire il token in wp-config.php, mai qui.
- *     define( 'LU3G_GITHUB_TOKEN', 'github_pat_...' );
  */
-if ( file_exists( LU3G_CAROUSEL_PATH . 'vendor/plugin-update-checker/plugin-update-checker.php' ) ) {
-	require_once LU3G_CAROUSEL_PATH . 'vendor/plugin-update-checker/plugin-update-checker.php';
+require_once __DIR__ . '/includes/class-updater.php';
+LU3G_Repeater_Carousel_Updater::init( __FILE__ );
 
-	$lu3g_carousel_updater = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
-		'https://github.com/lu3gofficial/lu3g-repeater-carousel/',
-		__FILE__,
-		'lu3g-repeater-carousel'
-	);
-
-	// Solo lo zip allegato alla Release, non quello generato da GitHub, che
-	// ha una cartella con il numero di versione nel nome.
-	$lu3g_carousel_updater->getVcsApi()->enableReleaseAssets( '/lu3g-repeater-carousel\.zip($|[?&#])/i' );
-
-	if ( defined( 'LU3G_GITHUB_TOKEN' ) && LU3G_GITHUB_TOKEN ) {
-		$lu3g_carousel_updater->setAuthentication( LU3G_GITHUB_TOKEN );
+/**
+ * Pulizia dopo il passaggio da Plugin Update Checker (fino alla 1.35.3) all'updater comune:
+ * toglie il controllo pianificato e i dati salvati dalla vecchia libreria, che non servono più.
+ * Gira una volta sola in bacheca.
+ */
+add_action(
+	'admin_init',
+	function () {
+		if ( get_site_option( 'lu3g_carousel_puc_cleaned' ) ) {
+			return;
+		}
+		wp_clear_scheduled_hook( 'puc_cron_check_updates-lu3g-repeater-carousel' );
+		delete_site_option( 'external_updates-lu3g-repeater-carousel' );
+		update_site_option( 'lu3g_carousel_puc_cleaned', 1 );
 	}
-}
+);
 
 /**
  * Bootstrap del plugin.

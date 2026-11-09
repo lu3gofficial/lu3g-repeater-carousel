@@ -5,7 +5,7 @@ Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
 Requires Plugins: elementor, jet-engine
-Stable tag: 1.35.3
+Stable tag: 1.35.4
 License: GPLv2 or later
 
 Widget Elementor per caroselli di card da repeater JetEngine, da contenuto statico o da sole immagini.
@@ -17,6 +17,9 @@ Carosello a scorrimento orizzontale nativo (scroll-snap, swipe, trackpad) con ca
 La documentazione completa è nel file DOCUMENTAZIONE.md incluso nel plugin.
 
 == Changelog ==
+
+= 1.35.4 =
+* Aggiornamenti con il sistema comune dei plugin LU3G (lu3g-updater) al posto di Plugin Update Checker.
 
 = 1.35.3 =
 * L'intestazione dichiara Elementor e JetEngine come plugin richiesti.
