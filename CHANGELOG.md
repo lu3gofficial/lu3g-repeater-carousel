@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.35.3
+- L'intestazione dichiara `Requires Plugins: elementor, jet-engine`, come gli altri plugin LU3G che usano Elementor. WordPress non lascia attivare il carosello se mancano Elementor o JetEngine, e non lascia disattivarli mentre il carosello è attivo. Anche LU3G Hub lo segnala prima di attivare. Nessun cambiamento nel widget.
+
 ## 1.35.2
 - Corretto un errore della 1.35.1: le card con l'animazione d'ingresso restavano invisibili. La nuova regola "metà carosello sullo schermo", pensata solo per l'invito a scorrere, era finita anche nell'animazione d'ingresso e nel ricalcolo delle altezze: l'ingresso partiva al 25% e la regola chiedeva il 50%, quindi le card non comparivano più.
 
